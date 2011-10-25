@@ -1,0 +1,1907 @@
+﻿Propellerhead Remote Mapping File						
+File Format Version	1.0.0					
+Control Surface Manufacturer	Behringer
+Control Surface Model	BCR2000
+Map Version	1.1.5					
+
+
+Scope	Propellerheads	Combinator
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	Push Encoder 1:1		Rotary 1		
+Map	Push Encoder 1:2		Rotary 2		
+Map	Push Encoder 1:3		Rotary 3		
+Map	Push Encoder 1:4		Rotary 4		
+Map	Upper Row Button 1		Button 1		
+Map	Upper Row Button 2		Button 2		
+Map	Upper Row Button 3		Button 3		
+Map	Upper Row Button 4		Button 4		
+
+Map	Upper Row Button 8		Select Previous Patch
+Map	Lower Row Button 8		Select Next Patch
+
+Map	Upper Row Button 7		Enabled
+Map	Lower Row Button 1		Bypass All FX
+Map	Lower Row Button 2		Run Pattern Devices
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 1		0
+Map	Bottom Row Encoder 2		0
+Map	Bottom Row Encoder 3		0
+Map	Bottom Row Encoder 4		0
+Map	Bottom Row Encoder 5		0
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	Mixer 14:2				
+
+Define Group	Channels	Ch1-7	Ch8-14		
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	Group
+
+Map	Preset Left Button		Channels=Ch1-7
+Map	Preset Right Button		Channels=Ch8-14
+
+Map	Bottom Row Encoder 8		Master Level		Single Dot
+Map	Push Encoder 4:8		Master Left Peak Meter		Bar/Off		
+Map	Top Row Encoder 8		Aux 1 Return Level		Single Dot
+Map	Push Encoder 1:8		Aux 2 Return Level		Single Dot
+
+Map	Bottom Row Encoder 1		Channel 1 Level		Single Dot	Ch1-7
+Map	Bottom Row Encoder 2		Channel 2 Level		Single Dot	Ch1-7
+Map	Bottom Row Encoder 3		Channel 3 Level		Single Dot	Ch1-7
+Map	Bottom Row Encoder 4		Channel 4 Level		Single Dot	Ch1-7
+Map	Bottom Row Encoder 5		Channel 5 Level		Single Dot	Ch1-7
+Map	Bottom Row Encoder 6		Channel 6 Level		Single Dot	Ch1-7
+Map	Bottom Row Encoder 7		Channel 7 Level		Single Dot	Ch1-7
+
+Map	Bottom Row Encoder 1		Channel 8 Level		Single Dot	Ch8-14
+Map	Bottom Row Encoder 2		Channel 9 Level		Single Dot	Ch8-14
+Map	Bottom Row Encoder 3		Channel 10 Level		Single Dot	Ch8-14
+Map	Bottom Row Encoder 4		Channel 11 Level		Single Dot	Ch8-14
+Map	Bottom Row Encoder 5		Channel 12 Level		Single Dot	Ch8-14
+Map	Bottom Row Encoder 6		Channel 13 Level		Single Dot	Ch8-14
+Map	Bottom Row Encoder 7		Channel 14 Level		Single Dot	Ch8-14
+
+Map	Middle Row Encoder 1		Channel 1 Pan		Single Dot	Ch1-7
+Map	Middle Row Encoder 2		Channel 2 Pan		Single Dot	Ch1-7
+Map	Middle Row Encoder 3		Channel 3 Pan		Single Dot	Ch1-7
+Map	Middle Row Encoder 4		Channel 4 Pan		Single Dot	Ch1-7
+Map	Middle Row Encoder 5		Channel 5 Pan		Single Dot	Ch1-7
+Map	Middle Row Encoder 6		Channel 6 Pan		Single Dot	Ch1-7
+Map	Middle Row Encoder 7		Channel 7 Pan		Single Dot	Ch1-7
+
+Map	Middle Row Encoder 1		Channel 8 Pan		Single Dot	Ch8-14
+Map	Middle Row Encoder 2		Channel 9 Pan		Single Dot	Ch8-14
+Map	Middle Row Encoder 3		Channel 10 Pan		Single Dot	Ch8-14
+Map	Middle Row Encoder 4		Channel 11 Pan		Single Dot	Ch8-14
+Map	Middle Row Encoder 5		Channel 12 Pan		Single Dot	Ch8-14
+Map	Middle Row Encoder 6		Channel 13 Pan		Single Dot	Ch8-14
+Map	Middle Row Encoder 7		Channel 14 Pan		Single Dot	Ch8-14
+
+Map	Top Row Encoder 1		Channel 1 Aux 1 Send		Single Dot	Ch1-7
+Map	Top Row Encoder 2		Channel 2 Aux 1 Send		Single Dot	Ch1-7
+Map	Top Row Encoder 3		Channel 3 Aux 1 Send		Single Dot	Ch1-7
+Map	Top Row Encoder 4		Channel 4 Aux 1 Send		Single Dot	Ch1-7
+Map	Top Row Encoder 5		Channel 5 Aux 1 Send		Single Dot	Ch1-7
+Map	Top Row Encoder 6		Channel 6 Aux 1 Send		Single Dot	Ch1-7
+Map	Top Row Encoder 7		Channel 7 Aux 1 Send		Single Dot	Ch1-7
+
+Map	Top Row Encoder 1		Channel 8 Aux 1 Send		Single Dot	Ch8-14
+Map	Top Row Encoder 2		Channel 9 Aux 1 Send		Single Dot	Ch8-14
+Map	Top Row Encoder 3		Channel 10 Aux 1 Send		Single Dot	Ch8-14
+Map	Top Row Encoder 4		Channel 11 Aux 1 Send		Single Dot	Ch8-14
+Map	Top Row Encoder 5		Channel 12 Aux 1 Send		Single Dot	Ch8-14
+Map	Top Row Encoder 6		Channel 13 Aux 1 Send		Single Dot	Ch8-14
+Map	Top Row Encoder 7		Channel 14 Aux 1 Send		Single Dot	Ch8-14
+
+Map	Lower Row Button 1		Channel 1 Mute			Ch1-7
+Map	Lower Row Button 2		Channel 2 Mute			Ch1-7
+Map	Lower Row Button 3		Channel 3 Mute			Ch1-7
+Map	Lower Row Button 4		Channel 4 Mute			Ch1-7
+Map	Lower Row Button 5		Channel 5 Mute			Ch1-7
+Map	Lower Row Button 6		Channel 6 Mute			Ch1-7
+Map	Lower Row Button 7		Channel 7 Mute			Ch1-7
+Map	Lower Row Button 8		0			Ch1-7
+
+Map	Upper Row Button 1		Channel 1 Solo			Ch1-7
+Map	Upper Row Button 2		Channel 2 Solo			Ch1-7
+Map	Upper Row Button 3		Channel 3 Solo			Ch1-7
+Map	Upper Row Button 4		Channel 4 Solo			Ch1-7
+Map	Upper Row Button 5		Channel 5 Solo			Ch1-7
+Map	Upper Row Button 6		Channel 6 Solo			Ch1-7
+Map	Upper Row Button 7		Channel 7 Solo			Ch1-7
+Map	Upper Row Button 8		0			Ch1-7
+
+Map	Lower Row Button 1		Channel 8 Mute			Ch8-14
+Map	Lower Row Button 2		Channel 9 Mute			Ch8-14
+Map	Lower Row Button 3		Channel 10 Mute			Ch8-14
+Map	Lower Row Button 4		Channel 11 Mute			Ch8-14
+Map	Lower Row Button 5		Channel 12 Mute			Ch8-14
+Map	Lower Row Button 6		Channel 13 Mute			Ch8-14
+Map	Lower Row Button 7		Channel 14 Mute			Ch8-14
+Map	Lower Row Button 8		0			Ch8-14
+
+Map	Upper Row Button 1		Channel 8 Solo			Ch8-14
+Map	Upper Row Button 2		Channel 9 Solo			Ch8-14
+Map	Upper Row Button 3		Channel 10 Solo			Ch8-14
+Map	Upper Row Button 4		Channel 11 Solo			Ch8-14
+Map	Upper Row Button 5		Channel 12 Solo			Ch8-14
+Map	Upper Row Button 6		Channel 13 Solo			Ch8-14
+Map	Upper Row Button 7		Channel 14 Solo			Ch8-14
+Map	Upper Row Button 8		0			Ch8-14
+
+Map	Push Encoder 4:1		Channel 1 Peak Meter		Bar/Off		Ch1-7
+Map	Push Encoder 4:2		Channel 2 Peak Meter		Bar/Off		Ch1-7
+Map	Push Encoder 4:3		Channel 3 Peak Meter		Bar/Off		Ch1-7
+Map	Push Encoder 4:4		Channel 4 Peak Meter		Bar/Off		Ch1-7
+Map	Push Encoder 4:5		Channel 5 Peak Meter		Bar/Off		Ch1-7
+Map	Push Encoder 4:6		Channel 6 Peak Meter		Bar/Off		Ch1-7
+Map	Push Encoder 4:7		Channel 7 Peak Meter		Bar/Off		Ch1-7
+
+Map	Push Encoder 4:1		Channel 8 Peak Meter		Bar/Off		Ch8-14
+Map	Push Encoder 4:2		Channel 9 Peak Meter		Bar/Off		Ch8-14
+Map	Push Encoder 4:3		Channel 10 Peak Meter		Bar/Off		Ch8-14
+Map	Push Encoder 4:4		Channel 11 Peak Meter		Bar/Off		Ch8-14
+Map	Push Encoder 4:5		Channel 12 Peak Meter		Bar/Off		Ch8-14
+Map	Push Encoder 4:6		Channel 13 Peak Meter		Bar/Off		Ch8-14
+Map	Push Encoder 4:7		Channel 14 Peak Meter		Bar/Off		Ch8-14
+
+Map	Push Encoder 1:1		Channel 1 Aux 2 Send		Single Dot	Ch1-7
+Map	Push Encoder 1:2		Channel 2 Aux 2 Send		Single Dot	Ch1-7
+Map	Push Encoder 1:3		Channel 3 Aux 2 Send		Single Dot	Ch1-7
+Map	Push Encoder 1:4		Channel 4 Aux 2 Send		Single Dot	Ch1-7
+Map	Push Encoder 1:5		Channel 5 Aux 2 Send		Single Dot	Ch1-7
+Map	Push Encoder 1:6		Channel 6 Aux 2 Send		Single Dot	Ch1-7
+Map	Push Encoder 1:7		Channel 7 Aux 2 Send		Single Dot	Ch1-7
+
+Map	Push Encoder 1:1		Channel 8 Aux 2 Send		Single Dot	Ch8-14
+Map	Push Encoder 1:2		Channel 9 Aux 2 Send		Single Dot	Ch8-14
+Map	Push Encoder 1:3		Channel 10 Aux 2 Send		Single Dot	Ch8-14
+Map	Push Encoder 1:4		Channel 11 Aux 2 Send		Single Dot	Ch8-14
+Map	Push Encoder 1:5		Channel 12 Aux 2 Send		Single Dot	Ch8-14
+Map	Push Encoder 1:6		Channel 13 Aux 2 Send		Single Dot	Ch8-14
+Map	Push Encoder 1:7		Channel 14 Aux 2 Send		Single Dot	Ch8-14
+
+Map	Push Encoder 2:1		Channel 1 Bass Amount		Single Dot	Ch1-7
+Map	Push Encoder 2:2		Channel 2 Bass Amount		Single Dot	Ch1-7
+Map	Push Encoder 2:3		Channel 3 Bass Amount		Single Dot	Ch1-7
+Map	Push Encoder 2:4		Channel 4 Bass Amount		Single Dot	Ch1-7
+Map	Push Encoder 2:5		Channel 5 Bass Amount		Single Dot	Ch1-7
+Map	Push Encoder 2:6		Channel 6 Bass Amount		Single Dot	Ch1-7
+Map	Push Encoder 2:7		Channel 7 Bass Amount		Single Dot	Ch1-7
+
+Map	Push Encoder 2:1		Channel 8 Bass Amount		Single Dot	Ch8-14
+Map	Push Encoder 2:2		Channel 9 Bass Amount		Single Dot	Ch8-14
+Map	Push Encoder 2:3		Channel 10 Bass Amount		Single Dot	Ch8-14
+Map	Push Encoder 2:4		Channel 11 Bass Amount		Single Dot	Ch8-14
+Map	Push Encoder 2:5		Channel 12 Bass Amount		Single Dot	Ch8-14
+Map	Push Encoder 2:6		Channel 13 Bass Amount		Single Dot	Ch8-14
+Map	Push Encoder 2:7		Channel 14 Bass Amount		Single Dot	Ch8-14
+
+Map	Push Encoder 2:1 Click		Channel 1 EQ On/Off			Ch1-7
+Map	Push Encoder 2:2 Click		Channel 2 EQ On/Off			Ch1-7
+Map	Push Encoder 2:3 Click		Channel 3 EQ On/Off			Ch1-7
+Map	Push Encoder 2:4 Click		Channel 4 EQ On/Off			Ch1-7
+Map	Push Encoder 2:5 Click		Channel 5 EQ On/Off			Ch1-7
+Map	Push Encoder 2:6 Click		Channel 6 EQ On/Off			Ch1-7
+Map	Push Encoder 2:7 Click		Channel 7 EQ On/Off			Ch1-7
+
+Map	Push Encoder 2:1 Click		Channel 8 EQ On/Off			Ch8-14
+Map	Push Encoder 2:2 Click		Channel 9 EQ On/Off			Ch8-14
+Map	Push Encoder 2:3 Click		Channel 10 EQ On/Off			Ch8-14
+Map	Push Encoder 2:4 Click		Channel 11 EQ On/Off			Ch8-14
+Map	Push Encoder 2:5 Click		Channel 12 EQ On/Off			Ch8-14
+Map	Push Encoder 2:6 Click		Channel 13 EQ On/Off			Ch8-14
+Map	Push Encoder 2:7 Click		Channel 14 EQ On/Off			Ch8-14
+
+Map	Push Encoder 4:1 Click		0
+//something weird in codec. The empty mapping above is to make sure all encoder modes are available / LC
+
+Map	Push Encoder 3:1		Channel 1 Treble Amount		Single Dot	Ch1-7
+Map	Push Encoder 3:2		Channel 2 Treble Amount		Single Dot	Ch1-7
+Map	Push Encoder 3:3		Channel 3 Treble Amount		Single Dot	Ch1-7
+Map	Push Encoder 3:4		Channel 4 Treble Amount		Single Dot	Ch1-7
+Map	Push Encoder 3:5		Channel 5 Treble Amount		Single Dot	Ch1-7
+Map	Push Encoder 3:6		Channel 6 Treble Amount		Single Dot	Ch1-7
+Map	Push Encoder 3:7		Channel 7 Treble Amount		Single Dot	Ch1-7
+
+Map	Push Encoder 3:1		Channel 8 Treble Amount		Single Dot	Ch8-14
+Map	Push Encoder 3:2		Channel 9 Treble Amount		Single Dot	Ch8-14
+Map	Push Encoder 3:3		Channel 10 Treble Amount		Single Dot	Ch8-14
+Map	Push Encoder 3:4		Channel 11 Treble Amount		Single Dot	Ch8-14
+Map	Push Encoder 3:5		Channel 12 Treble Amount		Single Dot	Ch8-14
+Map	Push Encoder 3:6		Channel 13 Treble Amount		Single Dot	Ch8-14
+Map	Push Encoder 3:7		Channel 14 Treble Amount		Single Dot	Ch8-14
+
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	Line Mixer 6:2				
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	Groups
+
+Map	Bottom Row Encoder 1		Channel 1 Level		Single Dot	
+Map	Bottom Row Encoder 2		Channel 2 Level		Single Dot	
+Map	Bottom Row Encoder 3		Channel 3 Level		Single Dot	
+Map	Bottom Row Encoder 4		Channel 4 Level		Single Dot	
+Map	Bottom Row Encoder 5		Channel 5 Level		Single Dot	
+Map	Bottom Row Encoder 6		Channel 6 Level		Single Dot	
+Map	Bottom Row Encoder 8		Master Level		Single Dot
+
+Map	Middle Row Encoder 1		Channel 1 Pan		Single Dot	
+Map	Middle Row Encoder 2		Channel 2 Pan		Single Dot	
+Map	Middle Row Encoder 3		Channel 3 Pan		Single Dot	
+Map	Middle Row Encoder 4		Channel 4 Pan		Single Dot	
+Map	Middle Row Encoder 5		Channel 5 Pan		Single Dot	
+Map	Middle Row Encoder 6		Channel 6 Pan		Single Dot	
+
+Map	Top Row Encoder 1		Channel 1 Aux Send		Single Dot	
+Map	Top Row Encoder 2		Channel 2 Aux Send		Single Dot	
+Map	Top Row Encoder 3		Channel 3 Aux Send		Single Dot	
+Map	Top Row Encoder 4		Channel 4 Aux Send		Single Dot	
+Map	Top Row Encoder 5		Channel 5 Aux Send		Single Dot	
+Map	Top Row Encoder 6		Channel 6 Aux Send		Single Dot	
+Map	Top Row Encoder 8		Aux Return Level		Single Dot
+
+Map	Push Encoder 1:1		Channel 1 Peak Meter		Bar/Off		
+Map	Push Encoder 1:2		Channel 2 Peak Meter		Bar/Off		
+Map	Push Encoder 1:3		Channel 3 Peak Meter		Bar/Off		
+Map	Push Encoder 1:4		Channel 4 Peak Meter		Bar/Off		
+Map	Push Encoder 1:5		Channel 5 Peak Meter		Bar/Off		
+Map	Push Encoder 1:6		Channel 6 Peak Meter		Bar/Off		
+Map	Push Encoder 1:7		Master Left Peak Meter		Bar/Off		
+Map	Push Encoder 1:8		Master Right Peak Meter		Bar/Off		
+
+Map	Lower Row Button 1		Channel 1 Mute			
+Map	Lower Row Button 2		Channel 2 Mute			
+Map	Lower Row Button 3		Channel 3 Mute			
+Map	Lower Row Button 4		Channel 4 Mute			
+Map	Lower Row Button 5		Channel 5 Mute			
+Map	Lower Row Button 6		Channel 6 Mute			
+
+Map	Upper Row Button 1		Channel 1 Solo			
+Map	Upper Row Button 2		Channel 2 Solo			
+Map	Upper Row Button 3		Channel 3 Solo			
+Map	Upper Row Button 4		Channel 4 Solo			
+Map	Upper Row Button 5		Channel 5 Solo			
+Map	Upper Row Button 6		Channel 6 Solo			
+
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+Map	Upper Row Button 7		0
+Map	Lower Row Button 7		0
+Map	Upper Row Button 8		0
+Map	Lower Row Button 8		0
+
+Scope	Propellerheads	THOR Polysonic Synthesizer
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	Upper Row Button 8		Select Previous Patch
+Map	Lower Row Button 8		Select Next Patch		
+
+Map	Top Row Encoder 8		Master Level
+ 
+Map	Lower Row Button 1		Button 1			
+Map	Lower Row Button 2		Button 2			
+Map	Lower Row Button 3		Portamento Mode		
+Map	Lower Row Button 4		Key Mode		
+Map	Lower Row Button 5		Osc 1 To Filter 1 Enable		
+Map	Lower Row Button 6		Osc 1 To Filter 2 Enable			
+Map	Lower Row Button 7		Delay On		
+		
+Map	Upper Row Button 1		Global Env Gate Trig On		
+Map	Upper Row Button 2		Osc 2 To Filter 1 Enable		
+Map	Upper Row Button 3		Osc 2 To Filter 2 Enable		
+Map	Upper Row Button 4		Mod Env Gate Trig On			
+Map	Upper Row Button 5		Step Sequencer Run		
+Map	Upper Row Button 6		Osc 3 To Filter 1 Enable		
+Map	Upper Row Button 7		Osc 3 To Filter 2 Enable		
+
+
+Map	Top Row Encoder 1		Rotary 1			
+Map	Top Row Encoder 2		Rotary 2			
+Map	Top Row Encoder 3		Filter 1 Freq			
+Map	Top Row Encoder 4		Filter 1 Res			
+Map	Top Row Encoder 5		Filter 2 Freq			
+Map	Top Row Encoder 6		Filter 2 Res			
+Map	Top Row Encoder 7		Filter 3 Freq			
+			
+
+Map	Middle Row Encoder 1		Filter Env Attack			
+Map	Middle Row Encoder 2		Filter Env Decay			
+Map	Middle Row Encoder 3		Filter Env Sustain			
+Map	Middle Row Encoder 4		Filter Env Release			
+Map	Middle Row Encoder 5		Amp Env Attack			
+Map	Middle Row Encoder 6		Amp Env Decay			
+Map	Middle Row Encoder 7		Amp Env Sustain			
+Map	Middle Row Encoder 8		Amp Env Release			
+
+
+Map	Bottom Row Encoder 1		Osc 1 And 2 Balance			
+Map	Bottom Row Encoder 2		Osc 1 And 2 Level			
+Map	Bottom Row Encoder 3		Osc 3 Level			
+Map	Bottom Row Encoder 4		Osc 1 Mod			
+Map	Bottom Row Encoder 5		Osc 2 Mod			
+Map	Bottom Row Encoder 6		Osc 3 Mod			
+Map	Bottom Row Encoder 7		Amplifier Pan		
+Map	Bottom Row Encoder 8		Amplifier Gain
+
+Map	Push Encoder 1:1		LFO 1 Rate			
+Map	Push Encoder 1:2		LFO 1 Waveform			
+Map	Push Encoder 1:3		LFO 2 Rate			
+Map	Push Encoder 1:4		LFO 2 Waveform			
+Map	Push Encoder 1:5		Portamento			
+Map	Push Encoder 1:6		Shaper Drive			
+Map	Push Encoder 1:7		Delay Dry Wet			
+Map	Push Encoder 1:8		Chorus Dry Wet			
+
+		
+Scope	Propellerheads	SubTractor Analog Synthesizer			
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	Upper Row Button 8		Select Previous Patch
+Map	Lower Row Button 8		Select Next Patch
+
+Map	Bottom Row Encoder 1		Filter Freq		Single Dot	
+Map	Bottom Row Encoder 2		Filter Res		Single Dot	
+Map	Bottom Row Encoder 3		Filter2 Freq		Single Dot	
+Map	Bottom Row Encoder 4		Filter2 Res		Single Dot	
+Map	Bottom Row Encoder 5		Filter Env Amount		Single Dot	
+Map	Bottom Row Encoder 6		FM Amount		Single Dot	
+Map	Bottom Row Encoder 7		Osc Mix		Single Dot	
+Map	Bottom Row Encoder 8		Master Level		Single Dot
+
+Map	Middle Row Encoder 1		Filter Env Attack
+Map	Middle Row Encoder 2		Filter Env Decay
+Map	Middle Row Encoder 3		Filter Env Sustain
+Map	Middle Row Encoder 4		Filter Env Release
+Map	Middle Row Encoder 5		Amp Env Attack
+Map	Middle Row Encoder 6		Amp Env Decay
+Map	Middle Row Encoder 7		Amp Env Sustain
+Map	Middle Row Encoder 8		Amp Env Release
+
+Map	Top Row Encoder 1		Osc1 Phase Diff
+Map	Top Row Encoder 2		Osc1 Wave
+Map	Top Row Encoder 3		Osc1 Octave
+Map	Top Row Encoder 4		Osc1 Semitone
+Map	Top Row Encoder 5		Osc2 Phase Diff
+Map	Top Row Encoder 6		Osc2 Wave
+Map	Top Row Encoder 7		Osc2 Octave
+Map	Top Row Encoder 8		Osc2 Semitone
+
+Map	Push Encoder 1:1		LFO1 Rate
+Map	Push Encoder 1:2		LFO1 Amount
+Map	Push Encoder 1:3		LFO1 Wave
+Map	Push Encoder 1:4		LFO2 Rate
+Map	Push Encoder 1:5		LFO2 Amount
+Map	Push Encoder 1:6		Noise Decay
+Map	Push Encoder 1:7		Noise Color
+Map	Push Encoder 1:8		Noise Level
+
+Map	Lower Row Button 1		Filter Type			
+Map	Lower Row Button 2		Filter Link Freq On/Off			
+Map	Lower Row Button 3		Filter2 On/Off			
+Map	Lower Row Button 4		Filter Env Invert			
+
+Map	Upper Row Button 1		LFO1 Dest			
+Map	Upper Row Button 2		LFO2 Dest			
+Map	Upper Row Button 3		Osc1 Phase Mode			
+Map	Upper Row Button 4		Osc2 Phase Mode			
+Map	Upper Row Button 5		Ring Mod			
+Map	Upper Row Button 6		Noise On/Off			
+Map	Upper Row Button 7		Osc2 On/Off			
+
+
+Scope	Propellerheads	Malstrom Graintable Synthesizer
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Upper Row Button 8		Select Previous Patch
+Map	Lower Row Button 8		Select Next Patch
+
+Map	Bottom Row Encoder 1		Filter A Freq
+Map	Bottom Row Encoder 2		Filter A Resonance
+Map	Bottom Row Encoder 3		Filter B Freq
+Map	Bottom Row Encoder 4		Filter B Resonance
+Map	Bottom Row Encoder 5		Filter Env Amount
+Map	Bottom Row Encoder 6		Shaper Amount
+Map	Bottom Row Encoder 7		Spread Amount
+Map	Bottom Row Encoder 8		Master Level
+
+Map	Middle Row Encoder 1		Oscillator B Motion
+Map	Middle Row Encoder 2		Oscillator B Index
+Map	Middle Row Encoder 3		Oscillator B Shift
+Map	Middle Row Encoder 4		Oscillator B Attack
+Map	Middle Row Encoder 5		Oscillator B Decay
+Map	Middle Row Encoder 6		Oscillator B Sustain
+Map	Middle Row Encoder 7		Oscillator B Release
+Map	Middle Row Encoder 8		Oscillator B Gain
+
+Map	Top Row Encoder 1		Oscillator A Motion
+Map	Top Row Encoder 2		Oscillator A Index
+Map	Top Row Encoder 3		Oscillator A Shift
+Map	Top Row Encoder 4		Oscillator A Attack
+Map	Top Row Encoder 5		Oscillator A Decay
+Map	Top Row Encoder 6		Oscillator A Sustain
+Map	Top Row Encoder 7		Oscillator A Release
+Map	Top Row Encoder 8		Oscillator A Gain
+
+Map	Push Encoder 1:1		Filter A Mode
+Map	Push Encoder 1:2		Filter B Mode
+Map	Push Encoder 1:3		Shaper Mode
+Map	Push Encoder 1:4		Filter Env Attack
+Map	Push Encoder 1:5		Filter Env Decay
+Map	Push Encoder 1:6		Filter Env Sustain
+Map	Push Encoder 1:7		Filter Env Release
+Map	Push Encoder 1:8		Velocity To Filter Env
+
+Map	Push Encoder 1:1 Click		Filter A Env
+Map	Push Encoder 1:2 Click		Filter A Kbd Track
+Map	Push Encoder 1:3 Click		Filter B Env
+Map	Push Encoder 1:4 Click		Filter B Kbd Track
+Map	Push Encoder 1:5 Click		Filter Env Invert
+
+Map	Push Encoder 2:1		Modulator A Curve
+Map	Push Encoder 2:2		Modulator A Rate
+Map	Push Encoder 2:3		Modulator A To Pitch
+Map	Push Encoder 2:4		Modulator A To Index
+Map	Push Encoder 2:5		Modulator A To Shift
+Map	Push Encoder 2:6		Modulator A Target
+Map	Push Encoder 2:7		0		Single Dot/Off
+Map	Push Encoder 2:8		0		Single Dot/Off
+
+Map	Push Encoder 2:1 Click		Modulator A One Shot
+Map	Push Encoder 2:2 Click		Modulator A Sync
+
+Map	Push Encoder 3:1		Modulator B Curve
+Map	Push Encoder 3:2		Modulator B Rate
+Map	Push Encoder 3:3		Modulator B To Motion
+Map	Push Encoder 3:4		Modulator B To Level
+Map	Push Encoder 3:5		Modulator B To Filter
+Map	Push Encoder 3:6		Modulator B To Modulator A
+Map	Push Encoder 3:7		Modulator B Target
+Map	Push Encoder 3:8		0		Single Dot/Off
+
+Map	Push Encoder 3:1 Click		Modulator B One Shot
+Map	Push Encoder 3:2 Click		Modulator B Sync
+
+Map	Push Encoder 4:1		Oscillator A Octave
+Map	Push Encoder 4:2		Oscillator A Semi
+Map	Push Encoder 4:3		Oscillator A Cent
+Map	Push Encoder 4:4		Velocity To Level A
+Map	Push Encoder 4:5		Oscillator B Octave
+Map	Push Encoder 4:6		Oscillator B Semi
+Map	Push Encoder 4:7		Oscillator B Cent
+Map	Push Encoder 4:8		Velocity To Level B
+
+Map	Upper Row Button 1		Oscillator A On/Off
+Map	Lower Row Button 1		Oscillator B On/Off
+Map	Upper Row Button 2		Route Oscillator A To Shaper
+Map	Lower Row Button 2		Route Oscillator B To Filter B
+Map	Upper Row Button 3		Route Oscillator A To Filter B
+Map	Lower Row Button 3		Route Filter B To Shaper
+Map	Upper Row Button 4		Shaper On/Off
+Map	Upper Row Button 5		Filter A On/Off
+Map	Lower Row Button 4		Filter B On/Off
+Map	Upper Row Button 6		Modulator A On/Off
+Map	Lower Row Button 6		Modulator B On/Off
+
+
+Scope	Propellerheads	NN19 Digital Sampler
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Upper Row Button 8		Select Previous Patch
+Map	Lower Row Button 8		Select Next Patch
+
+Map	Bottom Row Encoder 1		Filter Freq
+Map	Bottom Row Encoder 2		Filter Res
+Map	Bottom Row Encoder 3		Filter Env Amount
+Map	Bottom Row Encoder 4		Filter Env Attack
+Map	Bottom Row Encoder 5		Filter Env Decay
+Map	Bottom Row Encoder 6		Filter Env Sustain
+Map	Bottom Row Encoder 7		Filter Env Release
+Map	Bottom Row Encoder 8		Master Level
+
+Map	Middle Row Encoder 1		Osc Octave
+Map	Middle Row Encoder 2		Sample Start
+Map	Middle Row Encoder 3		Osc Env Amount
+Map	Middle Row Encoder 4		Amp Env Attack
+Map	Middle Row Encoder 5		Amp Env Decay
+Map	Middle Row Encoder 6		Amp Env Sustain
+Map	Middle Row Encoder 7		Amp Env Release
+Map	Middle Row Encoder 8		Portamento
+
+Map	Top Row Encoder 1		LFO Rate
+Map	Top Row Encoder 2		LFO Amount
+Map	Top Row Encoder 3		LFO Wave
+Map	Top Row Encoder 4		LFO Dest
+
+Map	Lower Row Button 1		Filter On/Off
+Map	Lower Row Button 2		Filter Mode
+Map	Lower Row Button 3		Filter Env Invert
+Map	Lower Row Button 4		LFO Sync Enable
+Map	Lower Row Button 5		Osc Kbd Track
+Map	Lower Row Button 6		Key Mode
+
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+
+Scope	Propellerheads	NN-XT Advanced Sampler
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Upper Row Button 8		Select Previous Patch
+Map	Lower Row Button 8		Select Next Patch
+
+Map	Bottom Row Encoder 1		Filter Freq
+Map	Bottom Row Encoder 2		Filter Res
+Map	Bottom Row Encoder 3		Amp Env Attack
+Map	Bottom Row Encoder 4		Amp Env Decay
+Map	Bottom Row Encoder 5		Amp Env Release
+Map	Bottom Row Encoder 6		Mod Env Decay
+Map	Bottom Row Encoder 7		External Controller
+Map	Bottom Row Encoder 8		Master Volume
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	Dr.REX Loop Player
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Upper Row Button 8		Select Previous Loop
+Map	Lower Row Button 8		Select Next Loop
+
+Map	Bottom Row Encoder 1		Filter Freq
+Map	Bottom Row Encoder 2		Filter Res
+Map	Bottom Row Encoder 3		Filter Env Amount
+Map	Bottom Row Encoder 4		Filter Env Attack
+Map	Bottom Row Encoder 5		Filter Env Decay
+Map	Bottom Row Encoder 6		Filter Env Sustain
+Map	Bottom Row Encoder 7		Filter Env Release
+Map	Bottom Row Encoder 8		Master Level
+
+Map	Middle Row Encoder 1		Osc Octave
+Map	Middle Row Encoder 2		Transpose
+Map	Middle Row Encoder 3		Osc Env Amount
+Map	Middle Row Encoder 4		Amp Env Attack
+Map	Middle Row Encoder 5		Amp Env Decay
+Map	Middle Row Encoder 6		Amp Env Sustain
+Map	Middle Row Encoder 7		Amp Env Release
+Map	Middle Row Encoder 8		Amp Vel Amount
+
+Map	Top Row Encoder 1		LFO1 Rate
+Map	Top Row Encoder 2		LFO1 Amount
+Map	Top Row Encoder 3		LFO1 Wave
+Map	Top Row Encoder 4		LFO1 Dest
+
+Map	Lower Row Button 1		Filter On/Off
+Map	Lower Row Button 2		Filter Mode
+Map	Lower Row Button 3		LFO Sync Enable
+
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+
+Scope	Propellerheads	Redrum Drum Computer
+Define Group	Drums	Drum1-7	Drum8-10
+Define Group	Keyboard Shortcut Variations	Play Mode	Pattern Select Mode
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Upper Row Button 8		Select Previous Patch
+Map	Lower Row Button 8		Select Next Patch
+
+Map	Bottom Row Encoder 8		Master Level
+Map	Foot Switch 1		Run
+
+Map	Preset Left Button		Drums=Drum1-7
+Map	Preset Right Button		Drums=Drum8-10
+
+Map	Bottom Row Encoder 1		Drum 1 Level			Drum1-7
+Map	Bottom Row Encoder 2		Drum 2 Level			Drum1-7
+Map	Bottom Row Encoder 3		Drum 3 Level			Drum1-7
+Map	Bottom Row Encoder 4		Drum 4 Level			Drum1-7
+Map	Bottom Row Encoder 5		Drum 5 Level			Drum1-7
+Map	Bottom Row Encoder 6		Drum 6 Level			Drum1-7
+Map	Bottom Row Encoder 7		Drum 7 Level			Drum1-7
+
+Map	Bottom Row Encoder 1		Drum 8 Level			Drum8-10
+Map	Bottom Row Encoder 2		Drum 9 Level			Drum8-10
+Map	Bottom Row Encoder 3		Drum 10 Level			Drum8-10
+
+Map	Middle Row Encoder 1		Drum 1 Pan			Drum1-7
+Map	Middle Row Encoder 2		Drum 2 Pan			Drum1-7
+Map	Middle Row Encoder 3		Drum 3 Pan			Drum1-7
+Map	Middle Row Encoder 4		Drum 4 Pan			Drum1-7
+Map	Middle Row Encoder 5		Drum 5 Pan			Drum1-7
+Map	Middle Row Encoder 6		Drum 6 Pan			Drum1-7
+Map	Middle Row Encoder 7		Drum 7 Pan			Drum1-7
+
+Map	Middle Row Encoder 1		Drum 8 Pan			Drum8-10
+Map	Middle Row Encoder 2		Drum 9 Pan			Drum8-10
+Map	Middle Row Encoder 3		Drum 10 Pan			Drum8-10
+
+Map	Top Row Encoder 1		Drum 1 Pitch			Drum1-7
+Map	Top Row Encoder 2		Drum 2 Pitch			Drum1-7
+Map	Top Row Encoder 3		Drum 3 Pitch			Drum1-7
+Map	Top Row Encoder 4		Drum 4 Pitch			Drum1-7
+Map	Top Row Encoder 5		Drum 5 Pitch			Drum1-7
+Map	Top Row Encoder 6		Drum 6 Pitch			Drum1-7
+Map	Top Row Encoder 7		Drum 7 Pitch			Drum1-7
+
+Map	Top Row Encoder 1		Drum 8 Pitch			Drum8-10
+Map	Top Row Encoder 2		Drum 9 Pitch			Drum8-10
+Map	Top Row Encoder 3		Drum 10 Pitch			Drum8-10
+
+Map	Top Row Encoder 4		0			Drum8-10
+Map	Top Row Encoder 5		0			Drum8-10
+Map	Top Row Encoder 6		0			Drum8-10
+Map	Top Row Encoder 7		0			Drum8-10
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 4		0			Drum8-10
+Map	Bottom Row Encoder 5		0			Drum8-10
+Map	Bottom Row Encoder 6		0			Drum8-10
+Map	Bottom Row Encoder 7		0			Drum8-10
+
+Map	Middle Row Encoder 4		0			Drum8-10
+Map	Middle Row Encoder 5		0			Drum8-10
+Map	Middle Row Encoder 6		0			Drum8-10
+Map	Middle Row Encoder 7		0			Drum8-10
+Map	Middle Row Encoder 8		0
+
+
+Map	Push Encoder 1:1		Drum 1 Length			Drum1-7
+Map	Push Encoder 1:2		Drum 2 Length			Drum1-7
+Map	Push Encoder 1:3		Drum 3 Length			Drum1-7
+Map	Push Encoder 1:4		Drum 4 Length			Drum1-7
+Map	Push Encoder 1:5		Drum 5 Length			Drum1-7
+Map	Push Encoder 1:6		Drum 6 Length			Drum1-7
+Map	Push Encoder 1:7		Drum 7 Length			Drum1-7
+
+Map	Push Encoder 1:1		Drum 8 Length			Drum8-10
+Map	Push Encoder 1:2		Drum 9 Length			Drum8-10
+Map	Push Encoder 1:3		Drum 10 Length			Drum8-10
+
+Map	Push Encoder 1:1 Click		Drum 1 Decay/Gate Mode			Drum1-7
+Map	Push Encoder 1:2 Click		Drum 2 Decay/Gate Mode			Drum1-7
+Map	Push Encoder 1:3 Click		Drum 3 Decay/Gate Mode			Drum1-7
+Map	Push Encoder 1:4 Click		Drum 4 Decay/Gate Mode			Drum1-7
+Map	Push Encoder 1:5 Click		Drum 5 Decay/Gate Mode			Drum1-7
+Map	Push Encoder 1:6 Click		Drum 6 Decay/Gate Mode			Drum1-7
+Map	Push Encoder 1:7 Click		Drum 7 Decay/Gate Mode			Drum1-7
+
+Map	Push Encoder 1:1 Click		Drum 8 Decay/Gate Mode			Drum8-10
+Map	Push Encoder 1:2 Click		Drum 9 Decay/Gate Mode			Drum8-10
+Map	Push Encoder 1:3 Click		Drum 10 Decay/Gate Mode			Drum8-10
+
+Map	Upper Row Button 1		Channel 1 Play			Drum1-7	Play Mode
+Map	Upper Row Button 2		Channel 2 Play			Drum1-7	Play Mode
+Map	Upper Row Button 3		Channel 3 Play			Drum1-7	Play Mode
+Map	Upper Row Button 4		Channel 4 Play			Drum1-7	Play Mode
+Map	Upper Row Button 5		Channel 5 Play			Drum1-7	Play Mode
+Map	Upper Row Button 6		Channel 6 Play			Drum1-7	Play Mode
+Map	Upper Row Button 7		Channel 7 Play			Drum1-7	Play Mode
+
+Map	Upper Row Button 1		Channel 8 Play			Drum8-10	Play Mode
+Map	Upper Row Button 2		Channel 9 Play			Drum8-10	Play Mode
+Map	Upper Row Button 3		Channel 10 Play			Drum8-10	Play Mode
+
+Map	Lower Row Button 1		Drum 1 Mute			Drum1-7	Play Mode
+Map	Lower Row Button 2		Drum 2 Mute			Drum1-7	Play Mode
+Map	Lower Row Button 3		Drum 3 Mute			Drum1-7	Play Mode
+Map	Lower Row Button 4		Drum 4 Mute			Drum1-7	Play Mode
+Map	Lower Row Button 5		Drum 5 Mute			Drum1-7	Play Mode
+Map	Lower Row Button 6		Drum 6 Mute			Drum1-7	Play Mode
+Map	Lower Row Button 7		Drum 7 Mute			Drum1-7	Play Mode
+
+Map	Lower Row Button 1		Drum 8 Mute			Drum8-10	Play Mode
+Map	Lower Row Button 2		Drum 9 Mute			Drum8-10	Play Mode
+Map	Lower Row Button 3		Drum 10 Mute			Drum8-10	Play Mode
+
+Map	Upper Row Button 1		Pattern 1			Pattern Select Mode
+Map	Upper Row Button 2		Pattern 2			Pattern Select Mode
+Map	Upper Row Button 3		Pattern 3			Pattern Select Mode
+Map	Upper Row Button 4		Pattern 4			Pattern Select Mode
+Map	Upper Row Button 5		Bank A			Pattern Select Mode
+Map	Upper Row Button 6		Bank B			Pattern Select Mode
+
+Map	Lower Row Button 1		Pattern 5			Pattern Select Mode
+Map	Lower Row Button 2		Pattern 6			Pattern Select Mode
+Map	Lower Row Button 3		Pattern 7			Pattern Select Mode
+Map	Lower Row Button 4		Pattern 8			Pattern Select Mode
+Map	Lower Row Button 5		Bank C			Pattern Select Mode
+Map	Lower Row Button 6		Bank D			Pattern Select Mode
+
+
+Scope	Propellerheads	MClass Equalizer
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Upper Row Button 7		Enabled
+
+Map	Top Row Encoder 1		Low Shelf Frequency
+Map	Middle Row Encoder 1		Low Shelf Gain
+Map	Bottom Row Encoder 1		Low Shelf Q		
+
+Map	Top Row Encoder 2		Parametric 1 Frequency
+Map	Middle Row Encoder 2		Parametric 1 Gain
+Map	Bottom Row Encoder 2		Parametric 1 Q		
+
+Map	Top Row Encoder 3		Parametric 2 Frequency
+Map	Middle Row Encoder 3		Parametric 2 Gain
+Map	Bottom Row Encoder 3		Parametric 2 Q		
+
+Map	Top Row Encoder 4		Hi Shelf Frequency
+Map	Middle Row Encoder 4		Hi Shelf Gain
+Map	Bottom Row Encoder 4		Hi Shelf Q		
+
+Map	Upper Row Button 1		Low Cut Enable
+Map	Lower Row Button 1		Low Shelf Enable
+Map	Lower Row Button 2		Parametric 1 Enable
+Map	Lower Row Button 3		Parametric 2 Enable
+Map	Lower Row Button 4		Hi Shelf Enable
+
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 5		0
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	MClass Stereo Imager
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Low Width
+Map	Bottom Row Encoder 2		X-Over Frequency
+Map	Bottom Row Encoder 3		High Width
+Map	Lower Row Button 1		Solo Mode
+Map	Upper Row Button 7		Enabled
+Map	Push Encoder 1:1		Low Width Meter		Spread
+Map	Push Encoder 1:3		High Width Meter		Spread
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 4		0
+Map	Bottom Row Encoder 5		0
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	MClass Compressor
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Input Gain
+Map	Bottom Row Encoder 2		Threshold
+Map	Bottom Row Encoder 3		Ratio
+Map	Bottom Row Encoder 4		Attack
+Map	Bottom Row Encoder 5		Release
+Map	Bottom Row Encoder 8		Output Gain
+
+Map	Push Encoder 1:1		Gain Meter		Bar
+
+Map	Lower Row Button 1		Soft Knee
+Map	Lower Row Button 2		Sidechain Solo
+Map	Lower Row Button 3		Adapt
+Map	Upper Row Button 7		Enabled
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	MClass Maximizer
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Input Gain
+Map	Bottom Row Encoder 2		Attack Speed
+Map	Bottom Row Encoder 3		Release Speed
+Map	Bottom Row Encoder 4		Output Gain
+Map	Bottom Row Encoder 5		Soft Clip Amount
+
+Map	Push Encoder 1:1		Gain Meter		Bar
+Map	Push Encoder 1:8		Peak Meter		Bar
+
+Map	Lower Row Button 1		Limiter Enable
+Map	Lower Row Button 2		Look Ahead Enable
+Map	Lower Row Button 3		Soft Clip Enable
+Map	Lower Row Button 4		Output Level Meter Mode
+Map	Upper Row Button 7		Enabled
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	RV7000 Advanced Reverb
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Upper Row Button 8		Select Previous Patch
+Map	Lower Row Button 8		Select Next Patch
+
+Map	Upper Row Button 7		Enabled
+
+Map	Bottom Row Encoder 1		Decay
+Map	Bottom Row Encoder 2		HF Damp
+Map	Bottom Row Encoder 3		Hi EQ
+Map	Bottom Row Encoder 4		Dry/Wet
+
+Map	Upper Row Button 1		EQ On/Off
+Map	Lower Row Button 1		Gate On/Off
+Map	Upper Row Button 2		Edit Mode
+
+Map	Push Encoder 1:1		Soft Knob 1
+Map	Push Encoder 1:2		Soft Knob 2
+Map	Push Encoder 1:3		Soft Knob 3
+Map	Push Encoder 1:4		Soft Knob 4
+Map	Push Encoder 1:5		Soft Knob 5
+Map	Push Encoder 1:6		Soft Knob 6
+Map	Push Encoder 1:7		Soft Knob 7
+Map	Push Encoder 1:8		Soft Knob 8
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 5		0
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	Scream 4 Distortion
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Upper Row Button 8		Select Previous Patch
+Map	Lower Row Button 8		Select Next Patch
+
+Map	Upper Row Button 7		Enabled
+
+Map	Bottom Row Encoder 1		Damage Control
+Map	Bottom Row Encoder 2		Damage Type
+Map	Bottom Row Encoder 3		Parameter 1
+Map	Bottom Row Encoder 4		Parameter 2
+Map	Bottom Row Encoder 5		Cut Lo
+Map	Bottom Row Encoder 6		Cut Mid
+Map	Bottom Row Encoder 7		Cut Hi
+Map	Bottom Row Encoder 8		Master Level
+
+Map	Middle Row Encoder 1		Body Resonance
+Map	Middle Row Encoder 2		Body Scale
+Map	Middle Row Encoder 3		Body Auto
+Map	Middle Row Encoder 4		Body Type
+
+Map	Lower Row Button 1		Damage On/Off
+Map	Lower Row Button 2		Cut On/Off
+Map	Lower Row Button 3		Body On/Off
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	BV512 Digital Vocoder
+Define Group	Bands	Band1-8	Band9-16	Band17-24	Band25-32
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Preset Left Button		Bands=Band1-8			Band9-16
+Map	Preset Left Button		Bands=Band9-16			Band17-24
+Map	Preset Left Button		Bands=Band17-24			Band25-32
+Map	Preset Right Button		Bands=Band9-16			Band1-8
+Map	Preset Right Button		Bands=Band17-24			Band9-16
+Map	Preset Right Button		Bands=Band25-32			Band17-24
+
+Map	Bottom Row Encoder 1		Band Count
+Map	Bottom Row Encoder 2		Shift
+Map	Bottom Row Encoder 3		Attack
+Map	Bottom Row Encoder 4		Decay
+Map	Bottom Row Encoder 5		HF Emphasis
+Map	Bottom Row Encoder 6		Dry/Wet
+
+Map	Upper Row Button 7		Enabled
+Map	Lower Row Button 1		Vocoder/Equalizer
+Map	Lower Row Button 2		Hold
+
+Map	Middle Row Encoder 1		Band Level 1			Band1-8
+Map	Middle Row Encoder 2		Band Level 2			Band1-8
+Map	Middle Row Encoder 3		Band Level 3			Band1-8
+Map	Middle Row Encoder 4		Band Level 4			Band1-8
+Map	Middle Row Encoder 5		Band Level 5			Band1-8
+Map	Middle Row Encoder 6		Band Level 6			Band1-8
+Map	Middle Row Encoder 7		Band Level 7			Band1-8
+Map	Middle Row Encoder 8		Band Level 8			Band1-8
+
+Map	Middle Row Encoder 1		Band Level 9			Band9-16
+Map	Middle Row Encoder 2		Band Level 10			Band9-16
+Map	Middle Row Encoder 3		Band Level 11			Band9-16
+Map	Middle Row Encoder 4		Band Level 12			Band9-16
+Map	Middle Row Encoder 5		Band Level 13			Band9-16
+Map	Middle Row Encoder 6		Band Level 14			Band9-16
+Map	Middle Row Encoder 7		Band Level 15			Band9-16
+Map	Middle Row Encoder 8		Band Level 16			Band9-16
+
+Map	Middle Row Encoder 1		Band Level 17			Band17-24
+Map	Middle Row Encoder 2		Band Level 18			Band17-24
+Map	Middle Row Encoder 3		Band Level 19			Band17-24
+Map	Middle Row Encoder 4		Band Level 20			Band17-24
+Map	Middle Row Encoder 5		Band Level 21			Band17-24
+Map	Middle Row Encoder 6		Band Level 22			Band17-24
+Map	Middle Row Encoder 7		Band Level 23			Band17-24
+Map	Middle Row Encoder 8		Band Level 24			Band17-24
+
+Map	Middle Row Encoder 1		Band Level 25			Band25-32
+Map	Middle Row Encoder 2		Band Level 26			Band25-32
+Map	Middle Row Encoder 3		Band Level 27			Band25-32
+Map	Middle Row Encoder 4		Band Level 28			Band25-32
+Map	Middle Row Encoder 5		Band Level 29			Band25-32
+Map	Middle Row Encoder 6		Band Level 30			Band25-32
+Map	Middle Row Encoder 7		Band Level 31			Band25-32
+Map	Middle Row Encoder 8		Band Level 32			Band25-32
+
+Map	Push Encoder 1:1		Mod Level 1		Bar	Band1-8
+Map	Push Encoder 1:2		Mod Level 2		Bar	Band1-8
+Map	Push Encoder 1:3		Mod Level 3		Bar	Band1-8
+Map	Push Encoder 1:4		Mod Level 4		Bar	Band1-8
+Map	Push Encoder 1:5		Mod Level 5		Bar	Band1-8
+Map	Push Encoder 1:6		Mod Level 6		Bar	Band1-8
+Map	Push Encoder 1:7		Mod Level 7		Bar	Band1-8
+Map	Push Encoder 1:8		Mod Level 8		Bar	Band1-8
+
+Map	Push Encoder 1:1		Mod Level 9		Bar	Band9-16
+Map	Push Encoder 1:2		Mod Level 10		Bar	Band9-16
+Map	Push Encoder 1:3		Mod Level 11		Bar	Band9-16
+Map	Push Encoder 1:4		Mod Level 12		Bar	Band9-16
+Map	Push Encoder 1:5		Mod Level 13		Bar	Band9-16
+Map	Push Encoder 1:6		Mod Level 14		Bar	Band9-16
+Map	Push Encoder 1:7		Mod Level 15		Bar	Band9-16
+Map	Push Encoder 1:8		Mod Level 16		Bar	Band9-16
+
+Map	Push Encoder 1:1		Mod Level 17		Bar	Band17-24
+Map	Push Encoder 1:2		Mod Level 18		Bar	Band17-24
+Map	Push Encoder 1:3		Mod Level 19		Bar	Band17-24
+Map	Push Encoder 1:4		Mod Level 20		Bar	Band17-24
+Map	Push Encoder 1:5		Mod Level 21		Bar	Band17-24
+Map	Push Encoder 1:6		Mod Level 22		Bar	Band17-24
+Map	Push Encoder 1:7		Mod Level 23		Bar	Band17-24
+Map	Push Encoder 1:8		Mod Level 24		Bar	Band17-24
+
+Map	Push Encoder 1:1		Mod Level 25		Bar	Band25-32
+Map	Push Encoder 1:2		Mod Level 26		Bar	Band25-32
+Map	Push Encoder 1:3		Mod Level 27		Bar	Band25-32
+Map	Push Encoder 1:4		Mod Level 28		Bar	Band25-32
+Map	Push Encoder 1:5		Mod Level 29		Bar	Band25-32
+Map	Push Encoder 1:6		Mod Level 30		Bar	Band25-32
+Map	Push Encoder 1:7		Mod Level 31		Bar	Band25-32
+Map	Push Encoder 1:8		Mod Level 32		Bar	Band25-32
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+
+
+Scope	Propellerheads	RV-7 Digital Reverb
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Algorithm
+Map	Bottom Row Encoder 2		Size
+Map	Bottom Row Encoder 3		Decay
+Map	Bottom Row Encoder 4		Damping
+Map	Bottom Row Encoder 5		Dry/Wet
+
+Map	Upper Row Button 7		Enabled
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	DDL-1 Digital Delay Line
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		DelayTime (steps)
+Map	Bottom Row Encoder 2		DelayTime (ms)
+Map	Bottom Row Encoder 3		Feedback
+Map	Bottom Row Encoder 4		Pan
+Map	Bottom Row Encoder 5		Dry/Wet Balance
+
+Map	Lower Row Button 1		Unit
+Map	Lower Row Button 2		Step Length
+Map	Upper Row Button 7		Enabled
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	D-11 Foldback Distortion
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Amount
+Map	Bottom Row Encoder 2		Foldback
+
+Map	Upper Row Button 7		Enabled
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 3		0
+Map	Bottom Row Encoder 4		0
+Map	Bottom Row Encoder 5		0
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	ECF-42 Envelope Controlled Filter
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Frequency
+Map	Bottom Row Encoder 2		Resonance
+Map	Bottom Row Encoder 3		Env Amount
+Map	Bottom Row Encoder 4		Velocity
+Map	Bottom Row Encoder 5		Attack
+Map	Bottom Row Encoder 6		Decay
+Map	Bottom Row Encoder 7		Sustain
+Map	Bottom Row Encoder 8		Release
+
+Map	Upper Row Button 7		Enabled
+Map	Lower Row Button 1		Mode
+Map	Upper Row Button 1		Trigger
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	CF-101 Chorus/Flanger
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Delay
+Map	Bottom Row Encoder 2		Feedback
+Map	Bottom Row Encoder 3		Rate
+Map	Bottom Row Encoder 4		Modulation Amount
+
+Map	Lower Row Button 1		LFO Sync Enable
+Map	Lower Row Button 2		Send/Insert Mode
+Map	Upper Row Button 7		Enabled
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 5		0
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	PH-90 Phaser
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Frequency
+Map	Bottom Row Encoder 2		Split
+Map	Bottom Row Encoder 3		Width
+Map	Bottom Row Encoder 4		Rate
+Map	Bottom Row Encoder 5		Frequency Modulation
+Map	Bottom Row Encoder 6		Feedback
+
+Map	Upper Row Button 7		Enabled
+Map	Lower Row Button 1		LFO Sync Enable
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	UN-16 Unison
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Voice Count
+Map	Bottom Row Encoder 2		Detune
+Map	Bottom Row Encoder 3		Dry/Wet
+
+Map	Upper Row Button 7		Enabled
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 4		0
+Map	Bottom Row Encoder 5		0
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	COMP-01 Compressor/Limiter
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Ratio
+Map	Bottom Row Encoder 2		Threshold
+Map	Bottom Row Encoder 3		Attack
+Map	Bottom Row Encoder 4		Release
+
+Map	Upper Row Button 7		Enabled
+Map	Push Encoder 1:1		Gain		Bar
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 5		0
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	PEQ-2 Two Band Parametric EQ
+//	Control Surface Item	Key	Remotable Item	Scale	Mode	
+
+Map	Bottom Row Encoder 1		Filter A Freq
+Map	Bottom Row Encoder 2		Filter A Q
+Map	Bottom Row Encoder 3		Filter A Gain
+Map	Bottom Row Encoder 4		Filter B Freq
+Map	Bottom Row Encoder 5		Filter B Q
+Map	Bottom Row Encoder 6		Filter B Gain
+
+Map	Upper Row Button 7		Enabled
+Map	Lower Row Button 1		Filter B On/Off
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	RPG-8 Monophonic Arpeggiator
+
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+                                          
+Map	Upper Row Button 1		Arpeggiator Enable		
+Map	Upper Row Button 2		Hold 		
+Map	Upper Row Button 3		Single Note Repeat		
+Map	Upper Row Button 4		Shuffle		
+Map	Upper Row Button 5		Sync		
+Map	Upper Row Button 6		Pattern Enable
+Map	Upper Row Button 7		Pattern Length Down
+Map	Upper Row Button 8		Pattern Length Up
+              				               
+
+Map	Top Row Encoder 1		Rate
+Map	Top Row Encoder 2		Gate Length
+Map	Top Row Encoder 3		Mode
+Map	Top Row Encoder 4		Velocity/Manual
+Map	Top Row Encoder 5		Octave Shift
+Map	Top Row Encoder 6		Octave
+Map	Top Row Encoder 7		Insert
+
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 1		0
+Map	Bottom Row Encoder 2		0
+Map	Bottom Row Encoder 3		0
+Map	Bottom Row Encoder 4		0
+Map	Bottom Row Encoder 5		0
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	Matrix Pattern Sequencer
+
+Map	Upper Row Button 1		Pattern 1			
+Map	Upper Row Button 2		Pattern 2			
+Map	Upper Row Button 3		Pattern 3			
+Map	Upper Row Button 4		Pattern 4			
+Map	Upper Row Button 5		Bank A			
+Map	Upper Row Button 6		Bank B			
+
+Map	Lower Row Button 1		Pattern 5			
+Map	Lower Row Button 2		Pattern 6			
+Map	Lower Row Button 3		Pattern 7			
+Map	Lower Row Button 4		Pattern 8			
+Map	Lower Row Button 5		Bank C			
+Map	Lower Row Button 6		Bank D			
+
+Map	Upper Row Button 7		Pattern Enable
+
+Map	Foot Switch 1		Run
+
+Map	Top Row Encoder 1		0
+Map	Top Row Encoder 2		0
+Map	Top Row Encoder 3		0
+Map	Top Row Encoder 4		0
+Map	Top Row Encoder 5		0
+Map	Top Row Encoder 6		0
+Map	Top Row Encoder 7		0
+Map	Top Row Encoder 8		0
+
+Map	Bottom Row Encoder 1		0
+Map	Bottom Row Encoder 2		0
+Map	Bottom Row Encoder 3		0
+Map	Bottom Row Encoder 4		0
+Map	Bottom Row Encoder 5		0
+Map	Bottom Row Encoder 6		0
+Map	Bottom Row Encoder 7		0
+Map	Bottom Row Encoder 8		0
+
+Map	Middle Row Encoder 1		0
+Map	Middle Row Encoder 2		0
+Map	Middle Row Encoder 3		0
+Map	Middle Row Encoder 4		0
+Map	Middle Row Encoder 5		0
+Map	Middle Row Encoder 6		0
+Map	Middle Row Encoder 7		0
+Map	Middle Row Encoder 8		0
+
+
+Scope	Propellerheads	Reason Document			
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+//Map	Edit Button		Loop On/Off
+//Map	Store Button		Record
+Map	Learn Button		Target Previous Track
+Map	Exit Button		Target Next Track
+
+Map	Top Left User Button		Rewind
+Map	Top Right User Button		Fast Forward
+Map	Bottom Left User Button		Stop
+Map	Bottom Right User Button		Play
+
+Map	Upper Row Button 8		Select Prev Patch for Target Device
+Map	Lower Row Button 8		Select Next Patch for Target Device
+
+Map	Top Row Encoder 1		A1 Groove Amount
+Map	Top Row Encoder 2		A2 Groove Amount
+Map	Top Row Encoder 3		A3 Groove Amount
+Map	Top Row Encoder 4		A4 Groove Amount
+Map	Top Row Encoder 5		A5 Groove Amount
+Map	Top Row Encoder 6		A6 Groove Amount
+Map	Top Row Encoder 7		A7 Groove Amount
+Map	Top Row Encoder 8		A8 Groove Amount
+
+Map	Bottom Row Encoder 1		A1 Shuffle
+Map	Bottom Row Encoder 2		A2 Shuffle
+Map	Bottom Row Encoder 3		A3 Shuffle
+Map	Bottom Row Encoder 4		A4 Shuffle
+Map	Bottom Row Encoder 5		A5 Shuffle
+Map	Bottom Row Encoder 6		A6 Shuffle
+Map	Bottom Row Encoder 7		A7 Shuffle
+Map	Bottom Row Encoder 8		A8 Shuffle
+
+Map	Middle Row Encoder 1		A1 Slide
+Map	Middle Row Encoder 2		A2 Slide
+Map	Middle Row Encoder 3		A3 Slide
+Map	Middle Row Encoder 4		A4 Slide
+Map	Middle Row Encoder 5		A5 Slide
+Map	Middle Row Encoder 6		A6 Slide
+Map	Middle Row Encoder 7		A7 Slide
+Map	Middle Row Encoder 8		A8 Slide
+
+
+Scope	Propellerheads	Record Document			
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	Edit Button		Loop On/Off
+Map	Store Button		Record
+Map	Learn Button		Target Previous Track
+Map	Exit Button		Target Next Track
+
+Map	Top Left User Button		Rewind
+Map	Top Right User Button		Fast Forward
+Map	Bottom Left User Button		Stop
+Map	Bottom Right User Button		Play
+
+Map	Upper Row Button 8		Select Prev Patch for Target Device
+Map	Lower Row Button 8		Select Next Patch for Target Device
+
+
+
+Scope	Propellerheads	ReGroove Mixer
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	Top Row Encoder 1		A1 Groove Amount
+Map	Top Row Encoder 2		A2 Groove Amount
+Map	Top Row Encoder 3		A3 Groove Amount
+Map	Top Row Encoder 4		A4 Groove Amount
+Map	Top Row Encoder 5		A5 Groove Amount
+Map	Top Row Encoder 6		A6 Groove Amount
+Map	Top Row Encoder 7		A7 Groove Amount
+Map	Top Row Encoder 8		A8 Groove Amount
+
+Map	Bottom Row Encoder 1		A1 Shuffle
+Map	Bottom Row Encoder 2		A2 Shuffle
+Map	Bottom Row Encoder 3		A3 Shuffle
+Map	Bottom Row Encoder 4		A4 Shuffle
+Map	Bottom Row Encoder 5		A5 Shuffle
+Map	Bottom Row Encoder 6		A6 Shuffle
+Map	Bottom Row Encoder 7		A7 Shuffle
+Map	Bottom Row Encoder 8		A8 Shuffle
+
+Map	Middle Row Encoder 1		A1 Slide
+Map	Middle Row Encoder 2		A2 Slide
+Map	Middle Row Encoder 3		A3 Slide
+Map	Middle Row Encoder 4		A4 Slide
+Map	Middle Row Encoder 5		A5 Slide
+Map	Middle Row Encoder 6		A6 Slide
+Map	Middle Row Encoder 7		A7 Slide
+Map	Middle Row Encoder 8		A8 Slide
+
+Map	Lower Row Button 1		A1 Pre-Align			
+Map	Lower Row Button 2		A2 Pre-Align			
+Map	Lower Row Button 3		A3 Pre-Align			
+Map	Lower Row Button 4		A4 Pre-Align			
+Map	Lower Row Button 5		A5 Pre-Align			
+Map	Lower Row Button 6		A6 Pre-Align			
+Map	Lower Row Button 7		A7 Pre-Align			
+Map	Lower Row Button 8		A8 Pre-Align			
+
+Map	Upper Row Button 1		A1 Use Global Shuffle			
+Map	Upper Row Button 2		A2 Use Global Shuffle			
+Map	Upper Row Button 3		A3 Use Global Shuffle			
+Map	Upper Row Button 4		A4 Use Global Shuffle			
+Map	Upper Row Button 5		A5 Use Global Shuffle			
+Map	Upper Row Button 6		A6 Use Global Shuffle			
+Map	Upper Row Button 7		A7 Use Global Shuffle			
+Map	Upper Row Button 8		A8 Use Global Shuffle			
+
+Map	Push Encoder 1:8		Pattern Shuffle
+
+
+
+Scope	Propellerheads	ID8 Instrument Device
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	Upper Row Button 8		Select Previous Preset		
+Map	Lower Row Button 8		Select Next Preset		
+
+Map	Bottom Row Encoder 1		Parameter 1
+Map	Bottom Row Encoder 2		Parameter 2
+Map	Bottom Row Encoder 8		Volume
+
+Map	Upper Row Button 1		Select Previous Category		
+Map	Lower Row Button 1		Select Next Category
+
+Map	Upper Row Button 2		Sound A
+Map	Upper Row Button 3		Sound B
+Map	Upper Row Button 4		Sound C
+Map	Upper Row Button 5		Sound D
+
+
+
+Scope	Propellerheads	Line 6 Guitar Amp
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	Upper Row Button 8		Select Previous Patch		
+Map	Lower Row Button 8		Select Next Patch		
+
+Map	Bottom Row Encoder 1		Drive			
+Map	Bottom Row Encoder 2		Bass			
+Map	Bottom Row Encoder 3		Middle			
+Map	Bottom Row Encoder 4		Treble			
+Map	Bottom Row Encoder 5		Presence			
+Map	Bottom Row Encoder 8		Volume			
+
+Map	Upper Row Button 7		Enabled
+
+Map	Lower Row Button 1		Wah Pedal On
+Map	Bottom Row Encoder 6		Wah Pedal
+Map	Bottom Row Encoder 7		Volume Pedal
+
+Map	Upper Row Button 3		Select Previous Amp Model
+Map	Lower Row Button 3		Select Next Amp Model
+Map	Upper Row Button 4		Select Previous Cab Model
+Map	Lower Row Button 4		Select Next Cab Model
+
+
+Scope	Propellerheads	Line 6 Bass Amp
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	Upper Row Button 8		Select Previous Patch		
+Map	Lower Row Button 8		Select Next Patch		
+
+Map	Bottom Row Encoder 1		Drive			
+Map	Bottom Row Encoder 2		Bass			
+Map	Bottom Row Encoder 3		Lo Mid			
+Map	Bottom Row Encoder 4		Hi Mid			
+Map	Bottom Row Encoder 5		Treble			
+Map	Bottom Row Encoder 8		Volume			
+
+Map	Upper Row Button 7		Enabled
+
+Map	Lower Row Button 1		Compressor On
+Map	Bottom Row Encoder 6		Comp Threshold
+
+Map	Upper Row Button 3		Select Previous Amp Model
+Map	Lower Row Button 3		Select Next Amp Model
+Map	Upper Row Button 4		Select Previous Cab Model
+Map	Lower Row Button 4		Select Next Cab Model
+
+
+
+Scope	Propellerheads	Record Main Mixer Channel
+Define Group	Keyboard Shortcut Variations	Inserts	FX Sends	Dyn
+
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+Map	Middle Row Encoder 1		Pan
+Map	Middle Row Encoder 2		Width		
+Map	Bottom Row Encoder 1		Level
+Map	Push Encoder 1:1		VU Meter		Bar/Off
+Map	Upper Row Button 1		Solo
+Map	Lower Row Button 1		Mute
+
+// insert fx
+
+Map	Push Encoder 1:5		Rotary 1
+Map	Push Encoder 1:6		Rotary 2
+Map	Push Encoder 1:7		Rotary 3
+Map	Push Encoder 1:8		Rotary 4
+
+Map	Push Encoder 1:5 Click		Button 1
+Map	Push Encoder 1:6 Click		Button 2
+Map	Push Encoder 1:7 Click		Button 3
+Map	Push Encoder 1:8 Click		Button 4
+
+Map	Upper Row Button 8		Select Prev Insert FX Patch
+Map	Lower Row Button 8		Select Next Insert FX Patch
+
+Map	Lower Row Button 7		Bypass Insert FX
+
+// compressor
+
+Map	Top Row Encoder 1		Input Gain
+Map	Top Row Encoder 2		C Ratio
+Map	Top Row Encoder 3		C Threshold
+Map	Top Row Encoder 4		C Release
+Map	Top Row Encoder 5		G Range
+Map	Top Row Encoder 6		G Threshold
+Map	Top Row Encoder 7		G Release
+Map	Top Row Encoder 8		G Hold
+
+Map	Upper Row Button 2		Comp On
+Map	Lower Row Button 2		Invert Phase
+Map	Upper Row Button 3		C Peak
+Map	Upper Row Button 4		C Fast Atk
+Map	Upper Row Button 5		Gate On
+Map	Upper Row Button 6		Expander
+Map	Upper Row Button 7		G Fast Atk
+
+Map	Push Encoder 1:2		Comp Gain Reduction		Bar/Off
+
+// eq
+
+Map	Push Encoder 1:3		LPF Frequency
+Map	Push Encoder 1:4		HPF Frequency
+Map	Push Encoder 1:3 Click		LPF On
+Map	Push Encoder 1:4 Click		HPF On
+
+Map	Middle Row Encoder 4		HF Gain		
+Map	Middle Row Encoder 5		HF Frequency
+Map	Middle Row Encoder 6		HMF Gain		
+Map	Middle Row Encoder 7		HMF Frequency
+Map	Middle Row Encoder 8		HMF Q
+
+Map	Bottom Row Encoder 4		LMF Gain
+Map	Bottom Row Encoder 5		LMF Frequency
+Map	Bottom Row Encoder 6		LMF Q
+Map	Bottom Row Encoder 7		LF Gain
+Map	Bottom Row Encoder 8		LF Frequency
+
+Map	Lower Row button 3		EQ On
+Map	Lower Row button 4		EQ E Mode
+Map	Lower Row button 5		HF Bell
+Map	Lower Row button 6		LF Bell
+
+// fx sends
+
+Map	Push Encoder 2:1		FX1 Send Level			
+Map	Push Encoder 2:2		FX2 Send Level			
+Map	Push Encoder 2:3		FX3 Send Level			 
+Map	Push Encoder 2:4		FX4 Send Level			
+Map	Push Encoder 2:5		FX5 Send Level			
+Map	Push Encoder 2:6		FX6 Send Level			
+Map	Push Encoder 2:7		FX7 Send Level			
+Map	Push Encoder 2:8		FX8 Send Level			
+
+Map	Push Encoder 2:1 Click		FX1 Send On			
+Map	Push Encoder 2:2 Click		FX2 Send On			
+Map	Push Encoder 2:3 Click		FX3 Send On			
+Map	Push Encoder 2:4 Click		FX4 Send On			
+Map	Push Encoder 2:5 Click		FX5 Send On			
+Map	Push Encoder 2:6 Click		FX6 Send On			
+Map	Push Encoder 2:7 Click		FX7 Send On			
+Map	Push Encoder 2:8 Click		FX8 Send On			
+
+
+
+
+
+Scope	Propellerheads	Record Master Section
+//	Control Surface Item	Key	Remotable Item	Scale	Mode
+
+//Map	Preset Left Button		Previous 8 Remote Base Channel
+//Map	Preset Right Button		Next 8 Remote Base Channel
+
+Map	Edit Button		Next 8 Remote Base Channel
+Map	Store Button		Previous 8 Remote Base Channel
+
+Map	Bottom Row Encoder 1		Channel 1 Level
+Map	Bottom Row Encoder 2		Channel 2 Level
+Map	Bottom Row Encoder 3		Channel 3 Level
+Map	Bottom Row Encoder 4		Channel 4 Level
+Map	Bottom Row Encoder 5		Channel 5 Level
+Map	Bottom Row Encoder 6		Channel 6 Level
+Map	Bottom Row Encoder 7		Channel 7 Level
+Map	Bottom Row Encoder 8		Channel 8 Level
+
+Map	Upper Row Button 1		Channel 1 Solo
+Map	Upper Row Button 2		Channel 2 Solo
+Map	Upper Row Button 3		Channel 3 Solo
+Map	Upper Row Button 4		Channel 4 Solo
+Map	Upper Row Button 5		Channel 5 Solo
+Map	Upper Row Button 6		Channel 6 Solo
+Map	Upper Row Button 7		Channel 7 Solo
+Map	Upper Row Button 8		Channel 8 Solo
+
+Map	Lower Row Button 1		Channel 1 Mute
+Map	Lower Row Button 2		Channel 2 Mute
+Map	Lower Row Button 3		Channel 3 Mute
+Map	Lower Row Button 4		Channel 4 Mute
+Map	Lower Row Button 5		Channel 5 Mute
+Map	Lower Row Button 6		Channel 6 Mute
+Map	Lower Row Button 7		Channel 7 Mute
+Map	Lower Row Button 8		Channel 8 Mute
+
+Map	Middle Row Encoder 1		Channel 1 Pan	
+Map	Middle Row Encoder 2		Channel 2 Pan	
+Map	Middle Row Encoder 3		Channel 3 Pan	
+Map	Middle Row Encoder 4		Channel 4 Pan	
+Map	Middle Row Encoder 5		Channel 5 Pan	
+Map	Middle Row Encoder 6		Channel 6 Pan	
+Map	Middle Row Encoder 7		Channel 7 Pan	
+Map	Middle Row Encoder 8		Channel 8 Pan	
+
+Map	Top Row Encoder 1		Channel 1 Width	
+Map	Top Row Encoder 2		Channel 2 Width	
+Map	Top Row Encoder 3		Channel 3 Width	
+Map	Top Row Encoder 4		Channel 4 Width	
+Map	Top Row Encoder 5		Channel 5 Width	
+Map	Top Row Encoder 6		Channel 6 Width	
+Map	Top Row Encoder 7		Channel 7 Width	
+Map	Top Row Encoder 8		Channel 8 Width	
+
+
+Map	Push Encoder 1:1		Rotary 1
+Map	Push Encoder 1:2		Rotary 2
+Map	Push Encoder 1:3		Rotary 3
+Map	Push Encoder 1:4		Rotary 4
+Map	Push Encoder 1:5		Threshold
+Map	Push Encoder 1:6		Ratio
+Map	Push Encoder 1:7		Make-Up Gain
+Map	Push Encoder 1:8		Master Level		Bar/Off
+
+Map	Push Encoder 1:1 Click		Button 1
+Map	Push Encoder 1:2 Click		Button 2
+Map	Push Encoder 1:3 Click		Button 3
+Map	Push Encoder 1:4 Click		Button 4
+Map	Push Encoder 1:5 Click		Compressor On
+Map	Push Encoder 1:6 Click		All Mutes Off
+Map	Push Encoder 1:7 Click		All Solo Off
+Map	Push Encoder 1:8 Click		Dim -20dB
+
+Map	Push Encoder 2:1		FX1 Return Level
+Map	Push Encoder 2:2		FX2 Return Level
+Map	Push Encoder 2:3		FX3 Return Level
+Map	Push Encoder 2:4		FX4 Return Level
+Map	Push Encoder 2:5		FX5 Return Level
+Map	Push Encoder 2:6		FX6 Return Level
+Map	Push Encoder 2:7		FX7 Return Level
+Map	Push Encoder 2:8		FX8 Return Level
+
+Map	Push Encoder 2:1 Click		FX1 Mute
+Map	Push Encoder 2:2 Click		FX2 Mute
+Map	Push Encoder 2:3 Click		FX3 Mute
+Map	Push Encoder 2:4 Click		FX4 Mute
+Map	Push Encoder 2:5 Click		FX5 Mute
+Map	Push Encoder 2:6 Click		FX6 Mute
+Map	Push Encoder 2:7 Click		FX7 Mute
+Map	Push Encoder 2:8 Click		FX8 Mute
+
+Map	Push Encoder 3:1		FX1 Pan
+Map	Push Encoder 3:2		FX2 Pan
+Map	Push Encoder 3:3		FX3 Pan
+Map	Push Encoder 3:4		FX4 Pan
+Map	Push Encoder 3:5		FX5 Pan
+Map	Push Encoder 3:6		FX6 Pan
+Map	Push Encoder 3:7		FX7 Pan
+Map	Push Encoder 3:8		FX8 Pan
+
+
+Map	Push Encoder 4:1		Channel 1 VU Meter		Bar/Off
+Map	Push Encoder 4:2		Channel 2 VU Meter		Bar/Off
+Map	Push Encoder 4:3		Channel 3 VU Meter		Bar/Off
+Map	Push Encoder 4:4		Channel 4 VU Meter		Bar/Off
+Map	Push Encoder 4:5		Channel 5 VU Meter		Bar/Off
+Map	Push Encoder 4:6		Channel 6 VU Meter		Bar/Off
+Map	Push Encoder 4:7		Channel 7 VU Meter		Bar/Off
+Map	Push Encoder 4:8		Channel 8 VU Meter		Bar/Off
