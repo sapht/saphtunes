@@ -17,7 +17,7 @@ album_create(char* slug, char* album_dir)
 
 	album->songs = malloc(sizeof(struct song_list));
 	album->songs->num = 0;
-	album->songs->entries = malloc(sizeof(void*));
+	album->songs->entries = malloc(MAX_ALBUM_SONGS * sizeof(void*));
 
 	printf("Created album named %s\n", album->slug);
 	return album;
