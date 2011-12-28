@@ -4,8 +4,8 @@
 #include <dirent.h>
 #include <string.h>
 
-#define GITSONG_DIR "/Volumes/Audio/Workspace/songs"
-#define GITALBUM_DIR "/Volumes/Audio/Workspace/album"
+#define GITSONG_DIR "test/songs"
+#define GITALBUM_DIR "test/album"
 #define MAX_SONGS 4096
 #define MAX_ALBUMS 512
 #define MAX_ALBUM_SONGS 128
@@ -32,6 +32,7 @@ int load_songs(struct gitsong **songs, char *song_dir) {
 	dirp = opendir(song_dir);
 	while (dirp) {
 		if ((dp = readdir(dirp)) != NULL) {
+			if (dp->d_name[0] == '.') {continue; }
 			struct gitsong *song = malloc(sizeof(struct gitsong));
 
 			song->slug = strdup(dp->d_name);
@@ -60,6 +61,7 @@ int load_albums(struct gitalbum **albums, char *album_dir) {
 	dirp = opendir(album_dir);
 	while (dirp) {
 		if ((dp = readdir(dirp)) != NULL) {
+			if (dp->d_name[0] == '.') {continue; }
 			struct gitalbum *album = malloc(sizeof(struct gitalbum));
 
 			album->slug = strdup(dp->d_name);
@@ -91,6 +93,9 @@ int load_album_songs(struct gitalbum *album, struct gitsong **songs, int num_son
 					album->num_songs++;
 				}
 			}
+		} else {
+			closedir(dirp);
+			break;
 		}
 	}
 
@@ -112,6 +117,7 @@ int main(int argc, char* argv[]) {
 
 	int num_songs = load_songs(songs, GITSONG_DIR);
 	int num_albums = load_albums(albums, GITALBUM_DIR);
+	printf("albums:%d\tsongs:%d\n", num_albums, num_songs);
 	for(int i=0; i<num_albums; i++) {
 		load_album_songs(albums[i], songs, num_songs);
 	}
