@@ -75,7 +75,7 @@ album_list_from_dir(char *album_dir)
     dirp = opendir(album_dir);
     while (dirp) {
         if ((dp = readdir(dirp)) != NULL) {
-            if (dp->d_name[0] == '.') {continue; }
+            if (dp->d_name[0] == '.' || 0 == strchr(dp->d_name, '\n')) {continue; }
 
 			struct gitalbum *album = album_create(dp->d_name, album_dir);
 			if ( album != 0 ) {

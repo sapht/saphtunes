@@ -35,7 +35,7 @@ song_list_from_dir(char *song_dir) {
     dirp = opendir(song_dir);
     while (dirp) {
         if ((dp = readdir(dirp)) != 0) {
-            if (dp->d_name[0] == '.') {continue; }
+            if (dp->d_name[0] == '.' || 0 == strchr(dp->d_name, '\n')) {continue; }
 
             struct gitsong *song = song_create(dp->d_name, song_dir);
             if (song != 0) {
@@ -66,7 +66,7 @@ song_repos_not_cloned(char **not_cloned,
 
     while(dirp) {
         if ((dp = readdir(dirp)) != 0) {
-            if (dp->d_name[0] == '.') { continue; }
+            if (dp->d_name[0] == '.' || 0 == strchr(dp->d_name, '\n')) { continue; }
             char* path = malloc(strlen(git_dir) + strlen(dp->d_name) + 2);
             sprintf(path, "%s/%s", git_dir, dp->d_name);
 
