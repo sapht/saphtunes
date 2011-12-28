@@ -1,11 +1,13 @@
 #include "song.h"
-#define ALBUM_DIR "test/album"
+#include "git.h"
+#define ALBUM_DIR "/Volumes/Audio/Workspace/album"
 #define MAX_ALBUMS 512
 #define MAX_ALBUM_SONGS 128
 
 struct gitalbum {
     char *path;
     char *slug;
+	struct git_entry *repo;
     struct song_list *songs;
 };
 

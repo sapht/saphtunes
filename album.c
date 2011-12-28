@@ -15,6 +15,12 @@ album_create(char* slug, char* album_dir)
     album->path = malloc(2 + strlen(album_dir) + strlen(slug)); /* slash and null at $ */
     sprintf(album->path, "%s/%s", album_dir, slug);
 
+    album->repo = git_entry_from_path(album->path);
+    if (album->repo == 0) {
+        /* Could not find a repo -- this is probably not a album */
+        return 0;
+    }
+
 	album->songs = malloc(sizeof(struct song_list));
 	album->songs->num = 0;
 	album->songs->entries = malloc(MAX_ALBUM_SONGS * sizeof(void*));
@@ -71,8 +77,13 @@ album_list_from_dir(char *album_dir)
         if ((dp = readdir(dirp)) != NULL) {
             if (dp->d_name[0] == '.') {continue; }
 
-            albums->entries[albums->num++] = 
-                album_create(dp->d_name, album_dir);
+			struct gitalbum *album = album_create(dp->d_name, album_dir);
+			if ( album != 0 ) {
+				albums->entries[albums->num++] = album;
+			} else {
+				fprintf(stderr, "\'%s\' is not an album\n", dp->d_name);
+			}
+                
 
         } else {
             closedir(dirp);

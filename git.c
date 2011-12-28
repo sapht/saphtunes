@@ -12,6 +12,9 @@ git_config_from_file(char* config_path)
 	config->path = strdup(config_path);
 
 	FILE *fp = fopen(config->path, "rb");
+	if (fp == 0) { 
+		return 0;
+	}
 	fseek(fp, 0, SEEK_END);
 	config->filesize = ftell(fp);
 	rewind(fp);
@@ -32,7 +35,7 @@ git_origin_from_config(struct git_config *config)
 	} else {
 		begin_block++;
 		char *end_block = strstr(begin_block, "[");
-		*end_block = 0;
+		if (end_block != 0) { *end_block = 0; }
 
 		char *url_begin = strstr(begin_block, "url = ");
 		if (url_begin == 0) {
@@ -40,8 +43,10 @@ git_origin_from_config(struct git_config *config)
 		} else {
 			url_begin += strlen("url = ");
 			char *url_end = strchr(url_begin, '\n');
-			url_end = 0;
-			return url_begin;
+			*url_end = 0;
+			char *r = strdup(url_begin);
+			free(config->data);
+			return r;
 		}
 	}
 }
@@ -54,16 +59,12 @@ git_entry_from_path(char* repo_path)
 	char* config_path = malloc(strlen(repo_path) + strlen(".git/config") + 2);
 	sprintf(config_path, "%s/%s", repo_path, ".git/config");
 
-	
-	/*
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-	ignorecase = true
-[remote "origin"]
-	url = /Volumes/Audio/git/songs/xi.git
-	fetch = +refs/heads/ *:refs/remotes/origin/ *
-	 */
+	struct git_config *config = git_config_from_file(config_path);
+	if ( 0 == config ) {
+		return 0;
+	}
+	entry->path = repo_path;
+	entry->origin = git_origin_from_config(config);
+
+	return entry;
 }
