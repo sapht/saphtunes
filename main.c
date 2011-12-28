@@ -106,9 +106,26 @@ int find_orphans(struct gitsong **orphans,
 				 struct gitsong **songs, int num_songs,
 				 struct gitalbum **albums, int num_albums) 
 {
-	/* hacker man code goes here */
-	int num_found = 0;
-	return num_found;
+	/* Loop over all songs, look for them in all albums
+	 * If a song is not found in any album, it is an orphan
+	 */
+	int num_orphans = 0;
+
+	for(int si=0; si<num_songs; si++) {
+		for (int ai=0; ai<num_albums; ai++) {
+			for (int asi=0; asi < albums[ai]->num_songs; asi++) {
+				if(songs[si] == albums[ai]->songs[asi]) {
+					continue 3;
+				}
+			}
+		}
+
+		/* If we reach this point, no song matched */
+		orphans[num_orphans] = songs[si];
+		num_orphans++;
+	}
+
+	return num_orphans;
 }
 
 int main(int argc, char* argv[]) {
@@ -122,9 +139,9 @@ int main(int argc, char* argv[]) {
 		load_album_songs(albums[i], songs, num_songs);
 	}
 
-	printf("%s\n", albums[1]->songs[1]->slug);
-
 	/*
+	printf("%s\n", albums[1]->songs[0]->slug); */
+
 	struct gitsong **orphans = malloc(MAX_SONGS * sizeof(void*));
 	int num_orphans = find_orphans(orphans, songs, num_songs, albums, num_albums);
 	if (num_orphans > 0) {
@@ -132,7 +149,6 @@ int main(int argc, char* argv[]) {
 			printf("%s\n", orphans[i]);
 		}
 	}
-	*/
 
 
 	
