@@ -102,6 +102,15 @@ int load_album_songs(struct gitalbum *album, struct gitsong **songs, int num_son
 	return album->num_songs;
 }
 
+int album_has_song(struct gitalbum *album, struct gitsong *song) {
+	for (int i=0; i < album->num_songs; i++) {
+		if(song == album->songs[i]) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
 int find_orphans(struct gitsong **orphans, 
 				 struct gitsong **songs, int num_songs,
 				 struct gitalbum **albums, int num_albums) 
@@ -112,17 +121,19 @@ int find_orphans(struct gitsong **orphans,
 	int num_orphans = 0;
 
 	for(int si=0; si<num_songs; si++) {
+		int found = 0;
 		for (int ai=0; ai<num_albums; ai++) {
-			for (int asi=0; asi < albums[ai]->num_songs; asi++) {
-				if(songs[si] == albums[ai]->songs[asi]) {
-					continue 3;
-				}
+			if (album_has_song(albums[ai], songs[si])) {
+				found = 1;
+				break;
 			}
 		}
 
-		/* If we reach this point, no song matched */
-		orphans[num_orphans] = songs[si];
-		num_orphans++;
+		if (found == 0) {
+			/* If we reach this point, no song matched */
+			orphans[num_orphans] = songs[si];
+			num_orphans++;
+		}
 	}
 
 	return num_orphans;
@@ -146,7 +157,7 @@ int main(int argc, char* argv[]) {
 	int num_orphans = find_orphans(orphans, songs, num_songs, albums, num_albums);
 	if (num_orphans > 0) {
 		for (int i=0; i<num_orphans; i++) {
-			printf("%s\n", orphans[i]);
+			printf("%s\n", orphans[i]->slug);
 		}
 	}
 
