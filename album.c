@@ -19,6 +19,7 @@ album_create(char* slug, char* album_dir)
 	album->songs->num = 0;
 	album->songs->entries = malloc(sizeof(void*));
 
+	printf("Created album named %s\n", album->slug);
 	return album;
 }
 
@@ -30,11 +31,16 @@ album_load_songs(
     struct dirent *dp; 
     DIR *dirp = opendir(album->path); 
 
+	printf("Looking at %s\n", album->slug);
     while(dirp) { 
         if ((dp = readdir(dirp)) != NULL) { 
             for (int i=0; i<songs->num; i++) { 
                 if(strcmp(songs->entries[i]->slug, dp->d_name) == 0) {
-                    album->songs->entries[album->songs->num++] = songs->entries[i];
+					printf("Found %s in %s\n", 
+							songs->entries[i]->slug, 
+							album->slug);
+                    album->songs->entries[album->songs->num++] = 
+						songs->entries[i];
                 }
             }
         } else {
@@ -59,7 +65,7 @@ album_has_song(struct gitalbum *album, struct gitsong *song)
 struct album_list *
 album_list_from_dir(char *album_dir) 
 {
-	struct album_list *albums;
+	struct album_list *albums = malloc(sizeof(struct album_list));
     albums->num = 0;
     albums->entries = malloc(MAX_ALBUMS * sizeof(void*));
 
