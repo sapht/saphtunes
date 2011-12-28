@@ -12,3 +12,5 @@ struct song_list {
     struct gitsong **entries;
 };
 
+struct song_list * song_list_from_dir(char *song_dir);
+struct gitsong *song_create (char *slug, char *song_dir);
