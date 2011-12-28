@@ -19,7 +19,6 @@ album_create(char* slug, char* album_dir)
 	album->songs->num = 0;
 	album->songs->entries = malloc(MAX_ALBUM_SONGS * sizeof(void*));
 
-	printf("Created album named %s\n", album->slug);
 	return album;
 }
 
@@ -31,14 +30,10 @@ album_load_songs(
     struct dirent *dp; 
     DIR *dirp = opendir(album->path); 
 
-	printf("Looking at %s\n", album->slug);
     while(dirp) { 
         if ((dp = readdir(dirp)) != NULL) { 
             for (int i=0; i<songs->num; i++) { 
                 if(strcmp(songs->entries[i]->slug, dp->d_name) == 0) {
-					printf("Found %s in %s\n", 
-							songs->entries[i]->slug, 
-							album->slug);
                     album->songs->entries[album->songs->num++] = 
 						songs->entries[i];
                 }
@@ -53,7 +48,6 @@ album_load_songs(
 int 
 album_has_song(struct gitalbum *album, struct gitsong *song) 
 {
-	printf("%d\n", album->songs->num);
     for (int i=0; i < album->songs->num; i++) {
         if(song == album->songs->entries[i]) {
             return 1;
@@ -112,7 +106,6 @@ album_find_exclusions(struct album_list *albums,
 
         if (found == 0) {
             /* If we reach this point, no song matched */
-			printf("Found orphan %s\n", songs->entries[si]->slug);
             orphans->entries[orphans->num++] = songs->entries[si];
         }
     }

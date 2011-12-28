@@ -42,3 +42,38 @@ song_list_from_dir(char *song_dir) {
     return song_list;
 }
 
+
+struct song_list *
+song_list_not_cloned(struct song_list *songs, char *git_dir) {
+	/* Look at all items in git_dir and try to find their clones in song_list
+	 * If no clone is found, add it to the response
+	 */
+
+	struct song_list *not_cloned = malloc(sizeof(struct song_list));
+	not_cloned->num = 0;
+	not_cloned->entries = malloc(MAX_SONGS * sizeof(void*));
+
+	DIR *dirp;
+	struct dirent *dp;
+	while(dirp) {
+		if ((dp = readdir(dirp)) != 0) {
+			if (dp->d_name == '.') { continue; }
+
+			int found = 0;
+			for(int i=0; i<songs->num; i++) {
+				if(strcmp(songs->entries[i]->remote, dp->d_name) == 0) {
+					// XXX: This will not work since d_name has .git
+					 found = 1;
+					 break;
+				}
+			}
+
+			if (found == 0) {
+				not_cloned->entries[not_cloned->num++] = songs
+			}
+		} else {
+			closedir(dirp);
+			break;
+		}
+	}
+}
