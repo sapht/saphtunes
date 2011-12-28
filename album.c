@@ -90,7 +90,7 @@ album_find_exclusions(struct album_list *albums,
     /* Loop over all songs, look for them in all albums
      * If a song is not found in any album, it is an orphan
      */
-    struct song_list *orphans;
+    struct song_list *orphans = malloc(sizeof(struct song_list));
     orphans->num = 0;
     orphans->entries = malloc(MAX_SONGS * sizeof(void*));
 
@@ -106,6 +106,7 @@ album_find_exclusions(struct album_list *albums,
 
         if (found == 0) {
             /* If we reach this point, no song matched */
+			printf("Found orphan %s\n", songs->entries[si]->slug);
             orphans->entries[orphans->num++] = songs->entries[si];
         }
     }
