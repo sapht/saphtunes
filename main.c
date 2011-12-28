@@ -23,28 +23,6 @@ struct gitalbum {
 	int num_songs;
 };
 
-/*
-int find_item_in_dir(char* item_name, char* path) {
-	DIR* dirp;
-
-	struct dirent* dp;
-
-	dirp = opendir(".");
-	while (dirp) {
-		if ((dp = readdir(dirp)) != NULL) {
-			if (strcmp(dp->d_name, item_name) == 0) {
-				closedir(dirp);
-				return 1;
-			}
-		} else {
-			closedir(dirp);
-			return 0;
-		}
-	}
-
-	return -1;
-} */
-
 int load_songs(struct gitsong **songs, char *song_dir) {
 	int num_loaded = 0;
 
@@ -86,6 +64,9 @@ int load_albums(struct gitalbum **albums, char *album_dir) {
 
 			album->slug = strdup(dp->d_name);
 			album->path = malloc(strlen(album_dir) + 1 + strlen(dp->d_name) + 1);
+			album->songs = malloc(MAX_ALBUM_SONGS * sizeof(void*));
+			album->num_songs = 0;
+
 			sprintf(album->path, "%s/%s", album_dir, dp->d_name);
 
 			albums[num_loaded] = album;
@@ -100,30 +81,25 @@ int load_albums(struct gitalbum **albums, char *album_dir) {
 }
 
 int load_album_songs(struct gitalbum *album, struct gitsong **songs, int num_songs) {
-	int num_loaded = 0;
-
 	struct dirent *dp;
 	DIR *dirp = opendir(album->path);
 	while(dirp) {
 		if ((dp = readdir(dirp)) != NULL) {
 			for (int i=0; i<num_songs; i++) {
 				if(strcmp(songs[i]->slug, dp->d_name) == 0) {
-					album->songs[num_loaded] = songs[i];
-					num_loaded++;
+					album->songs[album->num_songs] = songs[i];
+					album->num_songs++;
 				}
 			}
 		}
 	}
 
-	return num_loaded;
+	return album->num_songs;
 }
 
-
-
-int 
-find_orphans(struct gitsong **orphans, 
-			 struct gitsong **songs, int num_songs,
-			 struct gitalbum **albums, int num_albums) 
+int find_orphans(struct gitsong **orphans, 
+				 struct gitsong **songs, int num_songs,
+				 struct gitalbum **albums, int num_albums) 
 {
 	/* hacker man code goes here */
 	int num_found = 0;
