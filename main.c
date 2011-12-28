@@ -19,7 +19,7 @@ struct gitsong {
 struct gitalbum {
 	char *path;
 	char *slug;
-	struct gitsong* songs;
+	struct gitsong** songs;
 	int num_songs;
 };
 
@@ -106,7 +106,7 @@ int load_album_songs(struct gitalbum *album, struct gitsong **songs, int num_son
 	DIR *dirp = opendir(album->path);
 	while(dirp) {
 		if ((dp = readdir(dirp)) != NULL) {
-			for (int i=0; int i<num_songs; i++) {
+			for (int i=0; i<num_songs; i++) {
 				if(strcmp(songs[i]->slug, dp->d_name) == 0) {
 					album->songs[num_loaded] = songs[i];
 					num_loaded++;
