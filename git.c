@@ -5,33 +5,37 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-struct git_config *
-git_config_from_file(char* config_path)
-{
-	struct git_config *config = malloc(sizeof(struct git_config));
-	config->path = strdup(config_path);
 
-	FILE *fp = fopen(config->path, "rb");
+
+int
+parse_git_config(struct git_repo *repo)
+{
+    int config_filesize;
+    char* config_data;
+
+	FILE *fp = fopen(repo->git_config_path, "rb");
 	if (fp == 0) { 
 		return 0;
 	}
+
+    /* Read entire data into buffer */
 	fseek(fp, 0, SEEK_END);
-	config->filesize = ftell(fp);
+
+	config_filesize = ftell(fp);
+	config_data = malloc(config_filesize + 1);
+
 	rewind(fp);
-	config->data = malloc(config->filesize + 1);
-	fread(config->data, 1, config->filesize, fp);
-	config->data[config->filesize] = '\0';
+
+	fread(config_data, 1, config_filesize, fp);
+	config_data[config_filesize] = '\0';
+
 	fclose(fp);
+    free(fp);
 
-	return config;
-}
-
-char *
-git_origin_from_config(struct git_config *config) 
-{
-	char *begin_block = strstr(config->data, "[remote \"origin\"]");
+    /* Begin parsing */
+	char *begin_block = strstr(config_data, "[remote \"origin\"]");
 	if ( 0 == begin_block ) {
-		return "";
+		return 0;
 	} else {
 		begin_block++;
 		char *end_block = strstr(begin_block, "[");
@@ -39,32 +43,15 @@ git_origin_from_config(struct git_config *config)
 
 		char *url_begin = strstr(begin_block, "url = ");
 		if (url_begin == 0) {
-			return "";
+			return 0;
 		} else {
 			url_begin += strlen("url = ");
 			char *url_end = strchr(url_begin, '\n');
 			*url_end = 0;
 			char *r = strdup(url_begin);
-			free(config->data);
-			return r;
+			free(config_data);
+            free(config_filesize);
+            return 1;
 		}
 	}
-}
-
-struct git_entry *
-git_entry_from_path(char* repo_path)
-{
-	struct git_entry *entry = malloc(sizeof(struct git_entry));
-
-	char* config_path = malloc(strlen(repo_path) + strlen(".git/config") + 2);
-	sprintf(config_path, "%s/%s", repo_path, ".git/config");
-
-	struct git_config *config = git_config_from_file(config_path);
-	if ( 0 == config ) {
-		return 0;
-	}
-	entry->path = repo_path;
-	entry->origin = git_origin_from_config(config);
-
-	return entry;
 }

@@ -1,17 +1,11 @@
 #ifndef _GIT__H_
 #define _GIT__H_
-struct git_entry {
-	char* origin;
+
+struct git_repo {
+	char* git_origin;
+    char* git_config_path;
 	char* path;
 };
 
-struct git_config {
-	char* path;
-	char* data;
-	long filesize;
-};
-
-struct git_entry *git_entry_from_path(char* repo_path);
-struct git_config * git_config_from_file(char* config_path);
-char * git_origin_from_config(struct git_config *config);
+int parse_git_config(struct git_repo *repo);
 #endif
