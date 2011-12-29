@@ -6,8 +6,10 @@
 
 #define NUM_ELEMENTS(a) ((sizeof a)/(sizeof a[0]))
 
-struct dir_list {
-    dirent **entries;
-    int entries_len;
-}
+struct dirent_list {
+    struct dirent **e;
+    int len;
+};
+
+struct dirent_list * dir_read_all(char *dir);
 #endif

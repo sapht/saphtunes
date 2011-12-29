@@ -6,9 +6,23 @@
 #include <dirent.h>
 
 
+int
+git_load_generic(struct git_repo *repo, 
+                 char *root, 
+                 char *name)
+{
+
+    repo->path = malloc(255 * sizeof(char));
+    sprintf(repo->path, "%s/%s", root, name);
+
+    repo->git_config_path = malloc(255 * sizeof(char));
+    sprintf(repo->git_config_path, "%s/.git/config", repo->path);
+
+    return git_load_config(repo);
+}
 
 int
-parse_git_config(struct git_repo *repo)
+git_load_config(struct git_repo *repo)
 {
     int config_filesize;
     char* config_data;
@@ -48,9 +62,7 @@ parse_git_config(struct git_repo *repo)
 			url_begin += strlen("url = ");
 			char *url_end = strchr(url_begin, '\n');
 			*url_end = 0;
-			char *r = strdup(url_begin);
-			free(config_data);
-            free(config_filesize);
+			repo->git_origin = strdup(url_begin);
             return 1;
 		}
 	}

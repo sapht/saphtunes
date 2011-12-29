@@ -7,5 +7,6 @@ struct git_repo {
 	char* path;
 };
 
-int parse_git_config(struct git_repo *repo);
+int git_load_config(struct git_repo *repo);
+int git_load_generic(struct git_repo *repo, char *root, char *path);
 #endif
