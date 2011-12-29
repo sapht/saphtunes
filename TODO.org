@@ -1,0 +1,28 @@
+#+title: congman tasks
+* Multiple screens
+Screens per different views, one is only songs, one is albums, one is
+album/song, one is something else.
+
+There's a seemingly simple example for this in the cdk examples.
+* Split view
+Look for library functions. Otherwise, one could perhaps LINES or
+COLS or some other brutaly invasive ncurses feature.
+
+traverse_ex has some aligning to it.
+* CDK comments
+There's a nice text viewer/scroller in the examples. If I need to view
+big amounts of text, this could be useful.
+
+CDK widgets seem to be embeddable within ncurses in some manner;
+there's an example for this.
+* 1.0
+** TODO Implement a split pane view of album/children
+*** DONE try reducing size of an alphalist
+CLOSED: [2011-12-29 Thu 18:33]
+*** DONE create a second alphalist and align it differently
+CLOSED: [2011-12-29 Thu 18:33]
+*** TODO implement "change" event
+*** TODO implement resizing
+** TODO Implement a view of the 10 latest song commits, with view
+** TODO Implement a view of all repositories, album or songs, with un-commited files
+** TODO Implement multiple screens of different panes, accessible via Fx-Fy

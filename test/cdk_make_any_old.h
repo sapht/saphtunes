@@ -1,0 +1,30 @@
+#include <cdk.h>
+CDKOBJS * cdk_make_alphalist (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_button (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_buttonbox (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_calendar (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_dialog (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_dscale (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_entry (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_fscale (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_fslider (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_fselect (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_graph (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_histogram (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_itemlist (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_label (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_marquee (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_matrix (CDKSCREEN *cdkscreen, char **input_data, int x, int y) ;
+CDKOBJS * cdk_make_mentry (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_radio (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_scale (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_scroll (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_slider (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_selection (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_swindow (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_template (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_uscale (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_uslider (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+CDKOBJS * cdk_make_viewer (CDKSCREEN *cdkscreen, char **input_data, int x, int y);
+
+void cdk_make_type (CDKSCREEN *cdkscreen, int menu, EObjectType type);
