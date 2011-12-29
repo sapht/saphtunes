@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "song.h"
 #include "util.h"
 
@@ -7,20 +9,23 @@ song_create(char *root, char *name)
     struct song *r = malloc(sizeof(struct song));
     r->slug = name;
     git_load_generic((struct git_repo*)r, root, name);
+    r->path = r->git.path;
     return r;
 }
 
 int
 songs_load_dir(char* dir, struct song_list *song_list) {
-    struct dirent_list *files = dir_read_all(dir);
+    struct dirent_list files = dir_read_all(dir);
 
-    song_list = malloc(SONG_MAX_NUM * sizeof(void*));
-    song_list->len = files->len;
+    song_list->e = malloc(SONG_MAX_NUM * sizeof(void*));
+    song_list->len = files.len;
 
-    for(int i=0; i<files->len; i++) {
+    fprintf(stderr, "Length: %d (dir: %s)\n", files.len, dir);
+
+    for(int i=0; i<files.len; i++) {
         song_list->e[i] = song_create(
                 dir, 
-                files->e[i]->d_name);
+                files.e[i].d_name);
     }
 
     return song_list->len;

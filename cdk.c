@@ -12,9 +12,10 @@ album_list_enter(
         chtype key)
 /* Called when "enter" is pressed on an album */
 {
-    CDKSCROLL *scroll = (CDKSCROLL*) object;
+    CDKSCROLL *album_w = (CDKSCROLL*) object;
 
-    int offset = getCDKScrollCurrent(scroll);
+    int offset = getCDKScrollCurrent(album_w);
+
     ui_stop();
 
     printf("%s\n", _cm.albums->e[offset]->path);

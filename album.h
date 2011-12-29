@@ -9,7 +9,7 @@ struct album {
     struct git_repo git;
     struct song_list *songs;
     char *slug;
-    char* path;
+    char *path;
 };
 
 struct album_list {

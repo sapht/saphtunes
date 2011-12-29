@@ -5,8 +5,12 @@
 #include "song.h"
 #include "album.h"
 
+struct cm_singleton _cm;
 
 static int load_data() {
+    _cm.songs = malloc(sizeof(struct song_list));
+    _cm.albums = malloc(sizeof(struct song_list));
+
     if(0==songs_load_dir(_cm.p.song_dir, _cm.songs)) return 0;
     if(0==album_load_dir(_cm.p.album_dir, _cm.albums)) return 0;
 
