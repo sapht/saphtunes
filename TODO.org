@@ -17,12 +17,33 @@ CDK widgets seem to be embeddable within ncurses in some manner;
 there's an example for this.
 * 1.0
 ** TODO Implement a split pane view of album/children
-*** DONE try reducing size of an alphalist
-CLOSED: [2011-12-29 Thu 18:33]
-*** DONE create a second alphalist and align it differently
-CLOSED: [2011-12-29 Thu 18:33]
-*** TODO implement "change" event
+*** TODO load submodules from .gitmodules, not from looking at all the subrepos
+currently album_match_song_list loops through all songs, then does a
+dirent_list of the album root repo, then tries to match the origin of
+those songs with the corresponding origin of every dirent found in the
+root repo that contains a .git/config.
+
+this is bad, instead loop through all songs (which should have their
+origin already loaded via git_load_config), then look at each album,
+parse the .gitmodules and aqcuire a char** of submodule origins, then
+compare the origins. 
 *** TODO implement resizing
+*** Archive                                                   :ARCHIVE:
+**** DONE try reducing size of an alphalist
+CLOSED: [2011-12-29 Thu 18:33]
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-30 Fri 17:45
+:END:
+**** DONE create a second alphalist and align it differently
+CLOSED: [2011-12-29 Thu 18:33]
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-30 Fri 17:45
+:END:
+**** DONE implement "change" event
+CLOSED: [2011-12-30 Fri 17:44]
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-30 Fri 17:45
+:END:
 ** TODO Implement a view of the 10 latest song commits, with view
 ** TODO Implement a view of all repositories, album or songs, with un-commited files
 ** TODO Implement multiple screens of different panes, accessible via Fx-Fy

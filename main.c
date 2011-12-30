@@ -58,6 +58,11 @@ int main(int argc, char** argv) {
     _cm.p.album_dir = "/tmp/cm_test/album";
     _cm.p.song_git_dir = "/tmp/cm_test/origin/songs";
     _cm.p.album_git_dir = "/tmp/cm_test/origin/album";
+    /*_cm.p.song_dir = "/Volumes/Audio/Workspace/songs";
+    _cm.p.album_dir = "/Volumes/Audio/Workspace/album";
+    _cm.p.song_git_dir = "/Volumes/Audio/git/songs";
+    _cm.p.album_git_dir = "/Volumes/Audio/git/album";*/
+
     if(0 == load_data()) {
         fprintf(stderr, "Could not create song/album lists\n");
         exit(1);

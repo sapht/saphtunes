@@ -22,7 +22,6 @@ cdk_fill_song_widget(struct song_list *song_list)
         0
     );
 
-    refreshCDKScreen (_cm.cdk_screen);
     return 1;
 }
 
@@ -39,18 +38,19 @@ album_list_enter(
 
     int offset = getCDKScrollCurrent(album_w);
 
-    ui_stop();
-
     struct song_list *song_list = &_cm.albums->e[offset]->songs;
 
     /* Propagate widget of windows */
-    return cdk_fill_song_widget(song_list);
+    int could_fill = cdk_fill_song_widget(song_list);
+    refreshCDKScreen (_cm.cdk_screen);
+    traverseCDKScreen(_cm.cdk_screen);
 /*
     ui_stop();
     for(int i=0;i<song_list->len; i++) {
         printf("%s\n", song_list->e[i]->slug);
     }
     exit(1);*/
+    return 0;
 }
 
 int
@@ -63,7 +63,7 @@ create_widgets()
 
     CDKSCROLL *widget_left = newCDKScroll (
             _cm.cdk_screen,
-            LEFT, 1, LEFT, 30, 25, /* xyswh */
+            LEFT, 1, RIGHT, 30, 25, /* xyswh */
             "Album",
             album_repr, _cm.albums->len,
             0, A_REVERSE, 1, 0
@@ -71,7 +71,7 @@ create_widgets()
 
     CDKSCROLL *widget_right = newCDKScroll (
             _cm.cdk_screen,
-            RIGHT, 1, LEFT, 30, 25, /* xyswh */
+            RIGHT, 1, RIGHT, 30, 25, /* xyswh */
             "Songs in album",
             0, 0,
             0, A_REVERSE, 1, 0
