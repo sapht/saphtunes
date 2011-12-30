@@ -3,12 +3,12 @@
 
 #ifndef _SONG__H_
 #define _SONG__H_
-#define SONG_MAX_NUM 1024
+#define SONG_MAX_NUM 2048
 
 struct song {
-    struct git_repo git;
     char* slug;
     char* path;
+    struct git_repo git;
 };
 
 struct song_list {

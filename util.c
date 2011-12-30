@@ -21,15 +21,18 @@ dir_read_all(char *dir)
     while (dirp) {
         if ((dp = readdir(dirp)) != NULL) {
             /* Ignore bogus files */
-            fprintf(stderr, "Found entry %s\n", dp->d_name);
-            if (dp->d_name[0] == '.' || 0 != strchr(dp->d_name, '\n')) {
+            if (dp->d_name[0] == '.' || 0 != strchr(dp->d_name, '\r')) {
                 continue;
             }
+
+            /*printf("%s is valid, %p, %p\n", */
+                    /*dp->d_name,*/
+                    /*strchr(dp->d_name, '\r'),*/
+                    /*strchr(dp->d_name, '\n'));*/
 
             r.e[r.len++] = *dp;
             
         } else {
-            fprintf(stderr, "Done\n");
             closedir(dirp);
             break;
         }

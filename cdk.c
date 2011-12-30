@@ -2,7 +2,21 @@
 #include "cdk.h"
 #include "main.h"
 #include "album.h"
+#include "song.h"
 #include <stdlib.h>
+
+static int
+cdk_fill_song_widget(struct song_list *song_list)
+{
+    char **song_repr = malloc(SONG_MAX_NUM * sizeof(void*));
+    for(int i=0; i < _cm.songs->len; i++) {
+        song_repr[i] = _cm.songs->e[i]->slug;
+    }
+
+    return 0;
+    /* Magic CDK replacements... */
+}
+
 
 int
 album_list_enter(
@@ -18,11 +32,16 @@ album_list_enter(
 
     ui_stop();
 
+    struct album *selection;
+    selection = _cm.albums->e[offset];
+
+    /* Propagate widget of windows */
+    cdk_fill_song_widget(&selection->songs);
+
+    ui_stop();
     printf("%s\n", _cm.albums->e[offset]->path);
     exit(1);
 }
-
-
 
 int
 create_widgets()

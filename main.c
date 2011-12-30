@@ -14,6 +14,8 @@ static int load_data() {
     if(0==songs_load_dir(_cm.p.song_dir, _cm.songs)) return 0;
     if(0==album_load_dir(_cm.p.album_dir, _cm.albums)) return 0;
 
+    album_list_match_songs(_cm.albums, _cm.songs);
+
     return 1;
 }
 
@@ -52,9 +54,10 @@ static int main_from_arg(char* arg)
 }
 
 int main(int argc, char** argv) {
-    _cm.p.song_dir = "test/songs";
-    _cm.p.song_git_dir = "test/songs";
-    _cm.p.album_dir = "test/album";
+    _cm.p.song_dir = "/tmp/cm_test/songs";
+    _cm.p.album_dir = "/tmp/cm_test/album";
+    _cm.p.song_git_dir = "/tmp/cm_test/origin/songs";
+    _cm.p.album_git_dir = "/tmp/cm_test/origin/album";
     if(0 == load_data()) {
         fprintf(stderr, "Could not create song/album lists\n");
         exit(1);

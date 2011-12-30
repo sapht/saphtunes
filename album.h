@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "song.h"
 #include "git.h"
 
 #ifndef _ALBUM__H_
@@ -6,10 +7,10 @@
 #define ALBUM_MAX_NUM 256
 
 struct album {
-    struct git_repo git;
-    struct song_list *songs;
     char *slug;
     char *path;
+    struct git_repo git;
+    struct song_list songs;
 };
 
 struct album_list {
