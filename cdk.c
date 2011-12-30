@@ -9,12 +9,21 @@ static int
 cdk_fill_song_widget(struct song_list *song_list)
 {
     char **song_repr = malloc(SONG_MAX_NUM * sizeof(void*));
-    for(int i=0; i < _cm.songs->len; i++) {
-        song_repr[i] = _cm.songs->e[i]->slug;
+    for(int i=0; i < song_list->len; i++) {
+        song_repr[i] = song_list->e[i]->slug;
     }
 
-    return 0;
-    /* Magic CDK replacements... */
+    /* Erase the list, then fill it with song_repr, len=song_list->len */
+    CDKSCROLL *scroll = (CDKSCROLL*) _cm.cdk_widgets.right;
+    setCDKScrollItems(
+        scroll,
+        song_repr,
+        song_list->len,
+        0
+    );
+
+    refreshCDKScreen (_cm.cdk_screen);
+    return 1;
 }
 
 
@@ -32,15 +41,16 @@ album_list_enter(
 
     ui_stop();
 
-    struct album *selection;
-    selection = _cm.albums->e[offset];
+    struct song_list *song_list = &_cm.albums->e[offset]->songs;
 
     /* Propagate widget of windows */
-    cdk_fill_song_widget(&selection->songs);
-
+    return cdk_fill_song_widget(song_list);
+/*
     ui_stop();
-    printf("%s\n", _cm.albums->e[offset]->path);
-    exit(1);
+    for(int i=0;i<song_list->len; i++) {
+        printf("%s\n", song_list->e[i]->slug);
+    }
+    exit(1);*/
 }
 
 int
@@ -67,8 +77,8 @@ create_widgets()
             0, A_REVERSE, 1, 0
             );
 
-    _cm.cdk_widgets.left = ObjPtr(widget_left);
-    _cm.cdk_widgets.right = ObjPtr(widget_right);
+    _cm.cdk_widgets.left  = (CDKOBJS*) widget_left;
+    _cm.cdk_widgets.right = (CDKOBJS*) widget_right;
 
     bindCDKObject(
         vSCROLL,

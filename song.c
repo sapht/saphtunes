@@ -8,14 +8,11 @@ song_create(char *root, char *name)
 {
     struct song *r = malloc(sizeof(struct song));
 
-    printf("SONG\n-----------------------------------------\n");
-    printf("Loading config %s: %d\n", name, 
-    git_load_generic((struct git_repo*)r, root, name)
-    );
+    git_load_generic(&r->git, root, name);
     r->path = r->git.path;
     r->slug = name;
 
-    printf("Path %s has origin %s\n", r->git.path, r->git.origin);
+    /*printf("Path %s has origin %s\n", r->git.path, r->git.origin);*/
     return r;
 }
 

@@ -8,12 +8,11 @@ album_create(char *root, char *name)
 {
     struct album *r = malloc(sizeof(struct album));
 
-    printf("ALBUM\n-----------------------------------------\n");
-    git_load_generic((struct git_repo*)r, root, name);
+    git_load_generic(&r->git, root, name);
     r->path = r->git.path;
     r->slug = name;
 
-    printf("Album Path %s has origin %s\n", r->git.path, r->git.origin);
+    /*printf("Album path is %s\n", r->path);*/
 
     return r;
 }
@@ -49,7 +48,7 @@ album_list_match_songs(struct album_list *album_list,
             song = song_list->e[i];
 
             /*printf("Looking for submodule with origin %s\n", song->git.origin);*/
-            if (git_repo_has_submodule((struct git_repo*) album,
+            if (git_repo_has_submodule(&album->git,
                                        song->git.origin)) {
                 album->songs.e[
                     album->songs.len++

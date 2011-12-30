@@ -20,8 +20,6 @@ git_load_generic(struct git_repo *repo,
     repo->config_path = malloc(255 * sizeof(char));
     sprintf(repo->config_path, "%s/.git/config", repo->path);
 
-    printf("Git Path %s has config %s\n", repo->path, repo->config_path);
-
     return git_load_config(repo);
 }
 
@@ -66,7 +64,7 @@ git_load_config(struct git_repo *repo)
 			char *url_end = strchr(url_begin, '\n');
 			*url_end = 0;
 			repo->origin = strdup(url_begin);
-            printf("Found origin: %s\n", repo->origin);
+            /*printf("Found origin: %s\n", repo->origin);*/
             return 1;
 		}
 	}
@@ -86,6 +84,7 @@ git_repo_has_submodule(struct git_repo *root_repo,
     struct stat subrepo_stat;
     int i = 0;
 
+    /*printf("korvpath: %s\n", root_repo->path);*/
     /*printf("Looking at %s, %d files\n", root_repo->path, files.len);*/
     for(; i<files.len; i++) {
         sprintf(subrepo_config_path, 
@@ -94,13 +93,18 @@ git_repo_has_submodule(struct git_repo *root_repo,
                 files.e[i].d_name);
 
 
+        /*printf("config path: %s\n", subrepo_config_path);*/
         if (0 == stat(subrepo_config_path, &subrepo_stat)) {
             /* This is probably a subrepo. */
             git_load_generic(subrepo, root_repo->path, files.e[i].d_name);
-            /*printf("path=%s, Origin=%s, expected=%s", subrepo->path, subrepo->origin, expected_origin);*/
-            if(subrepo->origin == expected_origin) {
-                /* Found a matching subrepo. */
-                /*printf("Found a matching subrepo\n");*/
+            /*printf("Album=%s, path=%s, Origin=%s, expected=%s\n", 
+                    root_repo->path,
+                    subrepo->path, 
+                    subrepo->origin, 
+                    expected_origin);*/
+            if(0 == strcmp(subrepo->origin, expected_origin)) {
+                /*Found a matching subrepo.*/
+                /*printf("!!!!!!!!!!!!!!!!!!!!! Found a matching subrepo\n");*/
                 return 1;
             }
         }
