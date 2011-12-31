@@ -1,16 +1,13 @@
 #include "cdk.h"
 #ifndef _MAIN__H_
 #define _MAIN__H_
+#define cm _cm
 
 extern struct cm_singleton {
-    CDKSCREEN *cdk_screen;
-    WINDOW *curses_window;
+    struct song_list *songs;
+    struct album_list *albums;
 
-    struct {
-        CDKOBJS* left;
-        CDKOBJS* right;
-    } cdk_widgets;
-
+    struct cdk cdk;
     struct {
         char *song_dir;
         char *album_dir;
@@ -18,9 +15,6 @@ extern struct cm_singleton {
         char *song_git_dir;
         char *album_git_dir;
     } p;
-
-    struct song_list *songs;
-    struct album_list *albums;
 } _cm;
 
 

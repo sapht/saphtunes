@@ -11,9 +11,12 @@ static int load_data() {
     _cm.songs = malloc(sizeof(struct song_list));
     _cm.albums = malloc(sizeof(struct song_list));
 
+    printf("Loading songs...\n");
     if(0==songs_load_dir(_cm.p.song_dir, _cm.songs)) return 0;
+    printf("Loading albums...\n");
     if(0==album_load_dir(_cm.p.album_dir, _cm.albums)) return 0;
 
+    printf("Matching album repos to songs...\n");
     album_list_match_songs(_cm.albums, _cm.songs);
 
     return 1;
@@ -54,14 +57,14 @@ static int main_from_arg(char* arg)
 }
 
 int main(int argc, char** argv) {
-    _cm.p.song_dir = "/tmp/cm_test/songs";
+    /*_cm.p.song_dir = "/tmp/cm_test/songs";
     _cm.p.album_dir = "/tmp/cm_test/album";
     _cm.p.song_git_dir = "/tmp/cm_test/origin/songs";
-    _cm.p.album_git_dir = "/tmp/cm_test/origin/album";
-    /*_cm.p.song_dir = "/Volumes/Audio/Workspace/songs";
+    _cm.p.album_git_dir = "/tmp/cm_test/origin/album";*/
+    _cm.p.song_dir = "/Volumes/Audio/Workspace/songs";
     _cm.p.album_dir = "/Volumes/Audio/Workspace/album";
     _cm.p.song_git_dir = "/Volumes/Audio/git/songs";
-    _cm.p.album_git_dir = "/Volumes/Audio/git/album";*/
+    _cm.p.album_git_dir = "/Volumes/Audio/git/album";
 
     if(0 == load_data()) {
         fprintf(stderr, "Could not create song/album lists\n");

@@ -1,33 +1,16 @@
 #+title: congman tasks
-* Multiple screens
-Screens per different views, one is only songs, one is albums, one is
-album/song, one is something else.
+* 1.0 GTK
+Decided to skip buggy camelcased CDK in favor of GTK+.
 
-There's a seemingly simple example for this in the cdk examples.
-* Split view
-Look for library functions. Otherwise, one could perhaps LINES or
-COLS or some other brutaly invasive ncurses feature.
-
-traverse_ex has some aligning to it.
-* CDK comments
-There's a nice text viewer/scroller in the examples. If I need to view
-big amounts of text, this could be useful.
-
-CDK widgets seem to be embeddable within ncurses in some manner;
-there's an example for this.
+** TODO Rewrite the entire CDK interface in GTK+
+** TODO Implement a view of the 10 latest song commits, with view
+** TODO Implement a view of all repositories, album or songs, with un-commited files
 * 1.0
 ** TODO Implement a split pane view of album/children
-*** TODO load submodules from .gitmodules, not from looking at all the subrepos
-currently album_match_song_list loops through all songs, then does a
-dirent_list of the album root repo, then tries to match the origin of
-those songs with the corresponding origin of every dirent found in the
-root repo that contains a .git/config.
-
-this is bad, instead loop through all songs (which should have their
-origin already loaded via git_load_config), then look at each album,
-parse the .gitmodules and aqcuire a char** of submodule origins, then
-compare the origins. 
+*** TODO fix the 
 *** TODO implement resizing
+SIGWINCH
+http://stackoverflow.com/questions/4738803/resize-terminal-and-scrolling-problem-with-ncurses
 *** Archive                                                   :ARCHIVE:
 **** DONE try reducing size of an alphalist
 CLOSED: [2011-12-29 Thu 18:33]
@@ -44,6 +27,43 @@ CLOSED: [2011-12-30 Fri 17:44]
 :PROPERTIES:
 :ARCHIVE_TIME: 2011-12-30 Fri 17:45
 :END:
-** TODO Implement a view of the 10 latest song commits, with view
-** TODO Implement a view of all repositories, album or songs, with un-commited files
-** TODO Implement multiple screens of different panes, accessible via Fx-Fy
+**** DONE load submodules from .gitmodules, not from looking at all the subrepos
+CLOSED: [2011-12-30 Fri 22:06]
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-30 Fri 22:06
+:END:
+currently album_match_song_list loops through all songs, then does a
+dirent_list of the album root repo, then tries to match the origin of
+those songs with the corresponding origin of every dirent found in the
+root repo that contains a .git/config.
+
+this is bad, instead loop through all songs (which should have their
+origin already loaded via git_load_config), then look at each album,
+parse the .gitmodules and aqcuire a char** of submodule origins, then
+compare the origins. 
+* Archive                                                           :ARCHIVE:
+** Multiple screens
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-31 Sat 02:30
+:END:
+Screens per different views, one is only songs, one is albums, one is
+album/song, one is something else.
+
+There's a seemingly simple example for this in the cdk examples.
+** Split view
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-31 Sat 02:30
+:END:
+Look for library functions. Otherwise, one could perhaps LINES or
+COLS or some other brutaly invasive ncurses feature.
+
+traverse_ex has some aligning to it.
+** CDK comments
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-31 Sat 02:31
+:END:
+There's a nice text viewer/scroller in the examples. If I need to view
+big amounts of text, this could be useful.
+
+CDK widgets seem to be embeddable within ncurses in some manner;
+there's an example for this.

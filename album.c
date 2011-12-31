@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "song.h"
 #include "album.h"
 #include "util.h"
@@ -40,26 +42,39 @@ album_list_match_songs(struct album_list *album_list,
     struct song *song;
 
 
+    char **submodules = malloc(GIT_SUBMODULE_MAX_NUM * sizeof(char*));
+    int submodule_num;
+
     for (int ai=0; ai<album_list->len; ai++) {
         album = album_list->e[ai];
         album->songs.e = malloc(SONG_MAX_NUM * sizeof(void*));
 
-        for (int i=0; i<song_list->len; i++) {
-            song = song_list->e[i];
+        submodule_num = git_repo_fill_submodules(&album->git, submodules);
 
-            /*printf("Looking for submodule with origin %s\n", song->git.origin);*/
-            if (git_repo_has_submodule(&album->git,
-                                       song->git.origin)) {
-                album->songs.e[
-                    album->songs.len++
-                ] = song;
+
+        int found;
+        for (int j=0; j<submodule_num; j++) {
+            found = 0;
+            /*printf("Looking at submodule %s\n", submodules[j]);*/
+            for (int i=0; i<song_list->len; i++) {
+                song = song_list->e[i];
+                if (0 == strcmp(submodules[j], song->git.origin)) {
+                    album->songs.e[album->songs.len++] = song;
+                    found = 1;
+                    break;
+                }
+            }
+
+            if (!found) {
+                fprintf(stderr, "FATAL ERROR: SUBMODULE NOT FOUND: %s\n", submodules[j]);
+                exit(1);
             }
         }
 
-        fprintf(stderr, 
+        /*fprintf(stderr, 
                 "Album %s has %d songs\n", 
                 album->slug, 
-                album->songs.len);
+                album->songs.len);*/
     }
 }
 

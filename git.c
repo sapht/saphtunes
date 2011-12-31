@@ -70,45 +70,41 @@ git_load_config(struct git_repo *repo)
 	}
 }
 
-int 
-git_repo_has_submodule(struct git_repo *root_repo, 
-                       char *expected_origin)
+int
+git_repo_fill_submodules(struct git_repo *root_repo, char **paths)
 {
-    /* TODO: this process is slow and uneccesary
-     * parse .gitmodules instead
-     */
-    struct dirent_list files = dir_read_all(root_repo->path);
+    /* Find all submodules and return their count */
 
-    struct git_repo *subrepo = malloc(sizeof(struct git_repo));
-    char *subrepo_config_path = malloc(255 * sizeof(char));
-    struct stat subrepo_stat;
-    int i = 0;
+    int path_num = 0;
 
-    /*printf("korvpath: %s\n", root_repo->path);*/
-    /*printf("Looking at %s, %d files\n", root_repo->path, files.len);*/
-    for(; i<files.len; i++) {
-        sprintf(subrepo_config_path, 
-                "%s/%s/.git/config", 
-                root_repo->path, 
-                files.e[i].d_name);
+    char *submodule_dotfile_path = malloc(255);
+    sprintf(submodule_dotfile_path, "%s/%s", root_repo->path, ".gitmodules");
+    
+    FILE *fp = fopen(submodule_dotfile_path, "rb");
+    if(0 == fp) {
+        /* There was no .gitmodule file. */
+        return 0;
+    } else {
+        fseek(fp, 0, SEEK_END);
+        int fsize = ftell(fp);
+        rewind(fp);
 
+        char *data = malloc(fsize + 1);
+        fread(data, 1, fsize, fp);
+        fclose(fp);
 
-        /*printf("config path: %s\n", subrepo_config_path);*/
-        if (0 == stat(subrepo_config_path, &subrepo_stat)) {
-            /* This is probably a subrepo. */
-            git_load_generic(subrepo, root_repo->path, files.e[i].d_name);
-            /*printf("Album=%s, path=%s, Origin=%s, expected=%s\n", 
-                    root_repo->path,
-                    subrepo->path, 
-                    subrepo->origin, 
-                    expected_origin);*/
-            if(0 == strcmp(subrepo->origin, expected_origin)) {
-                /*Found a matching subrepo.*/
-                /*printf("!!!!!!!!!!!!!!!!!!!!! Found a matching subrepo\n");*/
-                return 1;
-            }
+        data[fsize] = '\0';
+
+        char *url_begin = data;
+        while((url_begin = strstr(url_begin, "url = "))) {
+            url_begin += strlen("url = ");
+            char *url_end = strchr(url_begin, '\n');
+            *url_end = '\0';
+
+            paths[path_num++] = strdup(url_begin);
+            *url_end = '\n';
         }
     }
 
-    return 0;
+    return path_num;
 }
