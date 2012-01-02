@@ -58,14 +58,13 @@ static int main_from_arg(char* arg)
 }
 
 int main(int argc, char** argv) {
-    /*_cm.p.song_dir = "/tmp/cm_test/songs";
-    _cm.p.album_dir = "/tmp/cm_test/album";
-    _cm.p.song_git_dir = "/tmp/cm_test/origin/songs";
-    _cm.p.album_git_dir = "/tmp/cm_test/origin/album";*/
-    cm.p.song_dir = "/Volumes/Audio/Workspace/songs";
-    cm.p.album_dir = "/Volumes/Audio/Workspace/album";
-    cm.p.song_git_dir = "/Volumes/Audio/git/songs";
-    cm.p.album_git_dir = "/Volumes/Audio/git/album";
+    if ((cm.p.song_dir      = getenv("SAPHTUNE_SONG_DIR")) == NULL ||
+        (cm.p.album_dir     = getenv("SAPHTUNE_ALBUM_DIR")) == NULL ||
+        (cm.p.song_git_dir  = getenv("SAPHTUNE_GIT_SONG_DIR")) == NULL ||
+        (cm.p.album_git_dir = getenv("SAPHTUNE_GIT_ALBUM_DIR")) == NULL) {
+        fprintf(stderr, "Could not load paths from env\n");
+        exit(1);
+    }
 
     if(0 == load_data()) {
         fprintf(stderr, "Could not create song/album lists\n");
