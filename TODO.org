@@ -1,4 +1,7 @@
 #+title: congman tasks
+* Data set TODO
+** TODO List and retag all projects with >1 master file
+** TODO Convert document types via applescript interface
 * 1.0 GTK
 Decided to skip buggy camelcased CDK in favor of GTK+.
 
