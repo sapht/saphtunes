@@ -38,5 +38,3 @@ for i in {1,2,3}; do
     git submodule add "$ROOT/git/songs/song_"$i"3.git"
     git push origin master
 done;
-
-ls -la /tmp/cm_test
