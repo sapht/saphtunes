@@ -2,9 +2,18 @@
 * 1.0 GTK
 Decided to skip buggy camelcased CDK in favor of GTK+.
 
-** TODO Rewrite the entire CDK interface in GTK+
+Tutorial for GTK+: http://zetcode.com/tutorials/gtktutorial/firstprograms/
+test file: [[../gtk_test]]
+
+** DONE Rewrite the entire CDK interface in GTK+
+CLOSED: [2012-01-02 Mon 00:17]
 ** TODO Implement a view of the 10 latest song commits, with view
 ** TODO Implement a view of all repositories, album or songs, with un-commited files
+** DONE Fix the window sizes
+CLOSED: [2012-01-02 Mon 02:11]
+On resize, album list grows huge. this may be the issue
+** DONE Add scrollbar
+CLOSED: [2012-01-02 Mon 02:11]
 * 1.0
 ** TODO Implement a split pane view of album/children
 *** TODO fix the 

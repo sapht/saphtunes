@@ -1,3 +1,3 @@
 #!/bin/sh
 mkdir -p build
-gcc -pg -Wall -ggdb -std=c99 -I/usr/local/include/cdk -lncurses -lcdk *.c -o build/cm
+gcc *.c -o build/cm -std=c99 -pg -Wall -ggdb -lncurses -lcdk `pkg-config --libs --cflags gtk+-2.0`

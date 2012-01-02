@@ -1,7 +1,8 @@
 #include <stdio.h>
-
+#include <string.h>
+#include <stdlib.h>
 #include "main.h"
-#include "cdk.h"
+#include "gtk.h"
 #include "song.h"
 #include "album.h"
 
@@ -61,10 +62,10 @@ int main(int argc, char** argv) {
     _cm.p.album_dir = "/tmp/cm_test/album";
     _cm.p.song_git_dir = "/tmp/cm_test/origin/songs";
     _cm.p.album_git_dir = "/tmp/cm_test/origin/album";*/
-    _cm.p.song_dir = "/Volumes/Audio/Workspace/songs";
-    _cm.p.album_dir = "/Volumes/Audio/Workspace/album";
-    _cm.p.song_git_dir = "/Volumes/Audio/git/songs";
-    _cm.p.album_git_dir = "/Volumes/Audio/git/album";
+    cm.p.song_dir = "/Volumes/Audio/Workspace/songs";
+    cm.p.album_dir = "/Volumes/Audio/Workspace/album";
+    cm.p.song_git_dir = "/Volumes/Audio/git/songs";
+    cm.p.album_git_dir = "/Volumes/Audio/git/album";
 
     if(0 == load_data()) {
         fprintf(stderr, "Could not create song/album lists\n");
@@ -73,7 +74,7 @@ int main(int argc, char** argv) {
 
 	if (argc == 1) {
 		/* This means interactive mode */
-        return ui_main();
+        return ui_main(&argc, &argv);
 	} else {
         return main_from_arg(argv[1]);
 	}
