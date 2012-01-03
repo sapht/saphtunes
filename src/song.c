@@ -5,10 +5,10 @@
 #include <string.h>
 
 int
-song_qsort(struct song *a,
-                struct song *b)
+song_qsort(struct song **a,
+           struct song **b)
 {
-    return strcmp(a->slug, b->slug);
+    return strcmp((*a)->slug, (*b)->slug);
 }
 
 struct song *

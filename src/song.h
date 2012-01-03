@@ -16,7 +16,7 @@ struct song_list {
     int len;
 };
 
-int song_qsort(struct song *a, struct song *b);
+int song_qsort(struct song **a, struct song **b);
 int songs_load_dir(char *dir, struct song_list *song_list);
 struct song * song_create(char *root, char *name);
 int song_repos_not_cloned(char *git_dir, struct song_list *song_list, char **not_cloned);

@@ -47,9 +47,9 @@ album_list_match_songs(struct album_list *album_list,
 
     for (int ai=0; ai<album_list->len; ai++) {
         album = album_list->e[ai];
-        album->songs.e = malloc(SONG_MAX_NUM * sizeof(void*));
 
         submodule_num = git_repo_fill_submodules(&album->git, submodules);
+        album->songs.e = malloc(submodule_num * sizeof(void*));
 
 
         int found;
@@ -71,9 +71,9 @@ album_list_match_songs(struct album_list *album_list,
             }
         }
 
-        qsort(album->songs.e, 
+        qsort((*album->songs.e), 
               album->songs.len, 
-              sizeof(struct song*),
+              sizeof(struct song),
               song_qsort);
 
         /*fprintf(stderr, 
