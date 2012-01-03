@@ -31,7 +31,7 @@ void
 album_list_match_songs(struct album_list *album_list, 
                        struct song_list *song_list)
 {
-    /* XXX: Note that songs are pointers to instances in _cm.songs.
+    /* XXX: Note that songs are pointers to instances in _st.songs.
      * This means the path is going to be the main clone, not the submodule
      * of the album. To implement things that require the submodule path, we
      * could create a album_song struct that represents the song embedded
@@ -70,6 +70,11 @@ album_list_match_songs(struct album_list *album_list,
                 exit(1);
             }
         }
+
+        qsort(album->songs.e, 
+              album->songs.len, 
+              sizeof(struct song*),
+              song_qsort);
 
         /*fprintf(stderr, 
                 "Album %s has %d songs\n", 

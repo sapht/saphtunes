@@ -274,7 +274,7 @@ to process_list(file_list, loop_start, limit, interactive)
 	set loop_iteration to 1
 	repeat with current_file_alias in file_list
 		log current_file_alias
-		set current_wavfile to (rstripstring(rstripstring(current_file_alias, ".record"), ".rns"))
+		set current_wavfile to (rstripstring(rstripstring(rstripstring(current_file_alias, ".record"), ".rns")), ".reason")
 		if ( true or not only_new or (exists file (POSIX file current_wavfile))) then
 			if (length of current_file_alias is greater than 3) then -- 3 is an arbitrary value. this is for testing against empty strings at the end of the file list... perhaps is should sanitize that variable instead ;)
 				if (loop_iteration is greater than loop_start) then

@@ -1,8 +1,8 @@
 #ifndef _MAIN__H_
 #define _MAIN__H_
-#define cm _cm
+#define st _st
 
-extern struct cm_singleton {
+extern struct st_singleton {
     struct song_list *songs;
     struct album_list *albums;
 
@@ -13,7 +13,7 @@ extern struct cm_singleton {
         char *song_git_dir;
         char *album_git_dir;
     } p;
-} _cm;
+} _st;
 
 
 #endif

@@ -13,14 +13,39 @@ git_load_generic(struct git_repo *repo,
                  char *root, 
                  char *name)
 {
-
     repo->path = malloc(255 * sizeof(char));
     sprintf(repo->path, "%s/%s", root, name);
 
     repo->config_path = malloc(255 * sizeof(char));
     sprintf(repo->config_path, "%s/.git/config", repo->path);
 
+    repo->status = 0;
+
     return git_load_config(repo);
+}
+
+int
+git_load_status(struct git_repo *repo)
+{
+    char *command = malloc(256);
+    sprintf(command, "cd %s && git status --porcelain -s", repo->path);
+
+    FILE *fpipe;
+    char data[4096];
+
+    if ( !(fpipe = popen(command, "r"))) {
+        perror("Problem with le pipe");
+        exit(1);
+    }
+
+    char *r = fgets(data, 4096, fpipe);
+    if (r != 0) {
+        repo->status = strdup(data);
+    }    
+    pclose(fpipe);
+
+
+    return 1;
 }
 
 int
@@ -49,17 +74,14 @@ git_load_config(struct git_repo *repo)
 
     /* Begin parsing */
 	char *begin_block = strstr(config_data, "[remote \"origin\"]");
-	if ( 0 == begin_block ) {
-		return 0;
-	} else {
+	if ( 0 != begin_block ) {
 		begin_block++;
 		char *end_block = strstr(begin_block, "[");
 		if (end_block != 0) { *end_block = 0; }
 
 		char *url_begin = strstr(begin_block, "url = ");
-		if (url_begin == 0) {
-			return 0;
-		} else {
+
+		if (url_begin != 0) {
 			url_begin += strlen("url = ");
 			char *url_end = strchr(url_begin, '\n');
 			*url_end = 0;
@@ -68,6 +90,8 @@ git_load_config(struct git_repo *repo)
             return 1;
 		}
 	}
+
+    return 0;
 }
 
 int

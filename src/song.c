@@ -2,17 +2,30 @@
 #include <stdio.h>
 #include "song.h"
 #include "util.h"
+#include <string.h>
+
+int
+song_qsort(struct song *a,
+                struct song *b)
+{
+    return strcmp(a->slug, b->slug);
+}
 
 struct song *
 song_create(char *root, char *name)
 {
     struct song *r = malloc(sizeof(struct song));
 
-    git_load_generic(&r->git, root, name);
+    int could_load = git_load_generic(&r->git, root, name);
+    if(!could_load) {
+        printf("Could not load %s\n", name);
+        exit(1);
+    }
+
+    git_load_status(&r->git);
     r->path = r->git.path;
     r->slug = name;
 
-    /*printf("Path %s has origin %s\n", r->git.path, r->git.origin);*/
     return r;
 }
 

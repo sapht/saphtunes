@@ -2,23 +2,23 @@
 #include <string.h>
 #include <stdlib.h>
 #include "main.h"
-#include "gtk.h"
+#include "ui.h"
 #include "song.h"
 #include "album.h"
 
-struct cm_singleton _cm;
+struct st_singleton _st;
 
 static int load_data() {
-    _cm.songs = malloc(sizeof(struct song_list));
-    _cm.albums = malloc(sizeof(struct song_list));
+    st.songs = malloc(sizeof(struct song_list));
+    st.albums = malloc(sizeof(struct song_list));
 
     printf("Loading songs...\n");
-    if(0==songs_load_dir(_cm.p.song_dir, _cm.songs)) return 0;
+    if(0==songs_load_dir(_st.p.song_dir, _st.songs)) return 0;
     printf("Loading albums...\n");
-    if(0==album_load_dir(_cm.p.album_dir, _cm.albums)) return 0;
+    if(0==album_load_dir(_st.p.album_dir, _st.albums)) return 0;
 
     printf("Matching album repos to songs...\n");
-    album_list_match_songs(_cm.albums, _cm.songs);
+    album_list_match_songs(_st.albums, _st.songs);
 
     return 1;
 }
@@ -28,7 +28,7 @@ static int main_from_arg(char* arg)
 {
     if (strcmp(arg, "orphans") == 0) {
         struct song_list *orphans = album_list_find_exclusions(
-            _cm.albums, _cm.songs
+            st.albums, st.songs
         );
         if (orphans->len > 0) {
             for (int i=0; i<orphans->len; i++) {
@@ -39,8 +39,8 @@ static int main_from_arg(char* arg)
         int num_not_cloned = 0;
         char** not_cloned = malloc(sizeof(void*) * SONG_MAX_NUM);
         num_not_cloned = song_repos_not_cloned(
-                _cm.p.song_git_dir,
-                _cm.songs,
+                _st.p.song_git_dir,
+                _st.songs,
                 not_cloned
                 );
         if (num_not_cloned > 0) {
@@ -58,10 +58,10 @@ static int main_from_arg(char* arg)
 }
 
 int main(int argc, char** argv) {
-    if ((cm.p.song_dir      = getenv("SAPHTUNE_SONG_DIR")) == NULL ||
-        (cm.p.album_dir     = getenv("SAPHTUNE_ALBUM_DIR")) == NULL ||
-        (cm.p.song_git_dir  = getenv("SAPHTUNE_GIT_SONG_DIR")) == NULL ||
-        (cm.p.album_git_dir = getenv("SAPHTUNE_GIT_ALBUM_DIR")) == NULL) {
+    if ((st.p.song_dir      = getenv("SAPHTUNE_SONG_DIR")) == NULL ||
+        (st.p.album_dir     = getenv("SAPHTUNE_ALBUM_DIR")) == NULL ||
+        (st.p.song_git_dir  = getenv("SAPHTUNE_GIT_SONG_DIR")) == NULL ||
+        (st.p.album_git_dir = getenv("SAPHTUNE_GIT_ALBUM_DIR")) == NULL) {
         fprintf(stderr, "Could not load paths from env\n");
         exit(1);
     }
