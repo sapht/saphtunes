@@ -71,9 +71,9 @@ album_list_match_songs(struct album_list *album_list,
             }
         }
 
-        qsort((*album->songs.e), 
+        qsort(album->songs.e, 
               album->songs.len, 
-              sizeof(struct song),
+              sizeof(struct song*),
               song_qsort);
 
         /*fprintf(stderr, 
