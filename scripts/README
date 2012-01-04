@@ -1,1 +1,0 @@
-These are some things I use to make it easier on myself working with Propellerheads Record/Reason. The autoexport-script is probably of greatest interest, it takes a chunk of files from stdin and blurts out .wav files in their respective parent directories. I use this in conjunction with other scripts to manage my song library.
