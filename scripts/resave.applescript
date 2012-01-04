@@ -21,7 +21,8 @@ to close_split_windows()
 						log "ya gotta do it again (rack)"
 						set reloop to true
 						set n to number of every window
-						click button 3 of win
+            click button 1 of win
+            --keystroke "w" using {command down}
 						
 						repeat -- repeat in order to make sure the window is actually closed
 							set n2 to number of every window
@@ -36,7 +37,8 @@ to close_split_windows()
 						
 						set reloop to true
 						set n to number of every window
-						click button 3 of win
+            click button 1 of win
+            --keystroke "w" using {command down}
 						
 						repeat -- repeat in order to make sure the window is actually closed
 							set n2 to number of every window
@@ -79,7 +81,7 @@ to get_dirname(file_alias) -- NOTE: will mess up if you give it a path with trai
 end get_dirname
 
 to clog(msg)
-	set theFileReference to open for access "/tmp/autoexport.log" with write permission
+	set theFileReference to open for access "/tmp/autosave.log" with write permission
 	write msg & "
 " to theFileReference starting at eof
 	close access theFileReference
@@ -118,7 +120,7 @@ on menu_click_recurse(mList, parentObject)
 	end tell
 end menu_click_recurse
 
-to save_song(file_alias)
+to save_song(file_alias, new_name)
 	tell application "System Events"
 		tell process "Reason"
 			tell application "Reason" to activate
@@ -144,29 +146,33 @@ to save_song(file_alias)
 			keystroke "g" using {command down, shift down}
 			set dirname to my get_dirname(file_alias)
 			keystroke dirname & "/" -- directory to save. make sure the directory exists, or else the last item will be considered a file name!
-      delay 1
+      --delay 1
       my clog("go to...")
 			key code 52 -- close "go to" dialog
+
+      keystroke new_name
       delay 1
+      --delay 1
       my clog("save...")
-      delay 1
+      --delay 1
       --key code 52 -- press "save"
       click button 4 of window 1
+      delay 1
 
-      delay 1
+      --delay 1
       my clog("OK")
-      delay 1
+      --delay 1
 
       
 
-			--repeat
-				--if (number of every window) is 1 then
-					--exit repeat
-				--end if
+      repeat
+        if (number of every window) is 1 then
+          exit repeat
+        end if
 				
 				-- TODO: sometimes, export fails. it says something like "Corrupted file when exporting XYZ."
-				--delay 1 -- this delay is neat because applescript seems to hog a lot of CPU while probing for windows, so it actually makes the process faster
-			--end repeat
+        delay 1 -- this delay is neat because applescript seems to hog a lot of CPU while probing for windows, so it actually makes the process faster
+      end repeat
 			
 			
 			my clog("Updated " & file_alias)
@@ -234,14 +240,14 @@ on rstripString(theText, trimString)
    return theText
 end rstripString
 
-to process_file(current_file_alias)
+to process_file(current_file_alias, new_name)
   if (length of current_file_alias is greater than 3) then -- 3 is an arbitrary value. this is for testing against empty strings at the end of the file list... perhaps is should sanitize that variable instead ;)
     tell application "System Events"
       tell application process "Reason"
         open current_file_alias -- if this fails, the script should choke entirely, which is good
         
         repeat
-          log "Inside repeat..."
+          my clog("Inside repeat...")
           set did_process to false
           repeat with current_win in every window -- the reason for this loop is to circumvent "Open Song" (and possibly other, unknown) tickers
             set loop_continue to false
@@ -254,6 +260,7 @@ to process_file(current_file_alias)
             
             if loop_continue is false then -- if the try block failed we will not go here. the try block should only fail during tiny frames of 0 window count
               -- BAD FORMAT
+              my clog("confused???")
               if number of all_ui is 4 then
                 log "well..."
                 if name of item 4 in all_ui is "File has bad format" then
@@ -287,11 +294,12 @@ to process_file(current_file_alias)
                 end if
                 
                 -- MAIN APPLICATION WINDOW
-                if number of all_ui is 21 then -- looks like this number changed in reason6
+                my clog((number of all_ui) as string)
+                if (number of all_ui) is in {21, 22, 23} then -- looks like this number changed in reason6
                   my close_split_windows()
                   
                   my clog( "I will now try to resave")
-                  my save_song(current_file_alias)
+                  my save_song(current_file_alias, new_name)
                   my clog("Looks successful!")
 
                   tell application "System Events"
@@ -307,6 +315,13 @@ to process_file(current_file_alias)
           end repeat
           
           if did_process is true then
+            repeat
+              if (number of every window) is 0 then
+                exit repeat
+              end if
+              
+              delay 1 -- this delay is neat because applescript seems to hog a lot of CPU while probing for windows, so it actually makes the process faster
+            end repeat
             exit repeat
           end if
         end repeat
@@ -316,5 +331,5 @@ to process_file(current_file_alias)
 end process_list
 
 on run argv
-  my process_file( item 1 of argv )
+  my process_file( item 1 of argv, item 2 of argv )
 end run
