@@ -14,28 +14,6 @@ struct song_buttons {
 };
 
 
-static void
-select_album(GtkTreeView *album_list_view, 
-                       GtkTreePath *item_path, 
-                       GtkTreeViewColumn *column,
-                       gpointer song_list
-                       )
-{
-    GtkTreeIter iter;
-    GtkTreeModel *album_model = gtk_tree_view_get_model(album_list_view);
-
-    if(!gtk_tree_model_get_iter(album_model, &iter, item_path)) {
-        printf("Could not find the album select iter\n");
-        exit(1);
-    }
-
-    int album_offset;
-    gtk_tree_model_get(album_model, &iter, 
-        0, &album_offset,
-        -1);
-
-    ui_fill_song_list(song_list, &st.albums->e[album_offset]->songs);
-}
 
 static void
 btn_open_song(GtkWidget *button, gpointer song_ptr)
@@ -50,17 +28,17 @@ btn_open_song(GtkWidget *button, gpointer song_ptr)
 
 
 static void
-select_song(GtkTreeView *song_list_view, 
-                      GtkTreePath *item_path, 
-                      GtkTreeViewColumn *column,
-                      gpointer song_buttons
-                      )
+select_song(GtkTreeSelection *selection,
+            gpointer song_buttons
+            )
 {
     GtkTreeIter iter;
-    GtkTreeModel *song_model = gtk_tree_view_get_model(song_list_view);
-    if(!gtk_tree_model_get_iter(song_model, &iter, item_path)) {
-        printf("Could not find song iter\n");
-        exit(1);
+    GtkTreeModel *song_model;
+
+    if(!gtk_tree_selection_get_selected(selection,
+                                         &song_model,
+                                         &iter)) {
+        return;
     }
 
     int song_offset;
@@ -83,6 +61,101 @@ select_song(GtkTreeView *song_list_view,
 
     buttstruct->open_sig = g_signal_connect (open_button, "clicked",
         G_CALLBACK (btn_open_song), song);
+}
+
+static void
+select_album(/*GtkTreeView *album_list_view, */
+                       /*GtkTreePath *item_path, */
+                       /*GtkTreeViewColumn *column,*/
+             GtkTreeSelection *selection,
+             gpointer song_list
+             )
+{
+    GtkTreeIter iter;
+    GtkTreeModel *album_model;
+
+    if(!gtk_tree_selection_get_selected(selection,
+                                         &album_model,
+                                         &iter)) {
+        return;
+    }
+
+    int album_offset;
+    gtk_tree_model_get(album_model, &iter, 
+        0, &album_offset,
+        -1);
+
+    ui_fill_song_list(song_list, &st.albums->e[album_offset]->songs);
+}
+
+static void
+album_sort_title(GtkTreeViewColumn *view_col,
+                 gpointer data)
+{
+    GtkTreeView *album_view = GTK_TREE_VIEW(
+        gtk_tree_view_column_get_tree_view(view_col)
+    );
+
+    GtkTreeSortable *album_sorter = GTK_TREE_SORTABLE(
+        gtk_tree_view_get_model(album_view)
+    );
+
+    GtkSortType order;
+    gint current_sort_field;
+
+    if (gtk_tree_sortable_get_sort_column_id(
+            album_sorter,
+            &current_sort_field,
+            &order) && current_sort_field == 1) {
+
+        gtk_tree_sortable_set_sort_column_id(
+            album_sorter,
+            1,
+            ((order == GTK_SORT_ASCENDING) 
+                ? GTK_SORT_DESCENDING
+                : GTK_SORT_ASCENDING)
+        );
+    } else {
+        gtk_tree_sortable_set_sort_column_id(
+            album_sorter,
+            1,
+            GTK_SORT_ASCENDING);
+    }
+}
+
+static void
+album_sort_numsongs(GtkTreeViewColumn *view_col,
+                 gpointer data)
+{
+    GtkTreeView *album_view = GTK_TREE_VIEW(
+        gtk_tree_view_column_get_tree_view(view_col)
+    );
+
+    GtkTreeSortable *album_sorter = GTK_TREE_SORTABLE(
+        gtk_tree_view_get_model(album_view)
+    );
+
+    GtkSortType order;
+    gint current_sort_field;
+
+    if (gtk_tree_sortable_get_sort_column_id(
+            album_sorter,
+            &current_sort_field,
+            &order) && current_sort_field == 2) {
+
+        gtk_tree_sortable_set_sort_column_id(
+            album_sorter,
+            2,
+            ((order == GTK_SORT_ASCENDING) 
+                ? GTK_SORT_DESCENDING
+                : GTK_SORT_ASCENDING)
+        );
+    } else {
+        gtk_tree_sortable_set_sort_column_id(
+            album_sorter,
+            2,
+            GTK_SORT_ASCENDING);
+    }
 }
 
 GtkWidget *
@@ -122,6 +195,30 @@ ui_page_1_create()
 
     gtk_tree_view_set_model(GTK_TREE_VIEW(album_list_view), GTK_TREE_MODEL(album_list));
     gtk_tree_view_set_headers_clickable(GTK_TREE_VIEW(album_list_view), 1);
+
+    /*gtk_tree_sortable_set_sort_column_id(*/
+        /*GTK_TREE_SORTABLE(album_list),*/
+        /*2,*/
+        /*GTK_SORT_DESCENDING);*/
+
+    g_signal_connect(
+        gtk_tree_view_get_column(
+            GTK_TREE_VIEW(album_list_view),
+            0),
+         "clicked",
+         G_CALLBACK(album_sort_title),
+         NULL
+    );
+
+    g_signal_connect(
+        gtk_tree_view_get_column(
+            GTK_TREE_VIEW(album_list_view),
+            1),
+         "clicked",
+         G_CALLBACK(album_sort_numsongs),
+         NULL
+    );
+
 
     /***************************************** 
      * Song list view                        *
@@ -175,8 +272,18 @@ ui_page_1_create()
     gtk_table_attach_defaults(GTK_TABLE(table), song_scroll,  1, 2, 0, 1);
     gtk_table_attach_defaults(GTK_TABLE(table), song_details, 1, 2, 1, 2);
 
-    g_signal_connect(G_OBJECT(album_list_view), "row-activated", G_CALLBACK(select_album), song_list);
-    g_signal_connect(G_OBJECT(song_list_view),  "row-activated", G_CALLBACK(select_song), song_buttons);
+    /*g_signal_connect(G_OBJECT(album_list_view), "row-activated", G_CALLBACK(select_album), song_list);*/
+    GtkTreeSelection *album_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(album_list_view));
+    GtkTreeSelection *song_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(song_list_view));
+    g_signal_connect(G_OBJECT(album_selection), 
+                     "changed", 
+                     G_CALLBACK(select_album), 
+                     song_list);
+
+    g_signal_connect(G_OBJECT(song_selection),  
+                     "changed", 
+                     G_CALLBACK(select_song), 
+                     song_buttons);
 
     return table;
 }
