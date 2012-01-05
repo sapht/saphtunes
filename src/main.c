@@ -9,7 +9,15 @@
 struct st_singleton _st;
 
 static int load_data() {
-    st.songs = malloc(sizeof(struct song_list));
+    if ((st.p.song_dir      = getenv("SAPHTUNE_SONG_DIR")) == NULL ||
+        (st.p.album_dir     = getenv("SAPHTUNE_ALBUM_DIR")) == NULL ||
+        (st.p.song_git_dir  = getenv("SAPHTUNE_GIT_SONG_DIR")) == NULL ||
+        (st.p.album_git_dir = getenv("SAPHTUNE_GIT_ALBUM_DIR")) == NULL) {
+        fprintf(stderr, "Could not load paths from env\n");
+        exit(1);
+    }
+
+    st.songs  = malloc(sizeof(struct song_list));
     st.albums = malloc(sizeof(struct song_list));
 
     printf("Loading songs...\n");
@@ -24,10 +32,15 @@ static int load_data() {
 }
 
 
-static int main_from_arg(char* arg)
+static int main_from_args(int argc, char **argv)
 {
-    if (strcmp(arg, "orphans") == 0) {
-        struct song_list *orphans = album_list_find_exclusions(
+    if (strcmp(argv[1], "orphans") == 0) {
+        if(!load_data()) {
+            fprintf(stderr, "Could not create song/album lists\n");
+            exit(1);
+        }
+
+        struct song_list*orphans = album_list_find_exclusions(
             st.albums, st.songs
         );
         if (orphans->len > 0) {
@@ -35,7 +48,20 @@ static int main_from_arg(char* arg)
                 printf("%s\n", orphans->e[i]->slug);
             }
         }
-    } else if (strcmp(arg, "displaced") == 0) {
+    } else if (strcmp(argv[1], "analyze") == 0) {
+        printf("Supercool analyze finder initialized\n");
+        struct song_render_stat stat = song_render_analyze(argv[2]);
+
+        printf("Nullspace: %d, clipping: %d",
+            stat.nullspace,
+            stat.clipping);
+
+    } else if (strcmp(argv[1], "displaced") == 0) {
+        if(!load_data()) {
+            fprintf(stderr, "Could not create song/album lists\n");
+            exit(1);
+        }
+
         int num_not_cloned = 0;
         char** not_cloned = malloc(sizeof(void*) * SONG_MAX_NUM);
         num_not_cloned = song_repos_not_cloned(
@@ -48,33 +74,29 @@ static int main_from_arg(char* arg)
                 printf("%s\n", not_cloned[i]);
             }
         }
-    } else if (strcmp(arg, "help") == 0) {
+    } else {
         printf("Commands:\n");
         printf("displaced\n");
         printf("orphans\n");
-        return 1;
-    }
+    }    
+
     return 0;
 }
 
 int main(int argc, char** argv) {
-    if ((st.p.song_dir      = getenv("SAPHTUNE_SONG_DIR")) == NULL ||
-        (st.p.album_dir     = getenv("SAPHTUNE_ALBUM_DIR")) == NULL ||
-        (st.p.song_git_dir  = getenv("SAPHTUNE_GIT_SONG_DIR")) == NULL ||
-        (st.p.album_git_dir = getenv("SAPHTUNE_GIT_ALBUM_DIR")) == NULL) {
-        fprintf(stderr, "Could not load paths from env\n");
-        exit(1);
-    }
-
-    if(0 == load_data()) {
-        fprintf(stderr, "Could not create song/album lists\n");
-        exit(1);
-    }
 
 	if (argc == 1) {
 		/* This means interactive mode */
+        if(!load_data()) {
+            fprintf(stderr, "Could not create song/album lists\n");
+            exit(1);
+        }
+
         return ui_main(&argc, &argv);
 	} else {
-        return main_from_arg(argv[1]);
+        return main_from_args(argc, argv);
 	}
+
+    printf("Nope\n");
+    return 0;
 }

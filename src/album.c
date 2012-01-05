@@ -74,7 +74,7 @@ album_list_match_songs(struct album_list *album_list,
         qsort(album->songs.e, 
               album->songs.len, 
               sizeof(struct song*),
-              (__compar_fn_t) song_qsort);
+              song_qsort);
 
         /*fprintf(stderr, 
                 "Album %s has %d songs\n", 

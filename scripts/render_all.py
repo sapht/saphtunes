@@ -7,14 +7,15 @@ import sys
 
 def export_all(render_scpt_path, files):
     for song_file in files:
-        out_file = project_name + '.wav'
-
-        if os.exists(out_file):
-            if os.stat(song_file).st_mtime > os.stat(out_file).st_mtime:
-                continue
-
         project_path = os.path.dirname(song_file)
         project_name = os.path.basename(project_path)
+
+        out_file = project_name + '.wav'
+        out_path = project_path + '/' + out_file
+
+        if os.path.isfile(out_path):
+            if os.stat(song_file).st_mtime < os.stat(out_path).st_mtime:
+                continue
 
         print (song_file, project_path, project_name)
 

@@ -22,32 +22,70 @@ song_create(char *root, char *name)
         exit(1);
     }
 
+    r->slug = name;
     git_load_status(&r->git);
     r->path = r->git.path;
-    r->path_render = malloc(256 * sizeof(char));
+    r->render_path = malloc(256 * sizeof(char));
 
-    sprintf(r->path_render, "%s/%s.wav",
+    sprintf(r->render_path, "%s/%s.wav",
             r->path,
             r->slug);
 
-
-    r->slug = name;
+    /*printf("Path to render: %s\n", r->render_path);*/
+    r->render_stat = song_render_analyze(r->render_path);
 
     return r;
 }
 
-int
-song_has_nullspace(const struct song *song)
+struct song_render_stat
+song_render_analyze(char *render_path)
 {
-    FILE *fp = fopen(song->path_render, "rb");
+    struct song_render_stat stat;
+    FILE *fp = fopen(render_path, "rb");
     if (!fp) {
-        printf("Could not detect nullspace of %s\n", song->slug);
-        exit(1);
+        printf("Could not detect analyze of %s\n", render_path);
+        stat.nullspace = -1;
+        stat.clipping  = -1;
+        return stat;
     }
 
     /* Assume 16 bit depth, 48khz */
-    fseek(fp, 0, SEEK_END - 
-                 48000 * 2 * 10);
+
+    short nullspace_num_sec_multiplier = 10;
+    short clipping_num_sec_divisor     = 10;
+
+    fseek(fp, 0, SEEK_END);
+    fseek(fp, -48000 * 2 * 2 * nullspace_num_sec_multiplier, SEEK_CUR);
+
+    short ch1_val;
+    short ch2_val;
+    short mean;
+    short silence_threshold = 5;
+
+    int loudness = 0;
+
+    /* Check for nullspace */
+    while(fread(&ch1_val, 2, 1, fp)
+       && fread(&ch2_val, 2, 1, fp)
+    ) {
+        mean = abs((ch1_val + ch2_val) / 2);
+        if (mean > silence_threshold) { loudness++; }
+    }
+
+    stat.nullspace = !loudness;
+
+    loudness = 0;
+    fseek(fp, (-48000 * 2 * 2)/clipping_num_sec_divisor, SEEK_CUR);
+    while(fread(&ch1_val, 2, 1, fp)
+       && fread(&ch2_val, 2, 1, fp)
+    ) {
+        mean = abs((ch1_val + ch2_val) / 2);
+        if (mean > silence_threshold) { loudness++; }
+    }
+
+    stat.clipping = loudness > 0;
+
+    return stat;
 }
 
 int

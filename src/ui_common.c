@@ -2,6 +2,7 @@
 #include "song.h"
 #include "album.h"
 #include "main.h"
+
 void
 ui_fill_song_list(GtkWidget *song_list_wdg, 
                   struct song_list *song_list)
@@ -24,8 +25,8 @@ ui_fill_song_list(GtkWidget *song_list_wdg,
                            &song_iter,
                            0, j,
                            1, song_list->e[i]->slug,
+                           2, song_list->e[i]->render_stat.nullspace,
+                           3, song_list->e[i]->render_stat.clipping,
                            -1);
     }
 }
-
-

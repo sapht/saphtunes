@@ -46,7 +46,7 @@ to saphtune_main(file_alias, new_name)
 			end repeat
 
 			key code 52 -- this closes the dialog where you choose bit depth and sample rate.
-			
+            delay 10
 			repeat
 				if (number of every window) is 1 then
 					exit repeat

@@ -37,19 +37,26 @@ select_song(GtkTreeSelection *selection,
 GtkWidget *
 ui_page_2_create()
 {
-    GtkListStore *song_list = gtk_list_store_new(2, G_TYPE_INT, G_TYPE_STRING);
+    GtkListStore *song_list = gtk_list_store_new(
+                5, 
+                G_TYPE_INT, 
+                G_TYPE_STRING,
+                G_TYPE_INT,
+                G_TYPE_INT,
+                G_TYPE_INT
+    );
     GtkTreeIter song_iter;
 
     for(int i=0; i<st.songs->len; i++) {
         struct song *song_entry = st.songs->e[i];
-        if(0 != song_entry->git.status){
-            gtk_list_store_append(song_list, &song_iter);
-            gtk_list_store_set(song_list, &song_iter,
-                            0, (gint) i,
-                            1, song_entry->slug,
-                            -1);
-        }
-
+        gtk_list_store_append(song_list, &song_iter);
+        gtk_list_store_set(song_list, &song_iter,
+                        0, (gint) i,
+                        1, song_entry->slug,
+                        2, song_entry->render_stat.nullspace,
+                        3, song_entry->render_stat.clipping,
+                        4, (0 != song_entry->git.status),
+                        -1);
     }
 
     GtkWidget *song_list_view = gtk_tree_view_new();
@@ -59,8 +66,25 @@ ui_page_2_create()
         GTK_TREE_VIEW(song_list_view),
         0, "Title", cell_renderer,
         "text", 1,
-        NULL
-    );
+        NULL);
+
+    gtk_tree_view_insert_column_with_attributes(
+        GTK_TREE_VIEW(song_list_view),
+        1, "null", cell_renderer,
+        "text", 2,
+        NULL);
+
+    gtk_tree_view_insert_column_with_attributes(
+        GTK_TREE_VIEW(song_list_view),
+        2, "clip", cell_renderer,
+        "text", 3,
+        NULL);
+
+    gtk_tree_view_insert_column_with_attributes(
+        GTK_TREE_VIEW(song_list_view),
+        3, "git", cell_renderer,
+        "text", 4,
+        NULL);
 
     gtk_tree_view_set_model(GTK_TREE_VIEW(song_list_view), GTK_TREE_MODEL(song_list));
 

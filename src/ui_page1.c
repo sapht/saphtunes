@@ -223,7 +223,13 @@ ui_page_1_create()
     /***************************************** 
      * Song list view                        *
      *****************************************/
-    GtkListStore *song_list = gtk_list_store_new(2, G_TYPE_INT, G_TYPE_STRING);
+    GtkListStore *song_list = gtk_list_store_new(
+        4, 
+        G_TYPE_INT, 
+        G_TYPE_STRING,
+        G_TYPE_INT,
+        G_TYPE_INT
+    );
     /*GtkTreeIter song_iter;*/
 
     GtkWidget *song_list_view = gtk_tree_view_new();
@@ -232,6 +238,19 @@ ui_page_1_create()
         0, "Title", cell_renderer,
         "text", 1,
         NULL);
+
+    gtk_tree_view_insert_column_with_attributes(
+        GTK_TREE_VIEW(song_list_view),
+        1, "null", cell_renderer,
+        "text", 2,
+        NULL);
+
+    gtk_tree_view_insert_column_with_attributes(
+        GTK_TREE_VIEW(song_list_view),
+        2, "clip", cell_renderer,
+        "text", 3,
+        NULL);
+
     gtk_tree_view_set_model(GTK_TREE_VIEW(song_list_view), GTK_TREE_MODEL(song_list));
 
 

@@ -5,11 +5,18 @@
 #define _SONG__H_
 #define SONG_MAX_NUM 2048
 
+struct song_render_stat {
+    int nullspace;
+    int clipping;
+};
+
 struct song {
     char *slug;
     char *path;
-    char *path_render;
     struct git_repo git;
+
+    struct song_render_stat render_stat;
+    char *render_path;
 };
 
 struct song_list {
@@ -17,6 +24,7 @@ struct song_list {
     int len;
 };
 
+struct song_render_stat song_render_analyze(char *render_path);
 int song_qsort(struct song **a, struct song **b);
 int songs_load_dir(char *dir, struct song_list *song_list);
 struct song * song_create(char *root, char *name);
