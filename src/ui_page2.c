@@ -8,16 +8,18 @@
 #include "song.h"
 
 static void
-select_song(GtkTreeView *song_list_view, 
-               GtkTreePath *item_path, 
-               GtkTreeViewColumn *column,
-               gpointer song_details
-               )
+select_song(GtkTreeSelection *selection,
+            gpointer song_details
+            )
 {
     GtkTreeIter iter;
-    GtkTreeModel *song_model = gtk_tree_view_get_model(song_list_view);
-    int found = gtk_tree_model_get_iter(song_model, &iter, item_path);
-    printf("%d\n", found);
+    GtkTreeModel *song_model;
+    
+    if(!gtk_tree_selection_get_selected(selection,
+                                         &song_model,
+                                         &iter)) {
+        return;
+    }
 
     int song_offset;
     gtk_tree_model_get(song_model, &iter, 
@@ -78,7 +80,12 @@ ui_page_2_create()
     gtk_table_attach_defaults(GTK_TABLE(table), song_scroll,  0, 1, 0, 1);
     gtk_table_attach_defaults(GTK_TABLE(table), song_status,  1, 2, 0, 1);
 
-    g_signal_connect(G_OBJECT(song_list_view),  "row-activated", G_CALLBACK(select_song), song_status);
+    GtkTreeSelection *song_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(song_list_view));
+    /*g_signal_connect(G_OBJECT(song_list_view),  "row-activated", G_CALLBACK(select_song), song_status);*/
+    g_signal_connect(G_OBJECT(song_selection),  
+                     "changed", 
+                     G_CALLBACK(select_song), 
+                     song_status);
 
     return table;
 }

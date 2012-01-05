@@ -24,9 +24,30 @@ song_create(char *root, char *name)
 
     git_load_status(&r->git);
     r->path = r->git.path;
+    r->path_render = malloc(256 * sizeof(char));
+
+    sprintf(r->path_render, "%s/%s.wav",
+            r->path,
+            r->slug);
+
+
     r->slug = name;
 
     return r;
+}
+
+int
+song_has_nullspace(const struct song *song)
+{
+    FILE *fp = fopen(song->path_render, "rb");
+    if (!fp) {
+        printf("Could not detect nullspace of %s\n", song->slug);
+        exit(1);
+    }
+
+    /* Assume 16 bit depth, 48khz */
+    fseek(fp, 0, SEEK_END - 
+                 48000 * 2 * 10);
 }
 
 int

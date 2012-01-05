@@ -6,8 +6,9 @@
 #define SONG_MAX_NUM 2048
 
 struct song {
-    char* slug;
-    char* path;
+    char *slug;
+    char *path;
+    char *path_render;
     struct git_repo git;
 };
 

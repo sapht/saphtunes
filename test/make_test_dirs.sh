@@ -7,7 +7,7 @@ mkdir -p $ROOT/album
 mkdir -p $ROOT/songs
 
 # Songs
-for i in {11,12,13,21,22,23,31,32,33,40}; do
+for i in {11,12,13,14,21,22,23,24,25,31,32,33,40}; do
     path="$ROOT/songs/song_$i";
     origin="$ROOT/git/songs/song_$i.git"
     git init $path
@@ -33,8 +33,8 @@ for i in {1,2,3}; do
     touch README
     git add README
     git commit -a -m 'First commit'
-    git submodule add "$ROOT/git/songs/song_"$i"1.git"
-    git submodule add "$ROOT/git/songs/song_"$i"2.git"
-    git submodule add "$ROOT/git/songs/song_"$i"3.git"
+    for z in "$ROOT/git/songs/song_$i"*; do
+        git submodule add "$z"
+    done;
     git push origin master
 done;
