@@ -5,6 +5,7 @@
 #include "ui.h"
 #include "song.h"
 #include "album.h"
+#include "cache.h"
 
 struct st_singleton _st;
 
@@ -16,6 +17,10 @@ static int load_data() {
         fprintf(stderr, "Could not load paths from env\n");
         exit(1);
     }
+
+    st.p.cache = "/tmp/saphtune-cache.dat";
+
+    cache_load(st.p.cache);
 
     st.songs  = malloc(sizeof(struct song_list));
     st.albums = malloc(sizeof(struct song_list));
@@ -92,7 +97,9 @@ int main(int argc, char** argv) {
             exit(1);
         }
 
-        return ui_main(&argc, &argv);
+        int r = ui_main(&argc, &argv);
+        cache_dump(st.p.cache);
+        return r;
 	} else {
         return main_from_args(argc, argv);
 	}

@@ -13,4 +13,5 @@ struct dirent_list {
 };
 
 struct dirent_list dir_read_all(char *dir);
+time_t get_mtime(const char *path);
 #endif

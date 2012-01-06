@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdio.h>
 #include "util.h"
+#include <sys/types.h>
+#include <sys/stat.h>
 
 struct dirent_list
 dir_read_all(char *dir)
@@ -25,19 +27,23 @@ dir_read_all(char *dir)
                 continue;
             }
 
-            /*printf("%s is valid, %p, %p\n", */
-                    /*dp->d_name,*/
-                    /*strchr(dp->d_name, '\r'),*/
-                    /*strchr(dp->d_name, '\n'));*/
-
             r.e[r.len++] = *dp;
-            
         } else {
             closedir(dirp);
             break;
         }
     }
-    
     r.e = realloc(r.e, r.len * sizeof(struct dirent));
     return r;
 }
+
+time_t get_mtime(const char *path)
+{
+    struct stat statbuf;
+    if (stat(path, &statbuf) == -1) {
+        return 0;
+    }
+
+    return statbuf.st_mtime;
+}
+

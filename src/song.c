@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "song.h"
 #include "util.h"
+#include "cache.h"
 #include <string.h>
 
 int
@@ -41,13 +42,28 @@ struct song_render_stat
 song_render_analyze(char *render_path)
 {
     struct song_render_stat stat;
-    FILE *fp = fopen(render_path, "rb");
-    if (!fp) {
-        printf("Could not detect analyze of %s\n", render_path);
+    char *cache_id = malloc(256);
+    sprintf(cache_id, "render_%s", render_path);
+
+    int render_mtime = get_mtime(render_path);
+    if (!render_mtime) {
+        printf("Render nonexistent: %s\n", render_path);
         stat.nullspace = -1;
         stat.clipping  = -1;
         return stat;
     }
+
+    struct cache_entry *e = cache_get(cache_id, render_mtime);
+    if (e) {
+        printf("Found goodies in cache!\n");
+        return *((struct song_render_stat*) e->value);
+    }
+
+    FILE *fp = fopen(render_path, "rb");
+    if(!fp) {
+        fprintf(stderr, "Unknown error reading render of %s\n", render_path);
+        exit(1);
+    };
 
     /* Assume 16 bit depth, 48khz */
 
@@ -85,6 +101,8 @@ song_render_analyze(char *render_path)
 
     stat.clipping = loudness > 0;
 
+    cache_set(cache_id, render_mtime, &stat, sizeof(stat));
+
     return stat;
 }
 
@@ -99,7 +117,7 @@ songs_load_dir(char* dir, struct song_list *song_list) {
 
     for(int i=0; i<files.len; i++) {
         song_list->e[i] = song_create(
-                dir, 
+                dir,
                 files.e[i].d_name);
     }
 
