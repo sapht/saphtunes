@@ -47,23 +47,28 @@ cache_load(char *dump_path)
         c->key   = malloc(c->key_len);
         c->value = malloc(c->value_len);
 
-        fread(c->key,   c->key_len,   sizeof(void*), fp);
-        fread(c->value, c->value_len, sizeof(void*), fp);
+        fread(c->key,   c->key_len,   1, fp);
+        fread(c->value, c->value_len, 1, fp);
 
 
         uint32_t hash_offset = hash_fn(c->key, c->key_len) & 2047;
-        struct hash *he = st.cachetable[hash_offset];
+        struct hash **he = &st.cachetable[hash_offset];
 
         do {
-            if (!he || !strcmp(he->key, c->key)) {
-                he = malloc(sizeof(struct hash));
-                he->key = strdup(c->key);
-                he->value = c;
+            if (!(*he)) {
+                *he = malloc(sizeof(struct hash));
+                (*he)->key = malloc(c->key_len * sizeof(char));
+                (*he)->key_len = c->key_len;
+                memcpy((*he)->key, c->key, c->key_len);
+
+
+                (*he)->value = c;
+                (*he)->next = 0;
                 break;
             }
-        } while ((he = he->next));
+        } while ((he = &((*he)->next)));
 
-        c = &st.cache[st.cache_num++];
+        c = &st.cache[++st.cache_num];
     }
 
     /* Cache was loaded */
@@ -81,9 +86,11 @@ cache_dump(char *dump_path)
     }
 
     for(int i = 0; i<st.cache_num; i++ ) {
-        fwrite(&st.cache[i],       sizeof(int) * 3,       1, fp);
-        fwrite(st.cache[i].key,    st.cache[i].key_len,   1, fp);
-        fwrite(st.cache[i].value,  st.cache[i].value_len, 1, fp);
+        fwrite(&st.cache[i].key_len,   sizeof(int),           1, fp);
+        fwrite(&st.cache[i].value_len, sizeof(int),           1, fp);
+        fwrite(&st.cache[i].timestamp, sizeof(int),           1, fp);
+        fwrite(st.cache[i].key,        st.cache[i].key_len,   1, fp);
+        fwrite(st.cache[i].value,      st.cache[i].value_len, 1, fp);
     }
 
     fclose(fp);
@@ -94,17 +101,21 @@ cache_dump(char *dump_path)
 
 void *
 cache_get(char *id, int ts) {
-    uint32_t hash_offset = hash_fn(id, strlen(id)) & 2047;
+    int id_len = strlen(id);
+    uint32_t hash_offset = hash_fn(id, id_len) & 2047;
 
     struct hash *e = st.cachetable[hash_offset];
 
     if(e) {
         /* There's at least 1 value on this offset */
         do {
-            if(!strcmp(e->key, id)) {
+            if ( id_len == e->key_len
+              && !memcmp(e->key, id, id_len)) {
                 if(ts <= e->value->timestamp) {
                     /* The timestamp is fresh */
                     return e->value;
+                } else {
+                  return 0;
                 }
             }
         } while((e = e->next));
@@ -115,27 +126,40 @@ cache_get(char *id, int ts) {
 
 int
 cache_set(char *id, int ts, void *data, int data_len) {
-    uint32_t hash_offset = hash_fn(id, strlen(id)) & 2047;
+    int id_len = strlen(id);
+    uint32_t hash_offset = hash_fn(id, id_len) & 2047;
     struct hash *e = st.cachetable[hash_offset];
 
     do {
-        if (!e || !strcmp(e->key, id)) {
+        if (!e) {
             struct cache_entry ce;
-            ce.key_len = strlen(id);
-            ce.value_len = data_len;
-            ce.key   = strdup(id);
+            ce.timestamp = ts;
 
-            ce.value = malloc(ce.value_len);
+            ce.key   = malloc(id_len);
+            ce.key_len = id_len;
+            memcpy(ce.key, id, id_len);
+
+            ce.value = malloc(data_len);
+            ce.value_len = data_len;
             memcpy(ce.value, data, data_len);
 
             st.cache[st.cache_num++] = ce;
 
             e = malloc(sizeof(struct hash));
-            e->key = strdup(id);
+            e->key = malloc(id_len * sizeof(char));
+            e->key_len = id_len;
+            memcpy(e->key, id, id_len);
             e->value = &ce;
             return 1;
+        } else if (!memcmp(e->key, id, id_len)) {
+            struct cache_entry *ce = e->value;
+            ce->timestamp = ts;
+            ce->value_len = data_len;
+            ce->value = malloc(data_len);
+            memcpy(ce->value, data, ce->value_len);
+            return 1;
         }
-    } while ((e = e->next));
+    } while ((e = e->next) || 1);
 
     fprintf(stderr, "could not set cache entry %s", id);
     exit(1);

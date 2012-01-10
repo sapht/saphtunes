@@ -6,14 +6,14 @@ to close_split_windows()
 				repeat with win in every window
 					set wintitle to (title of win)
 					log wintitle
-					
+
 					if (wintitle) contains " (Rack)" then
 						log "ya gotta do it again (rack)"
 						set reloop to true
 						set n to number of every window
             click button 1 of win
             --keystroke "w" using {command down}
-						
+
 						repeat -- repeat in order to make sure the window is actually closed
 							set n2 to number of every window
 							if (n2 is less than n) then
@@ -21,15 +21,15 @@ to close_split_windows()
 							end if
 						end repeat
 					end if
-					
+
 					if (wintitle) contains " (Mixer)" then
 						log "ya gotta do it again (mixer)"
-						
+
 						set reloop to true
 						set n to number of every window
             click button 1 of win
             --keystroke "w" using {command down}
-						
+
 						repeat -- repeat in order to make sure the window is actually closed
 							set n2 to number of every window
 							if (n2 is less than n) then
@@ -37,7 +37,7 @@ to close_split_windows()
 							end if
 						end repeat
 					end if
-					
+
 					if (reloop is true) then
 						exit repeat
 					end if
@@ -98,9 +98,10 @@ end resolve_please_insert_disk
 to process_file(current_file_alias, new_name)
   if (length of current_file_alias is greater than 3) then -- 3 is an arbitrary value. this is for testing against empty strings at the end of the file list... perhaps is should sanitize that variable instead ;)
     tell application "System Events"
-      tell application process "Reason"
+      tell application "Reason"
         open current_file_alias -- if this fails, the script should choke entirely, which is good
-        
+      end tell
+      tell application process "Reason"
         repeat
           my clog("Inside repeat...")
           set did_process to false
@@ -112,7 +113,7 @@ to process_file(current_file_alias, new_name)
             on error
               set loop_continue to true
             end try
-            
+
             if loop_continue is false then -- if the try block failed we will not go here. the try block should only fail during tiny frames of 0 window count
               -- BAD FORMAT
               my clog("confused???")
@@ -127,7 +128,7 @@ to process_file(current_file_alias, new_name)
                   exit repeat
                 end if
               else
-                
+
                 -- MISSING SOUNDS
                 if current_title is "Missing Sounds" then
                   select current_win
@@ -137,7 +138,7 @@ to process_file(current_file_alias, new_name)
                   return "missing_sounds"
                   exit repeat
                 end if
-                
+
                 -- INSERT DISK
                 if current_title is "Please Insert Disk" then
                   select current_win
@@ -147,7 +148,7 @@ to process_file(current_file_alias, new_name)
                   return "missing_refill"
                   exit repeat
                 end if
-                
+
                 -- MAIN APPLICATION WINDOW
                 my clog((number of all_ui) as string)
                 if (number of all_ui) is in {21, 22, 23} then -- looks like this number changed in reason6
@@ -165,13 +166,13 @@ to process_file(current_file_alias, new_name)
             end if
             delay 1
           end repeat
-          
+
           if did_process is true then
             repeat
               if (number of every window) is 0 then
                 exit repeat
               end if
-              
+
               delay 1 -- this delay is neat because applescript seems to hog a lot of CPU while probing for windows, so it actually makes the process faster
             end repeat
             exit repeat

@@ -12,7 +12,7 @@ struct cache_entry {
 
 struct hash {
     char *key;
-
+    int key_len;
     struct cache_entry *value;
     struct hash *next;
 };

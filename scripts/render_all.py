@@ -6,24 +6,32 @@ import subprocess
 import sys
 
 def export_all(render_scpt_path, files):
-    for song_file in files:
-        project_path = os.path.dirname(song_file)
+    korv = []
+
+    for song_path in files:
+        project_path = os.path.dirname(song_path)
         project_name = os.path.basename(project_path)
 
         out_file = project_name + '.wav'
         out_path = project_path + '/' + out_file
 
         if os.path.isfile(out_path):
-            if os.stat(song_file).st_mtime < os.stat(out_path).st_mtime:
+            if os.stat(song_path).st_mtime < os.stat(out_path).st_mtime:
                 continue
 
-        print (song_file, project_path, project_name)
+        korv.append(
+            {'path': song_path,
+             'out': out_file}
+        )
 
+    print "Rendering %d files: \n=================\n\t%s" % (len(korv), "\n\t".join([k['path'] for k in korv]))
+
+    for k in korv:
         subprocess.call(
             '''osascript %s "%s" "%s"''' % (
                 render_scpt_path,
-                song_file,
-                out_file
+                k['path'],
+                k['out']
             ),
             shell=True
         )

@@ -32,7 +32,6 @@ song_create(char *root, char *name)
             r->path,
             r->slug);
 
-    /*printf("Path to render: %s\n", r->render_path);*/
     r->render_stat = song_render_analyze(r->render_path);
 
     return r;
@@ -47,16 +46,18 @@ song_render_analyze(char *render_path)
 
     int render_mtime = get_mtime(render_path);
     if (!render_mtime) {
-        printf("Render nonexistent: %s\n", render_path);
+        printf("Render could not analyze: nonexistent: %s\n", render_path);
         stat.nullspace = -1;
         stat.clipping  = -1;
+        stat.duration  = -1;
         return stat;
     }
 
     struct cache_entry *e = cache_get(cache_id, render_mtime);
     if (e) {
-        printf("Found goodies in cache!\n");
         return *((struct song_render_stat*) e->value);
+    } else {
+        printf("Render Analyze: loading info on %s from FS...\n", render_path);
     }
 
     FILE *fp = fopen(render_path, "rb");
@@ -69,9 +70,13 @@ song_render_analyze(char *render_path)
 
     short nullspace_num_sec_multiplier = 10;
     short clipping_num_sec_divisor     = 10;
+    int sample_second = 44100 * 2 * 2; /* rate * channel * sample size */
 
     fseek(fp, 0, SEEK_END);
-    fseek(fp, -48000 * 2 * 2 * nullspace_num_sec_multiplier, SEEK_CUR);
+    int filesize = ftell(fp);
+    stat.duration = filesize / sample_second;
+
+    fseek(fp, -sample_second * nullspace_num_sec_multiplier, SEEK_CUR);
 
     short ch1_val;
     short ch2_val;
@@ -91,7 +96,7 @@ song_render_analyze(char *render_path)
     stat.nullspace = !loudness;
 
     loudness = 0;
-    fseek(fp, (-48000 * 2 * 2)/clipping_num_sec_divisor, SEEK_CUR);
+    fseek(fp, -sample_second/clipping_num_sec_divisor, SEEK_CUR);
     while(fread(&ch1_val, 2, 1, fp)
        && fread(&ch2_val, 2, 1, fp)
     ) {

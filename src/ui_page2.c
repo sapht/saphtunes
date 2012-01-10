@@ -7,6 +7,7 @@
 #include "album.h"
 #include "song.h"
 
+
 static void
 select_song(GtkTreeSelection *selection,
             gpointer song_details

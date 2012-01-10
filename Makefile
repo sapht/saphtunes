@@ -1,8 +1,12 @@
 # vim: set noexpandtab:
 CFLAGS = -O0 -ggdb -Wall -std=gnu99
 
-st: obj/album.o obj/cache.o obj/git.o obj/main.o obj/song.o obj/ui.o obj/ui_common.o obj/ui_page1.o obj/ui_page2.o obj/util.o
+st: init obj/album.o obj/cache.o obj/git.o obj/main.o obj/song.o obj/ui.o obj/ui_common.o obj/ui_page1.o obj/ui_page2.o obj/util.o
 	gcc -o build/st obj/*.o $(CFLAGS) `pkg-config --libs gtk+-2.0`
+
+init:
+	@mkdir -p build 
+	@mkdir -p obj
 
 obj/album.o: src/album.c src/song.h src/git.h src/album.h src/util.h
 	gcc -c src/album.c -o obj/album.o $(CFLAGS) `pkg-config --cflags gtk+-2.0`
@@ -38,7 +42,6 @@ obj/ui_page2.o: src/ui_page2.c src/main.h src/cache.h src/ui_common.h \
 
 obj/util.o: src/util.c src/util.h
 	gcc -c src/util.c -o obj/util.o  $(CFLAGS) `pkg-config --cflags gtk+-2.0`
-
 
 clean:
 	rm obj/*.o

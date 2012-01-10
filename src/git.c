@@ -1,12 +1,15 @@
-#include "git.h"
-#include "util.h"
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
-
 #include <stdio.h>
+
+#include "git.h"
+#include "util.h"
+#include "cache.h"
+
 
 int
 git_load_generic(struct git_repo *repo, 
@@ -27,23 +30,46 @@ git_load_generic(struct git_repo *repo,
 int
 git_load_status(struct git_repo *repo)
 {
-    char *command = malloc(256);
-    sprintf(command, "cd %s && git status --porcelain -s", repo->path);
+    int cache_key_len = strlen(repo->path) + 2;
+    char *cache_key = malloc(cache_key_len);
+    sprintf(cache_key, "S%s", repo->path);
+    cache_key[cache_key_len - 1] = '\0';
 
-    FILE *fpipe;
-    char data[4096];
+    int mtime_dir = get_mtime(repo->path);
+    struct cache_entry *e = cache_get(cache_key, mtime_dir);
+    if(e) {
+        repo->status = strdup(e->value);
+    } else {
+        printf("Git status: open proc for %s...\n", repo->path);
+        char *command = malloc(256);
+        sprintf(command, "cd %s && git status --porcelain -s", repo->path);
 
-    if ( !(fpipe = popen(command, "r"))) {
-        perror("Problem with le pipe");
-        exit(1);
+        FILE *fpipe;
+
+        if ( !(fpipe = popen(command, "r"))) {
+            perror("Problem with le pipe");
+            exit(1);
+        }
+
+        char fbuf[1024];
+        memset(fbuf, 0, 1024);
+
+        int data_len = (int) fread(fbuf, 1, 1024, fpipe);
+        /*  data_len == 1 */
+        /* sorry for ugliness */
+        if(ferror(fpipe) && errno != 4) { 
+            printf("IMPOSSIBL!\n");
+            exit(1);
+        }
+
+        pclose(fpipe);
+
+        repo->status = malloc(data_len + 1);
+        memcpy(repo->status, fbuf, data_len);
+        repo->status[data_len] = '\0';
+
+        cache_set(cache_key, mtime_dir, repo->status, data_len + 1);
     }
-
-    char *r = fgets(data, 4096, fpipe);
-    if (r != 0) {
-        repo->status = strdup(data);
-    }    
-    pclose(fpipe);
-
 
     return 1;
 }
@@ -54,23 +80,39 @@ git_load_config(struct git_repo *repo)
     int config_filesize;
     char* config_data;
 
-	FILE *fp = fopen(repo->config_path, "rb");
-	if (fp == 0) { 
-		return 0;
-	}
+    int config_mtime = get_mtime(repo->config_path);
+    if (!config_mtime) {
+        return 0;
+    }
 
-    /* Read entire data into buffer */
-	fseek(fp, 0, SEEK_END);
+    char *cache_id = repo->config_path;
+    struct cache_entry *ce = cache_get(cache_id, config_mtime);
+    if (ce) {
+        config_data = malloc(sizeof(char) * ce->value_len);
+        memcpy(config_data, ce->value, ce->value_len);
+    } else {
+        printf("Loading config data %s from FS...\n", repo->config_path);
+        FILE *fp = fopen(repo->config_path, "rb");
+        if (fp == 0) {
+            return 0;
+        }
 
-	config_filesize = ftell(fp);
-	config_data = malloc(config_filesize + 1);
+        /* Read entire data into buffer */
+        fseek(fp, 0, SEEK_END);
 
-	rewind(fp);
+        config_filesize = ftell(fp);
+        config_data = malloc(config_filesize + 1);
 
-	fread(config_data, 1, config_filesize, fp);
-	config_data[config_filesize] = '\0';
+        rewind(fp);
 
-	fclose(fp);
+        fread(config_data, 1, config_filesize, fp);
+        config_data[config_filesize] = '\0';
+
+        fclose(fp);
+
+        cache_set(cache_id, config_mtime, config_data, config_filesize+1);
+    }
+
 
     /* Begin parsing */
 	char *begin_block = strstr(config_data, "[remote \"origin\"]");

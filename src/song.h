@@ -8,6 +8,7 @@
 struct song_render_stat {
     int nullspace;
     int clipping;
+    int duration;
 };
 
 struct song {
