@@ -12,6 +12,8 @@ album_create(char *root, char *name)
 
     git_load_generic(&r->git, root, name);
     r->path = r->git.path;
+    r->m3u_path = malloc(PATH_MAX_LEN * sizeof(char));
+    sprintf(r->m3u_path, "%s/%s/playlist.m3u", root, name);
     r->slug = name;
 
     /*printf("Album path is %s\n", r->path);*/
@@ -19,12 +21,62 @@ album_create(char *root, char *name)
     return r;
 }
 
+void
+album_make_m3u(struct album *album)
+{
+    char *buf = malloc(sizeof(char) * album->songs.len * PATH_MAX_LEN);
+    FILE *fp = fopen(album->m3u_path, "w");
+    struct song *song;
+    for (int i=0; i<album->songs.len; i++) {
+        song = album->songs.e[i];
+        fwrite(song->render_path, strlen(song->render_path), 1, fp);
+        fwrite("\n", 1, 1, fp);
+    }
+
+    fclose(fp);
+}
+
+void
+album_list_make_m3u(struct album_list *album_list)
+{
+    struct album *album;
+    for(int i=0; i<album_list->len; i++) {
+        album = album_list->e[i];
+        album_make_m3u(album);
+    }
+}
+
+
+
 struct song_list *
 album_list_find_exclusions(
     struct album_list *album_list,
     struct song_list *song_list)
 {
-    return song_list;
+	struct song_list orphans;
+	orphans.e = malloc(1024 * sizeof(void*)); /* let's say max 1024 songs... */
+	orphans.len = 0;
+
+    for(int i=0; i<song_list->len; i++) {
+		int found = 0;
+		for(int j=0; j<album_list->len; j++) {
+			for(int k=0; k<album_list->e[j]->songs.len; k++) {
+				if (album_list->e[j]->songs.e[k] == song_list->e[i]) {
+					found = 1;
+				}
+			}
+		}
+
+		if(!found) {
+			orphans.e[
+				orphans.len++
+			] = song_list->e[i];
+		}
+	}
+
+	struct song_list *retval = malloc(sizeof(orphans));
+	*retval = orphans;
+	return retval;
 }
 
 void

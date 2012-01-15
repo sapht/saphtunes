@@ -16,10 +16,10 @@ git_load_generic(struct git_repo *repo,
                  char *root, 
                  char *name)
 {
-    repo->path = malloc(255 * sizeof(char));
+    repo->path = malloc(PATH_MAX_LEN * sizeof(char));
     sprintf(repo->path, "%s/%s", root, name);
 
-    repo->config_path = malloc(255 * sizeof(char));
+    repo->config_path = malloc(PATH_MAX_LEN * sizeof(char));
     sprintf(repo->config_path, "%s/.git/config", repo->path);
 
     repo->status = 0;
@@ -143,7 +143,7 @@ git_repo_fill_submodules(struct git_repo *root_repo, char **paths)
 
     int path_num = 0;
 
-    char *submodule_dotfile_path = malloc(255);
+    char *submodule_dotfile_path = malloc(PATH_MAX_LEN * sizeof(char));
     sprintf(submodule_dotfile_path, "%s/%s", root_repo->path, ".gitmodules");
     
     FILE *fp = fopen(submodule_dotfile_path, "rb");

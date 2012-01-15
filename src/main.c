@@ -13,12 +13,11 @@ static int load_data() {
     if ((st.p.song_dir      = getenv("SAPHTUNE_SONG_DIR")) == NULL ||
         (st.p.album_dir     = getenv("SAPHTUNE_ALBUM_DIR")) == NULL ||
         (st.p.song_git_dir  = getenv("SAPHTUNE_GIT_SONG_DIR")) == NULL ||
+        (st.p.cache         = getenv("SAPHTUNE_CACHE_FILE")) == NULL ||
         (st.p.album_git_dir = getenv("SAPHTUNE_GIT_ALBUM_DIR")) == NULL) {
         fprintf(stderr, "Could not load paths from env\n");
         exit(1);
     }
-
-    st.p.cache = "/tmp/saphtune-cache.dat";
 
     cache_load(st.p.cache);
 
@@ -32,6 +31,8 @@ static int load_data() {
 
     printf("Matching album repos to songs...\n");
     album_list_match_songs(_st.albums, _st.songs);
+    printf("Making album m3u...\n");
+    album_list_make_m3u(_st.albums);
 
     return 1;
 }
@@ -45,14 +46,16 @@ static int main_from_args(int argc, char **argv)
             exit(1);
         }
 
-        struct song_list*orphans = album_list_find_exclusions(
+        struct song_list *orphans = album_list_find_exclusions(
             st.albums, st.songs
         );
+
         if (orphans->len > 0) {
             for (int i=0; i<orphans->len; i++) {
                 printf("%s\n", orphans->e[i]->slug);
             }
         }
+
     } else if (strcmp(argv[1], "analyze") == 0) {
         printf("Supercool analyze finder initialized\n");
         struct song_render_stat stat = song_render_analyze(argv[2]);

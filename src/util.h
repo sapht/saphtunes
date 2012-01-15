@@ -6,6 +6,7 @@
 
 #define DIRENT_MAX 4096
 #define NUM_ELEMENTS(a) ((sizeof a)/(sizeof a[0]))
+#define PATH_MAX_LEN 255
 
 struct dirent_list {
     struct dirent *e;

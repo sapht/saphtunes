@@ -9,6 +9,7 @@
 struct album {
     char *slug;
     char *path;
+    char *m3u_path;
     struct git_repo git;
     struct song_list songs;
 };
@@ -18,6 +19,8 @@ struct album_list {
     int len;
 };
 
+void album_make_m3u(struct album *album);
+void album_list_make_m3u(struct album_list *album_list);
 int album_load_dir(char* dir, struct album_list *album_list);
 void album_list_match_songs(struct album_list *album_list, struct song_list *song_list);
 struct album * album_create(char *root, char *name);

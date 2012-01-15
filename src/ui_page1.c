@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+#include "string.h"
 #include "main.h"
 #include "ui_common.h"
 #include "ui_page1.h"
@@ -7,7 +8,29 @@
 #include "album.h"
 #include "song.h"
 
-static struct song_detail_box {
+enum {
+        TARGET_INT32,
+        TARGET_STRING,
+        TARGET_ROOTWIN
+};
+
+struct album_list_wdg {
+	GtkTreeView       *view;
+	GtkListStore      *store;
+	GtkScrolledWindow *scroll;
+	GtkCellRenderer   *cr;
+	GtkTreeSelection  *sel;
+};
+
+struct song_list_wdg {
+	GtkTreeView       *view;
+	GtkListStore      *store;
+	GtkScrolledWindow *scroll;
+	GtkCellRenderer   *cr;
+	GtkTreeSelection  *sel;
+};
+
+struct song_detail_wdg {
     /* Song Detail box */
     GtkWidget *frame;
     GtkWidget *box;
@@ -23,13 +46,186 @@ static struct song_detail_box {
     void *btn_cb[2];
 };
 
+/*****************************************************
+ * Creation                                          *
+ *****************************************************/
+
+/*  Album stuff */
+static struct album_list_wdg *
+create_album_list_wdg()
+{
+	struct album_list_wdg *wdg = malloc(sizeof(struct album_list_wdg));
+
+    wdg->cr    = gtk_cell_renderer_text_new();
+	wdg->view  = GTK_TREE_VIEW(gtk_tree_view_new()),
+	wdg->store = gtk_list_store_new(
+		3, 
+		G_TYPE_INT, 
+		G_TYPE_STRING, 
+		G_TYPE_INT
+	);
+    gtk_tree_view_set_model(wdg->view, GTK_TREE_MODEL(wdg->store));
+
+    wdg->scroll = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(0, 0));
+    gtk_scrolled_window_set_policy(
+		wdg->scroll,
+		GTK_POLICY_NEVER, 
+		GTK_POLICY_ALWAYS
+	);
+    gtk_container_add(
+		GTK_CONTAINER(wdg->scroll), 
+		GTK_WIDGET(wdg->view)
+	);
+
+
+	/* Create columns */
+	char *cols = "Title\0Song#";
+	for(int i=0; i<2; i++) {
+		gtk_tree_view_insert_column_with_attributes(
+			wdg->view,
+			i,    /* Offset in header */
+			cols, 
+			wdg->cr,
+			"text",
+			i+1, /* Store col number to display */
+			NULL);
+		cols += strlen(cols) + 1;
+
+		/* Tell GTK that this header corresponds to this field for sorting. */
+		gtk_tree_view_column_set_sort_column_id(
+			gtk_tree_view_get_column(wdg->view, i), i+1);
+	}
+
+    wdg->sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(wdg->view));
+
+	return wdg;
+}
+
+/*  Song stuff */
+static struct song_list_wdg *
+create_song_list_wdg() 
+{
+	struct song_list_wdg *wdg = malloc(sizeof(struct song_list_wdg));
+    wdg->cr = gtk_cell_renderer_text_new();
+    wdg->view  = GTK_TREE_VIEW(gtk_tree_view_new());
+    wdg->store = gtk_list_store_new(
+        6, 
+        G_TYPE_INT, 
+        G_TYPE_STRING,
+        G_TYPE_STRING,
+        G_TYPE_INT,
+        G_TYPE_INT,
+        G_TYPE_INT
+    );
+
+    gtk_tree_view_set_model(wdg->view, GTK_TREE_MODEL(wdg->store));
+
+    wdg->scroll = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(0, 0));
+    gtk_scrolled_window_set_policy(
+		wdg->scroll,
+		GTK_POLICY_NEVER, 
+		GTK_POLICY_ALWAYS
+	);
+    gtk_container_add(
+		GTK_CONTAINER(wdg->scroll), 
+		GTK_WIDGET(wdg->view)
+	);
+
+
+	char *cols = "name\0time\0nil\0clp\0git";
+
+	for(int i=0; i<5; i++) {
+		gtk_tree_view_insert_column_with_attributes(
+			wdg->view,
+			i, 
+			cols, 
+			wdg->cr,
+			"text", 
+			i+1,
+			NULL);
+
+		cols += strlen(cols) + 1;
+
+		gtk_tree_view_column_set_sort_column_id(
+			gtk_tree_view_get_column(wdg->view, i), i+1);
+	}
+
+    wdg->sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(wdg->view));
+
+	return wdg;
+}
+
+static void
+song_store_fill(GtkListStore *song_liststore, 
+			   struct song_list *song_list)
+{
+    GtkTreeIter song_iter;
+    gtk_list_store_clear(song_liststore);
+
+	if(!song_list) {
+		song_list = st.songs;
+	}
+
+    int j, i;
+    for(i=0; i<song_list->len; i++) {
+        j=i;
+        if (song_list != st.songs) {
+            /* Find matching real id */
+            for(j=0; j<st.songs->len; j++) {
+                if(st.songs->e[j] == song_list->e[i]) { break; }
+            }
+        }
+
+        char *duration = song_format_duration(
+			song_list->e[i]->render_stat.duration
+		);
+
+        gtk_list_store_append(song_liststore, &song_iter);
+        gtk_list_store_set(song_liststore,
+                           &song_iter,
+                           0, j,
+                           1, song_list->e[i]->slug,
+                           2, duration,
+                           3, song_list->e[i]->render_stat.nullspace,
+                           4, song_list->e[i]->render_stat.clipping,
+                           5, (0 != song_list->e[i]->git.status),
+                           -1);
+    }
+}
+
+static void
+album_store_fill(GtkListStore *album_store,
+				struct song_list *all_songs,
+				struct album_list *album_list)
+{
+	/*  Create initial items */
+    GtkTreeIter album_iter;
+
+	gtk_list_store_append(album_store, &album_iter);
+	gtk_list_store_set   (album_store, &album_iter,
+			0, -1,
+			1, "--All songs--",
+			2, all_songs->len,
+			-1);
+
+    for(int i=0; i<album_list->len; i++) {
+        struct album *album_entry = album_list->e[i];
+
+        gtk_list_store_append(album_store, &album_iter);
+        gtk_list_store_set   (album_store, &album_iter,
+                0, (gint) i,
+                1, album_entry->slug,
+                2, album_entry->songs.len,
+                -1);
+    }
+}
 
 static void
 btn_open_song(GtkWidget *button, gpointer song_ptr)
 {
     struct song *song = (struct song*) song_ptr;
 
-    char *open_command = malloc(256*sizeof(char) + sizeof(song->slug));
+    char *open_command = malloc(sizeof(char) * (8 + strlen(song->git.path)));
     sprintf(open_command, "open \"%s\"", song->git.path);
     system(open_command);
     printf("%s\n", open_command);
@@ -47,10 +243,11 @@ btn_play_song(GtkWidget *button, gpointer song_ptr)
 }
 
 
-static struct song_detail_box *
-create_song_detail_box()
+static struct song_detail_wdg *
+create_song_detail_wdg()
 {
-    struct song_detail_box sdbox = {
+    struct song_detail_wdg *sdbox = malloc(sizeof(struct song_detail_wdg));
+	*sdbox = (struct song_detail_wdg) {
         .frame = gtk_frame_new("--"),
 		.gstatus = gtk_text_view_new(),
 		.rstatus_dur  = gtk_label_new("--"),
@@ -77,7 +274,7 @@ create_song_detail_box()
 
 	gtk_container_add(
 		GTK_CONTAINER(gstatus_sw),
-		sdbox.gstatus);
+		sdbox->gstatus);
 
 	GtkWidget *gstatus_frame = gtk_frame_new("git status");
 	gtk_container_add(
@@ -87,9 +284,9 @@ create_song_detail_box()
 
 	GtkWidget *rstatus_frame = gtk_frame_new("render stat");
 	GtkWidget *rstatus_box = gtk_vbox_new(0, 1);
-	gtk_box_pack_start(GTK_BOX(rstatus_box), sdbox.rstatus_dur,  1, 0, 0);
-	gtk_box_pack_start(GTK_BOX(rstatus_box), sdbox.rstatus_null, 1, 0, 0);
-	gtk_box_pack_start(GTK_BOX(rstatus_box), sdbox.rstatus_clip, 1, 0, 0);
+	gtk_box_pack_start(GTK_BOX(rstatus_box), sdbox->rstatus_dur,  1, 0, 0);
+	gtk_box_pack_start(GTK_BOX(rstatus_box), sdbox->rstatus_null, 1, 0, 0);
+	gtk_box_pack_start(GTK_BOX(rstatus_box), sdbox->rstatus_clip, 1, 0, 0);
 	gtk_container_add(GTK_CONTAINER(rstatus_frame), rstatus_box);
 
 
@@ -98,18 +295,16 @@ create_song_detail_box()
 	gtk_box_pack_start(GTK_BOX(stati_box), rstatus_frame, 1, 1, 0);
 
 	/* Pack the master box */
-	gtk_box_pack_start(GTK_BOX(sdbox.vbox), stati_box, 0, 0, 0);
-	gtk_box_pack_start(GTK_BOX(sdbox.vbox), sdbox.box, 0, 0, 0);
+	gtk_box_pack_start(GTK_BOX(sdbox->vbox), stati_box, 0, 0, 0);
+	gtk_box_pack_start(GTK_BOX(sdbox->vbox), sdbox->box, 0, 0, 0);
 
-    for(int i=0; i<sdbox.btn_num; i++) {
-        gtk_box_pack_start(GTK_BOX(sdbox.box), sdbox.btn[i], 0, 0, 0);
+    for(int i=0; i<sdbox->btn_num; i++) {
+        gtk_box_pack_start(GTK_BOX(sdbox->box), sdbox->btn[i], 0, 0, 0);
     }
 
-    gtk_container_add( GTK_CONTAINER(sdbox.frame), sdbox.vbox);
+    gtk_container_add( GTK_CONTAINER(sdbox->frame), sdbox->vbox);
 
-    struct song_detail_box *sdbox_p = malloc(sizeof(sdbox));
-    *sdbox_p = sdbox;
-    return sdbox_p;
+    return sdbox;
 }
 
 static void
@@ -117,8 +312,8 @@ select_song(GtkTreeSelection *selection,
             gpointer sdbox_p
             )
 {
-    struct song_detail_box *sdbox =
-        (struct song_detail_box *) sdbox_p;
+    struct song_detail_wdg *sdbox =
+        (struct song_detail_wdg *) sdbox_p;
 
 	int song_offset = treesel_offset_item(
             selection,
@@ -191,13 +386,13 @@ select_album(GtkTreeSelection *selection,
             selection, 0
         );
 	if(album_offset >= 0) {
-		ui_fill_song_list(
+		song_store_fill(
 			song_list, 
 			&st.albums->e[album_offset]->songs
 		);
 	} else {
 		/* The placeholder -1 album: means entire list */
-		ui_fill_song_list(
+		song_store_fill(
 			song_list, 
 			st.songs
 		);
@@ -207,167 +402,57 @@ select_album(GtkTreeSelection *selection,
 GtkWidget *
 ui_page_1_create()
 {
-    /***************************************
-     *Creating album list widget           *
-     ***************************************/
-    GtkListStore *album_list = gtk_list_store_new(3, G_TYPE_INT, G_TYPE_STRING, G_TYPE_INT);
-    GtkTreeIter album_iter;
+	struct album_list_wdg  *wdg_album   = create_album_list_wdg();
+	struct song_list_wdg   *wdg_songs   = create_song_list_wdg();
+    struct song_detail_wdg *wdg_songdet = create_song_detail_wdg();
 
-	gtk_list_store_append(album_list, &album_iter);
-	gtk_list_store_set(album_list, &album_iter,
-			0, -1,
-			1, "--All songs--",
-			2, st.songs->len,
-			-1);
+    GtkTargetEntry target_list[] = {
+            { "INTEGER",    0, TARGET_INT32 },
+            { "STRING",     0, TARGET_STRING },
+            { "text/plain", 0, TARGET_STRING },
+            { "application/x-rootwindow-drop", 0, TARGET_ROOTWIN }
+    };
 
-    for(int i=0; i<st.albums->len; i++) {
-        struct album *album_entry = st.albums->e[i];
+    guint n_targets = G_N_ELEMENTS (target_list);
 
-        gtk_list_store_append(album_list, &album_iter);
-        gtk_list_store_set(album_list, &album_iter,
-                0, (gint) i,
-                1, album_entry->slug,
-                2, album_entry->songs.len,
-                -1);
-    }
+	album_store_fill(wdg_album->store,
+					 st.songs,
+					 st.albums);
 
-    GtkWidget *album_list_view = gtk_tree_view_new();
-    GtkCellRenderer *cell_renderer  = gtk_cell_renderer_text_new();
+    g_signal_connect(wdg_album->sel,
+                     "changed",
+                     G_CALLBACK(select_album),
+                     wdg_songs->store
+	);
 
-    gtk_tree_view_insert_column_with_attributes(
-        GTK_TREE_VIEW(album_list_view),
-        0, "Title", cell_renderer,
-        "text", 1,
-        NULL);
+    g_signal_connect(wdg_songs->sel,
+                     "changed",
+                     G_CALLBACK(select_song),
+                     wdg_songdet
+	);
 
-    gtk_tree_view_insert_column_with_attributes(
-        GTK_TREE_VIEW(album_list_view),
-        1, "song#", cell_renderer,
-        "text", 2,
-        NULL);
+    gtk_drag_source_set(GTK_WIDGET(wdg_songs->view),
+                        GDK_BUTTON1_MASK,
+                        target_list,
+                        n_targets,
+                        GDK_ACTION_COPY);
 
-    gtk_tree_view_set_model(GTK_TREE_VIEW(album_list_view), GTK_TREE_MODEL(album_list));
-
-    gtk_tree_view_column_set_sort_column_id(
-        gtk_tree_view_get_column(
-            GTK_TREE_VIEW(album_list_view),
-            0), 1
-    );
-    gtk_tree_view_column_set_sort_column_id(
-        gtk_tree_view_get_column(
-            GTK_TREE_VIEW(album_list_view),
-            1), 2
-    );
-
-
-    /***************************************** 
-     * Song list view                        *
-     *****************************************/
-    GtkListStore *song_list = gtk_list_store_new(
-        6, 
-        G_TYPE_INT, 
-        G_TYPE_STRING,
-        G_TYPE_STRING,
-        G_TYPE_INT,
-        G_TYPE_INT,
-        G_TYPE_INT
-    );
-    /*GtkTreeIter song_iter;*/
-
-    GtkWidget *song_list_view = gtk_tree_view_new();
-    gtk_tree_view_insert_column_with_attributes(
-        GTK_TREE_VIEW(song_list_view),
-        0, "name", cell_renderer,
-        "text", 1,
-        NULL);
-    gtk_tree_view_column_set_sort_column_id(
-        gtk_tree_view_get_column( GTK_TREE_VIEW(song_list_view), 0), 
-        1
-        );
-
-    gtk_tree_view_insert_column_with_attributes(
-        GTK_TREE_VIEW(song_list_view),
-        1, "time", cell_renderer,
-        "text", 2,
-        NULL);
-    gtk_tree_view_column_set_sort_column_id(
-        gtk_tree_view_get_column( GTK_TREE_VIEW(song_list_view), 1), 
-        2
-        );
-
-    gtk_tree_view_insert_column_with_attributes(
-        GTK_TREE_VIEW(song_list_view),
-        2, "nil", cell_renderer,
-        "text", 3,
-        NULL);
-    gtk_tree_view_column_set_sort_column_id(
-        gtk_tree_view_get_column( GTK_TREE_VIEW(song_list_view), 2), 
-        3
-        );
-
-    gtk_tree_view_insert_column_with_attributes(
-        GTK_TREE_VIEW(song_list_view),
-        3, "clp", cell_renderer,
-        "text", 4,
-        NULL);
-    gtk_tree_view_column_set_sort_column_id(
-        gtk_tree_view_get_column( GTK_TREE_VIEW(song_list_view), 3), 
-        4
-        );
-
-    gtk_tree_view_insert_column_with_attributes(
-        GTK_TREE_VIEW(song_list_view),
-        4, "git", cell_renderer,
-        "text", 5,
-        NULL);
-    gtk_tree_view_column_set_sort_column_id(
-        gtk_tree_view_get_column( GTK_TREE_VIEW(song_list_view), 3), 
-        5
-        );
-
-
-
-    gtk_tree_view_set_model(GTK_TREE_VIEW(song_list_view), GTK_TREE_MODEL(song_list));
-
-
-    /* *********************************** *
-     * Song details                        *
-     * ************************************/
-    struct song_detail_box *sdbox = create_song_detail_box();
-
-
-    /***************************************
-     *Make containers for all the stuffs   *
-     ***************************************/
 
     GtkWidget *table = gtk_table_new(2, 2, TRUE);
     gtk_table_set_row_spacings(GTK_TABLE(table), 10);
     gtk_table_set_col_spacings(GTK_TABLE(table), 10);
 
-    GtkWidget *album_scroll = gtk_scrolled_window_new(0, 0);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(album_scroll), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-    gtk_container_add(GTK_CONTAINER(album_scroll), album_list_view);
+    gtk_table_attach_defaults(GTK_TABLE(table), 
+		GTK_WIDGET(wdg_album->scroll), 
+		0, 1, 0, 2);
 
-    GtkWidget *song_scroll = gtk_scrolled_window_new(0, 0);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(song_scroll), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-    gtk_container_add(GTK_CONTAINER(song_scroll), song_list_view);
+    gtk_table_attach_defaults(GTK_TABLE(table), 
+		GTK_WIDGET(wdg_songs->scroll), 
+		1, 2, 0, 1);
 
-    gtk_table_attach_defaults(GTK_TABLE(table), album_scroll, 0, 1, 0, 2);
-    gtk_table_attach_defaults(GTK_TABLE(table), song_scroll,  1, 2, 0, 1);
-    gtk_table_attach_defaults(GTK_TABLE(table), sdbox->frame, 1, 2, 1, 2);
-
-    /*g_signal_connect(G_OBJECT(album_list_view), "row-activated", G_CALLBACK(select_album), song_list);*/
-    GtkTreeSelection *album_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(album_list_view));
-    GtkTreeSelection *song_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(song_list_view));
-    g_signal_connect(G_OBJECT(album_selection),
-                     "changed",
-                     G_CALLBACK(select_album),
-                     song_list);
-
-    g_signal_connect(G_OBJECT(song_selection),
-                     "changed",
-                     G_CALLBACK(select_song),
-                     sdbox);
+    gtk_table_attach_defaults(GTK_TABLE(table), 
+		GTK_WIDGET(wdg_songdet->frame), 
+		1, 2, 1, 2);
 
     return table;
 }
