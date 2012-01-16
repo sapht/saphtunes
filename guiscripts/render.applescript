@@ -56,7 +56,7 @@ to saphtune_main(file_alias, new_name)
 			end repeat
 
 			
-			my clog("Successfully exported: " & file_alias)
+			my clog("exported:" & file_alias)
 			return "success"
 		end tell
 	end tell

@@ -29,11 +29,11 @@ to get_dirname(file_alias) -- NOTE: will mess up if you give it a path with trai
 	set fpath_chunks to my split(file_alias, "/")
 	set n to number of fpath_chunks
 	set i to 0
-	log fpath_chunks
+	--log fpath_chunks
 	repeat
 		if (i is greater than 0) then
 			set p to item (i + 1) of fpath_chunks
-			log p
+			--log p
 			if i is equal to (n - 1) then
 				exit repeat
 			end if

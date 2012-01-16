@@ -26,15 +26,54 @@ song_create(char *root, char *name)
     r->slug = name;
     git_load_status(&r->git);
     r->path = r->git.path;
-    r->render_path = malloc(256 * sizeof(char));
-
-    sprintf(r->render_path, "%s/%s.wav",
-            r->path,
-            r->slug);
-
+    r->project_path = malloc(256 * sizeof(char)); 
+    r->render_path  = malloc(256 * sizeof(char)); 
+    sprintf(r->render_path,  "%s/%s.wav",    r->path, r->slug);
+    r->render_path_len  = strlen(render_path);
+    sprintf(r->project_path, "%s/%s.reason", r->path, r->slug);
+    r->project_path_len = strlen(render_path);
     r->render_stat = song_render_analyze(r->render_path);
 
     return r;
+}
+
+void
+song_list_render(struct song_list *song_list, char *render_script_path)
+{
+    struct song *song;
+    struct {
+        char **command;
+        int command_num;
+    } queue;
+    queue.command_num = 0;
+    queue.command = malloc(sizeof(void*) * song_list->len);
+
+    for(int j=0; j<song_list->len; j++) {
+        song = song_list->e[i];
+
+        queue.command[queue.command_num] = malloc((
+                strlen("osascript  xx xx")
+              + strlen(render_script_path)
+              + strlen(song->slug)
+              + 1) * sizeof(char));
+
+        queue.command[queue.command_num] = sprintf(
+            "osascript %s \"%s\" \"%s.wav\"",
+            render_script_path,
+            song->project_path,
+            song->slug
+        );
+
+        queue.command_num++; 
+    }
+
+    FILE *pipe;
+    for(int i=0; i<queue.command_num; i++) {
+        if(!(fpipe = popen(queue.command[i], "r"))) {
+            perror("Problem with le pipe");
+            exit(1);
+        }
+    }
 }
 
 struct song_render_stat

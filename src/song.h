@@ -18,6 +18,10 @@ struct song {
 
     struct song_render_stat render_stat;
     char *render_path;
+    int render_path_len;
+
+    char *project_path;
+    int project_path_len;
 };
 
 struct song_list {
@@ -30,4 +34,5 @@ int song_qsort(struct song **a, struct song **b);
 int songs_load_dir(char *dir, struct song_list *song_list);
 struct song * song_create(char *root, char *name);
 int song_repos_not_cloned(char *git_dir, struct song_list *song_list, char **not_cloned);
+void song_list_render(struct song_list *song_list, char *render_script_path);
 #endif
