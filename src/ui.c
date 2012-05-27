@@ -1,6 +1,4 @@
 #include "main.h"
-#include "album.h"
-#include "song.h"
 #include "ui.h"
 #include "ui_common.h"
 #include "ui_page1.h"

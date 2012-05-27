@@ -4,9 +4,6 @@
 #include "ui_common.h"
 #include "ui_page2.h"
 
-#include "album.h"
-#include "song.h"
-
 
 static void
 select_song(GtkTreeSelection *selection,

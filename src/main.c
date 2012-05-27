@@ -1,112 +1,181 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
 #include "main.h"
-#include "ui.h"
-#include "song.h"
-#include "album.h"
 #include "cache.h"
+#include "ui.h"
 
 struct st_singleton _st;
 
-static int load_data() {
+static int load_data(int use_cache) {
     if ((st.p.song_dir      = getenv("SAPHTUNE_SONG_DIR")) == NULL ||
+        (st.p.playlist_dir  = getenv("SAPHTUNE_PLAYLIST_DIR")) == NULL ||
         (st.p.album_dir     = getenv("SAPHTUNE_ALBUM_DIR")) == NULL ||
         (st.p.song_git_dir  = getenv("SAPHTUNE_GIT_SONG_DIR")) == NULL ||
         (st.p.cache         = getenv("SAPHTUNE_CACHE_FILE")) == NULL ||
         (st.p.album_git_dir = getenv("SAPHTUNE_GIT_ALBUM_DIR")) == NULL) {
         fprintf(stderr, "Could not load paths from env\n");
-        exit(1);
+        return 0;
     }
 
-    cache_load(st.p.cache);
+    if(use_cache) {
+        cache_load(st.p.cache);
+    }
 
     st.songs  = malloc(sizeof(struct song_list));
     st.albums = malloc(sizeof(struct song_list));
 
-    printf("Loading songs...\n");
     if(0==songs_load_dir(_st.p.song_dir, _st.songs)) return 0;
-    printf("Loading albums...\n");
     if(0==album_load_dir(_st.p.album_dir, _st.albums)) return 0;
-
-    printf("Matching album repos to songs...\n");
-    album_list_match_songs(_st.albums, _st.songs);
-    printf("Making album m3u...\n");
-    album_list_make_m3u(_st.albums);
+    if(0==album_list_match_songs(_st.albums, _st.songs)) return 0;
 
     return 1;
 }
 
+void need_data() {
+    if(!load_data(1)) {
+        fprintf(stderr, "Could not create song/album lists\n");
+        exit(1);
+    }
+}
 
-static int main_from_args(int argc, char **argv)
-{
-    if (strcmp(argv[1], "orphans") == 0) {
-        if(!load_data()) {
-            fprintf(stderr, "Could not create song/album lists\n");
-            exit(1);
-        }
+void data_available() {
+	cache_dump(st.p.cache);
+}
 
-        struct song_list *orphans = album_list_find_exclusions(
-            st.albums, st.songs
-        );
+static int render_analyze(char *render_path) {
+	struct song_render_stat s = song_render_analyze(render_path);
+	song_render_print(&s);
+	return 0;
+}
 
-        if (orphans->len > 0) {
-            for (int i=0; i<orphans->len; i++) {
-                printf("%s\n", orphans->e[i]->slug);
-            }
-        }
-
-    } else if (strcmp(argv[1], "analyze") == 0) {
-        printf("Supercool analyze finder initialized\n");
-        struct song_render_stat stat = song_render_analyze(argv[2]);
-
-        printf("Nullspace: %d, clipping: %d",
-            stat.nullspace,
-            stat.clipping);
-
-    } else if (strcmp(argv[1], "displaced") == 0) {
-        if(!load_data()) {
-            fprintf(stderr, "Could not create song/album lists\n");
-            exit(1);
-        }
-
-        int num_not_cloned = 0;
-        char** not_cloned = malloc(sizeof(void*) * SONG_MAX_NUM);
-        num_not_cloned = song_repos_not_cloned(
-                _st.p.song_git_dir,
-                _st.songs,
-                not_cloned
-                );
-        if (num_not_cloned > 0) {
-            for (int i=0; i<num_not_cloned; i++) {
-                printf("%s\n", not_cloned[i]);
-            }
-        }
-    } else {
-        printf("Commands:\n");
-        printf("displaced\n");
-        printf("orphans\n");
-    }    
-
-    return 0;
+static int print_nullspaced() {
+	need_data();
+	for(int i=0; i<st.songs->len; i++) {
+		if(st.songs->e[i]->render_stat.nullspace) {
+			printf("%s\n", st.songs->e[i]->slug);
+		}
+	}
+	data_available();
+	return 0;
 }
 
 int main(int argc, char** argv) {
+    int opts;
+	int retval = -1;
+	struct {
+		char list[9];
+		char* desc[9];
+	} o = {
+		"oasdlgnr", { 
+			"         Print orphans",
+			" [file]  Analyze render",
+			"         Print git status",
+			"         Print displaced songs",
+			"         Write playlist files",
+			"         Open GUI",
+			"         List nullspaced songs",
+			"         Recache",
+			0
+		}
+	};
+	void *tmp;
 
-	if (argc == 1) {
-		/* This means interactive mode */
-        if(!load_data()) {
-            fprintf(stderr, "Could not create song/album lists\n");
-            exit(1);
-        }
+    while( -1 != (opts = getopt(argc, argv, o.list))) {
+        switch(opts) {
+		case 'n':
+			retval = print_nullspaced();
+			break;
 
-        int r = ui_main(&argc, &argv);
-        cache_dump(st.p.cache);
-        return r;
-	} else {
-        return main_from_args(argc, argv);
+        case 'o':
+            need_data();
+			data_available();
+
+            song_list_print(album_list_find_exclusions(st.albums, st.songs), 0);
+            retval = 0;
+			break;
+
+        case 'a':
+            retval = render_analyze(argv[2]);
+			break;
+
+        case 's':
+            need_data();
+			data_available();
+
+			printf("slug\tstat\n");
+            for(int i=0; i<st.songs->len; i++) {
+                if(0 != strcmp("", st.songs->e[i]->git.status)) {
+                    printf("%s\t\"%s\"\n",
+						st.songs->e[i]->slug, 
+						st.songs->e[i]->git.status);
+                }
+            }
+
+            retval = 0;
+			break;
+
+        case 'd': 
+            need_data();
+            data_available();
+
+            int num_not_cloned = 0;
+            char** not_cloned = malloc(sizeof(void*) * SONG_MAX_NUM);
+            num_not_cloned = song_repos_not_cloned(
+				st.p.song_git_dir,
+				st.songs,
+				not_cloned
+			);
+
+            if (num_not_cloned > 0) {
+                for (int i=0; i<num_not_cloned; i++) {
+                    printf("%s\n", not_cloned[i]);
+                }
+            }
+
+            retval = 0;
+			break;
+
+        case 'l':
+            need_data();
+
+            printf("album.m3u\n");
+			tmp = malloc(PATH_MAX);
+            sprintf( (char*) tmp, "%s/album.m3u", st.p.playlist_dir);
+			album_list_make_m3u(_st.albums, (char*) tmp);
+
+            printf("songs.m3u\n");
+            sprintf( (char*) tmp, "%s/songs.m3u", st.p.playlist_dir);
+			song_list_make_m3u(_st.songs, (char*) tmp);
+
+			free(tmp);
+            data_available();
+            retval = 0;
+			break;
+
+        case 'g':
+            need_data();
+            data_available();
+            retval = ui_main(&argc, &argv);
+			break;
+
+        case 'r':
+            load_data(0);
+            data_available();
+            printf("%s\n", st.p.cache);
+            retval = 0;
+			break;
+		}
+    }
+
+	if(retval != -1)  {
+		return retval;
 	}
 
-    printf("Nope\n");
-    return 0;
+	fprintf(stderr, "Usage:\n");
+	for(int i=0; o.list[i] != 0; i++) {
+		fprintf(stderr, "\t-%c%s\n", o.list[i], o.desc[i]);
+	}
+	return 1;
 }

@@ -1,8 +1,7 @@
 #include "ui_common.h"
-#include "song.h"
-#include "album.h"
 #include "main.h"
 #include <math.h>
+#include <stdlib.h>
 
 char *
 song_format_duration(int duration) 

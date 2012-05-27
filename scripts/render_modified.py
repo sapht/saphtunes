@@ -1,9 +1,11 @@
+#!/usr/bin/env python
 from glob import glob
 import os
 import subprocess
 import sys
 
 def render_modified(render_scpt_path, files):
+    todo = []
     for song_file in files:
         project_path = os.path.dirname(song_file)
         project_name = os.path.basename(project_path)
@@ -15,7 +17,13 @@ def render_modified(render_scpt_path, files):
             if os.stat(song_file).st_mtime < os.stat(out_path).st_mtime:
                 continue
 
-        print (song_file, project_path, project_name)
+        todo.append((song_file, out_file))
+
+    print 'RENDERING %d ITEMS' % (len(todo))
+    for d in todo:
+        song_file = d[0]
+        out_file = d[1]
+        print(d[0], d[1])
 
         subprocess.call(
             '''osascript %s "%s" "%s"''' % (

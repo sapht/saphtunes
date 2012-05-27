@@ -71,6 +71,8 @@ cache_load(char *dump_path)
         c = &st.cache[++st.cache_num];
     }
 
+    fclose(fp);
+
     /* Cache was loaded */
     return 1;
 }

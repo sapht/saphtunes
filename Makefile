@@ -8,7 +8,7 @@ init:
 	@mkdir -p build 
 	@mkdir -p obj
 
-obj/album.o: src/album.c src/song.h src/git.h src/album.h src/util.h
+obj/album.o: src/album.c src/song.h src/git.h src/album.h src/util.h src/main.c
 	gcc -c src/album.c -o obj/album.o $(CFLAGS) `pkg-config --cflags gtk+-2.0`
 
 obj/cache.o: src/cache.c src/main.h src/cache.h
@@ -44,8 +44,8 @@ obj/util.o: src/util.c src/util.h
 	gcc -c src/util.c -o obj/util.o  $(CFLAGS) `pkg-config --cflags gtk+-2.0`
 
 clean:
-	rm obj/*.o
-	rm build/st
+	echo obj/*.o | xargs rm
+	@rm -f build/st
 
 gui:
 	cat guiscripts/_common.applescript \

@@ -13,6 +13,14 @@ struct dirent_list {
     int len;
 };
 
-struct dirent_list dir_read_all(char *dir);
+struct dirent_list dir_read_all(char *dir, 
+    int (*filter)(struct dirent*));
+int dir_filter_is_dir(struct dirent *dp);
+int dir_filter_none(struct dirent *dp);
+int dir_filter_is_symlink(struct dirent *dp);
 time_t get_mtime(const char *path);
+void dirent_list_free(struct dirent_list *dl);
+void dirent_list_init(struct dirent_list *r);
+void dirent_list_sort(struct dirent_list *dl);
+
 #endif

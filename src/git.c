@@ -6,7 +6,7 @@
 #include <dirent.h>
 #include <stdio.h>
 
-#include "git.h"
+#include "main.h"
 #include "util.h"
 #include "cache.h"
 
@@ -40,7 +40,7 @@ git_load_status(struct git_repo *repo)
     if(e) {
         repo->status = strdup(e->value);
     } else {
-        printf("Git status: open proc for %s...\n", repo->path);
+        fprintf(stderr, "Git status: open proc for %s...\n", repo->path);
         char *command = malloc(256);
         sprintf(command, "cd %s && git status --porcelain -s", repo->path);
 

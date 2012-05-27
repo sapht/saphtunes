@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "song.h"
-#include "album.h"
 #include "util.h"
+#include "main.h"
+#include <sys/types.h>
 
 struct album *
 album_create(char *root, char *name)
@@ -13,41 +13,46 @@ album_create(char *root, char *name)
     git_load_generic(&r->git, root, name);
     r->path = r->git.path;
     r->m3u_path = malloc(PATH_MAX_LEN * sizeof(char));
-    sprintf(r->m3u_path, "%s/%s/playlist.m3u", root, name);
+    sprintf(r->m3u_path, "%s/play-%s.m3u", root, name);
     r->slug = name;
 
+    r->length = 0;
+    r->songs.len = 0;
     /*printf("Album path is %s\n", r->path);*/
 
     return r;
 }
 
-void
+int
 album_make_m3u(struct album *album)
 {
-    char *buf = malloc(sizeof(char) * album->songs.len * PATH_MAX_LEN);
-    FILE *fp = fopen(album->m3u_path, "w");
-    struct song *song;
-    for (int i=0; i<album->songs.len; i++) {
-        song = album->songs.e[i];
-        fwrite(song->render_path, strlen(song->render_path), 1, fp);
-        fwrite("\n", 1, 1, fp);
-    }
-
-    fclose(fp);
+    return song_list_make_m3u(
+        &album->songs,
+        album->m3u_path
+    );
 }
 
-void
-album_list_make_m3u(struct album_list *album_list)
+int
+album_list_make_m3u(struct album_list *album_list, char *path)
 {
+    FILE *album_master;
+    album_master = fopen(path, "w");
+    fwrite("#EXTM3U\n", strlen("#EXTM3U\n"), 1, album_master);
     struct album *album;
     for(int i=0; i<album_list->len; i++) {
         album = album_list->e[i];
         album_make_m3u(album);
+        if(album->songs.len > 0) {
+            fprintf(album_master, "#EXTINF:%d, sapht - %s\n",
+                album->length,
+                album->slug);
+            fprintf(album_master, "%s\n", album->m3u_path);
+        }
     }
+
+    fclose(album_master);
+    return 1;
 }
-
-
-
 
 struct song_list *
 album_list_find_exclusions(
@@ -80,7 +85,7 @@ album_list_find_exclusions(
 	return retval;
 }
 
-void
+int
 album_list_match_songs(struct album_list *album_list, 
                        struct song_list *song_list)
 {
@@ -92,53 +97,61 @@ album_list_match_songs(struct album_list *album_list,
      */
 
     struct album *album;
-    struct song *song;
+    char *entry_link_target;
+    char *entry_full_path;
+    struct dirent *dp;
+    struct dirent_list album_dir_entries;
 
-
-    char **submodules = malloc(GIT_SUBMODULE_MAX_NUM * sizeof(char*));
-    int submodule_num;
 
     for (int ai=0; ai<album_list->len; ai++) {
         album = album_list->e[ai];
 
-        submodule_num = git_repo_fill_submodules(&album->git, submodules);
-        album->songs.e = malloc(submodule_num * sizeof(void*));
+        album_dir_entries = dir_read_all(album->path, dir_filter_is_symlink);
+        dirent_list_sort(&album_dir_entries);
 
+        album->songs.e = malloc(album_dir_entries.len * sizeof(void*));
+        /* allocate space for all items, realloc when we set len */
 
-        int found;
-        for (int j=0; j<submodule_num; j++) {
-            found = 0;
-            /*printf("Looking at submodule %s\n", submodules[j]);*/
-            for (int i=0; i<song_list->len; i++) {
-                song = song_list->e[i];
-                if (0 == strcmp(submodules[j], song->git.origin)) {
-                    album->songs.e[album->songs.len++] = song;
-                    found = 1;
-                    break;
-                }
+        for (int j=0; j<album_dir_entries.len; j++) {
+            dp = &album_dir_entries.e[j];
+
+            entry_full_path = malloc(sizeof(char) * (2 + strlen(album->path) + dp->d_namlen));
+            sprintf(entry_full_path, "%s/%s", 
+                album->path,
+                dp->d_name
+            );
+
+            entry_link_target = realpath(entry_full_path, 0);
+            free(entry_full_path);
+
+            if(0 == entry_link_target) { /* Could not resolve path name */
+                fprintf(stderr, "ERROR: SONGLINK UNRESOLVED: %s\n", dp->d_name);
+                return 0;
             }
 
-            if (!found) {
-                fprintf(stderr, "FATAL ERROR: SUBMODULE NOT FOUND: %s\n", submodules[j]);
-                exit(1);
+            if( 0 == strncmp(entry_link_target, st.p.song_dir, strlen(st.p.song_dir))) {
+                /* might be a song link */
+                for (int i=0; i<song_list->len; i++) {
+                    if (0 == strcmp(entry_link_target, song_list->e[i]->path)) {
+                        album->songs.e[album->songs.len] = song_list->e[i];
+                        /*printf("%s at %d\n", song_list->e[i]->slug, album->songs.len);*/
+                        album->songs.len++;
+                        album->length += song_list->e[i]->render_stat.duration;
+                        break;
+                    }
+                }
             }
         }
 
-        qsort(album->songs.e, 
-              album->songs.len, 
-              sizeof(struct song*),
-              song_qsort);
-
-        /*fprintf(stderr, 
-                "Album %s has %d songs\n", 
-                album->slug, 
-                album->songs.len);*/
+        album->songs.e = realloc(album->songs.e, sizeof(void*) * album->songs.len);
     }
+
+    return 1;
 }
 
 int
 album_load_dir(char* dir, struct album_list *album_list) {
-    struct dirent_list files = dir_read_all(dir);
+    struct dirent_list files = dir_read_all(dir, dir_filter_is_dir);
 
     album_list->e = malloc(ALBUM_MAX_NUM * sizeof(void*));
     album_list->len = files.len;

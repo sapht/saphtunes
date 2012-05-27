@@ -5,9 +5,6 @@
 #include "ui_common.h"
 #include "ui_page1.h"
 
-#include "album.h"
-#include "song.h"
-
 enum {
         TARGET_INT32,
         TARGET_STRING,
@@ -188,7 +185,7 @@ song_store_fill(GtkListStore *song_liststore,
                            2, duration,
                            3, song_list->e[i]->render_stat.nullspace,
                            4, song_list->e[i]->render_stat.clipping,
-                           5, (0 != song_list->e[i]->git.status),
+                           5, (0 != strcmp("", song_list->e[i]->git.status)),
                            -1);
     }
 }

@@ -1,58 +1,65 @@
-#+title: congman tasks
-* Data set TODO
-** TODO List and retag all projects with >1 master file
-** TODO Convert document types via applescript interface
-* 1.0 GTK
-Decided to skip buggy camelcased CDK in favor of GTK+.
-
-Tutorial for GTK+: http://zetcode.com/tutorials/gtktutorial/firstprograms/
-test file: [[../gtk_test]]
-
-** DONE Rewrite the entire CDK interface in GTK+
-CLOSED: [2012-01-02 Mon 00:17]
-** TODO Implement a view of the 10 latest song commits, with view
-** TODO Implement a view of all repositories, album or songs, with un-commited files
-** DONE Fix the window sizes
-CLOSED: [2012-01-02 Mon 02:11]
-On resize, album list grows huge. this may be the issue
-** DONE Add scrollbar
-CLOSED: [2012-01-02 Mon 02:11]
+#+title: saphtunes management tool
 * 1.0
-** TODO Implement a split pane view of album/children
-*** TODO fix the 
-*** TODO implement resizing
-SIGWINCH
-http://stackoverflow.com/questions/4738803/resize-terminal-and-scrolling-problem-with-ncurses
-*** Archive                                                   :ARCHIVE:
-**** DONE try reducing size of an alphalist
-CLOSED: [2011-12-29 Thu 18:33]
-:PROPERTIES:
-:ARCHIVE_TIME: 2011-12-30 Fri 17:45
-:END:
-**** DONE create a second alphalist and align it differently
-CLOSED: [2011-12-29 Thu 18:33]
-:PROPERTIES:
-:ARCHIVE_TIME: 2011-12-30 Fri 17:45
-:END:
-**** DONE implement "change" event
-CLOSED: [2011-12-30 Fri 17:44]
-:PROPERTIES:
-:ARCHIVE_TIME: 2011-12-30 Fri 17:45
-:END:
-**** DONE load submodules from .gitmodules, not from looking at all the subrepos
-CLOSED: [2011-12-30 Fri 22:06]
-:PROPERTIES:
-:ARCHIVE_TIME: 2011-12-30 Fri 22:06
-:END:
-currently album_match_song_list loops through all songs, then does a
-dirent_list of the album root repo, then tries to match the origin of
-those songs with the corresponding origin of every dirent found in the
-root repo that contains a .git/config.
+Tutorial for GTK+: http://zetcode.com/tutorials/gtktutorial/firstprograms/
 
-this is bad, instead loop through all songs (which should have their
-origin already loaded via git_load_config), then look at each album,
-parse the .gitmodules and aqcuire a char** of submodule origins, then
-compare the origins. 
+
+test file: [[../gtk_test]]
+** DONE Rewrite album-song coupling to symlinks/strings as opposed to submodules
+This is to gain performance and free up some disk space.
+*** DONE Change repo formats
+*** DONE Rewrite implementation:q
+** scrapped
+*** TODO Sort songs by latest commit and view commit history
+*** TODO Implement drag-and-drop movement of songs between albums.
+*** TODO Add drag-and-drop reordering of songs within an album.
+*** TODO Create features for managing albums
+- Add an album
+- Remove an album
+- Rename an album
+
+Since albums are stored in git, this may become an ugly proceedure. If
+the track list is stored in a .ini file, and songs are reordered by
+editing these files, the problem is mitigated, but this makes general
+GUI movement using Finder a big nuisance.
+
+The reliability of a config file solution might become more obvious
+when drag-and-drop and album playlist hotkeys are implemented, as the
+Finder becomes more and more obsolete.
+** TODO Add a GUI slot for album metadata (such as "play m3u")
+** DONE Implement an "orphans" album.
+It could be, like global list, populated automatically, or it could be
+a real album. In the second case, some import functionality needs to
+be written.
+** DONE Implement song-numbering within albums
+The metadata should likely be stored inside the album somehow.
+
+A file naming convention should be sufficient. It might become tricky
+when moving songs betweeen albums though, as we'd need to shift the
+file names to reorder things. This may be especially tricky if songs
+are reordered outsite of the UI.
+** Archive                                                       :ARCHIVE:
+*** DONE Fix the window sizes
+CLOSED: [2012-01-02 Mon 02:11]
+:PROPERTIES:
+:ARCHIVE_TIME: 2012-01-21 Sat 17:58
+:END:
+On resize, album list grows huge. this may be the issue
+*** DONE Add scrollbar
+CLOSED: [2012-01-02 Mon 02:11]
+:PROPERTIES:
+:ARCHIVE_TIME: 2012-01-21 Sat 17:58
+:END:
+
+*** DONE Rewrite the entire CDK interface in GTK+
+CLOSED: [2012-01-02 Mon 00:17]
+:PROPERTIES:
+:ARCHIVE_TIME: 2012-01-21 Sat 17:58
+:END:
+*** DONE Implement a view of all repositories, album or songs, with un-commited files
+CLOSED: [2012-01-21 Sat 17:58]
+:PROPERTIES:
+:ARCHIVE_TIME: 2012-01-21 Sat 17:58
+:END:
 * Archive                                                           :ARCHIVE:
 ** Multiple screens
 :PROPERTIES:
@@ -79,3 +86,51 @@ big amounts of text, this could be useful.
 
 CDK widgets seem to be embeddable within ncurses in some manner;
 there's an example for this.
+** Data set TODO
+:PROPERTIES:
+:ARCHIVE_TIME: 2012-01-21 Sat 17:57
+:END:
+*** DONE List and retag all projects with >1 master file
+CLOSED: [2012-01-21 Sat 17:57]
+*** DONE Convert document types via applescript interface
+CLOSED: [2012-01-21 Sat 17:57]
+** 1.0
+:PROPERTIES:
+:ARCHIVE_TIME: 2012-01-21 Sat 17:57
+:END:
+*** DONE Implement a split pane view of album/children
+CLOSED: [2012-01-21 Sat 17:57]
+**** TODO fix the 
+**** TODO implement resizing
+SIGWINCH
+http://stackoverflow.com/questions/4738803/resize-terminal-and-scrolling-problem-with-ncurses
+**** Archive                                               :ARCHIVE:
+***** DONE try reducing size of an alphalist
+CLOSED: [2011-12-29 Thu 18:33]
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-30 Fri 17:45
+:END:
+***** DONE create a second alphalist and align it differently
+CLOSED: [2011-12-29 Thu 18:33]
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-30 Fri 17:45
+:END:
+***** DONE implement "change" event
+CLOSED: [2011-12-30 Fri 17:44]
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-30 Fri 17:45
+:END:
+***** DONE load submodules from .gitmodules, not from looking at all the subrepos
+CLOSED: [2011-12-30 Fri 22:06]
+:PROPERTIES:
+:ARCHIVE_TIME: 2011-12-30 Fri 22:06
+:END:
+currently album_match_song_list loops through all songs, then does a
+dirent_list of the album root repo, then tries to match the origin of
+those songs with the corresponding origin of every dirent found in the
+root repo that contains a .git/config.
+
+this is bad, instead loop through all songs (which should have their
+origin already loaded via git_load_config), then look at each album,
+parse the .gitmodules and aqcuire a char** of submodule origins, then
+compare the origins. 
