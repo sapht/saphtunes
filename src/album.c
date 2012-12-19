@@ -66,6 +66,10 @@ album_list_find_exclusions(
     for(int i=0; i<song_list->len; i++) {
 		int found = 0;
 		for(int j=0; j<album_list->len; j++) {
+            if (album_is_auxiliary(album_list->e[j])) {
+                continue;
+            }
+
 			for(int k=0; k<album_list->e[j]->songs.len; k++) {
 				if (album_list->e[j]->songs.e[k] == song_list->e[i]) {
 					found = 1;
@@ -163,4 +167,15 @@ album_load_dir(char* dir, struct album_list *album_list) {
     }
 
     return album_list->len;
+}
+
+int
+album_is_auxiliary(struct album *album) {
+    if(strstr(album->slug, "github")) {
+        return 1;
+    }
+    if(strstr(album->slug, ".edits")) {
+        return 1;
+    }
+    return 0;
 }

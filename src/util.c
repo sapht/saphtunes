@@ -19,7 +19,6 @@ int dir_filter_is_symlink(struct dirent *dp) {
     return DT_LNK==dp->d_type;
 }
 int dp_name_parse_order(char *str) {
-    /* TODO */
     int pos = 0;
     char *s = str;
     for(;;s++) {
@@ -33,7 +32,7 @@ int dp_name_parse_order(char *str) {
 
         return 0;
     }
-    fprintf(stderr, "we has a winrr!!! %d, %s\n", pos, str);
+    // fprintf(stderr, "we has a winrr!!! %d, %s\n", pos, str);
     return pos;
 }
 
@@ -42,25 +41,16 @@ int dp_cmp(struct dirent *dp1, struct dirent *dp2) {
     o1 = dp_name_parse_order(dp1->d_name);
     o2 = dp_name_parse_order(dp2->d_name);
     if(o1 && o2) {
-        /*printf("%s(%d) or %s(%d)?\n", dp1->d_name, o1, dp2->d_name, o2);*/
         if(o1 > o2) {
-            /*printf("%s after %s\n", dp1->d_name, dp2->d_name);*/
             return 1;
         }
         if(o1 < o2) {
-            /*printf("%s after %s\n", dp2->d_name, dp1->d_name);*/
             return -1;
         }
-        /*printf("Neither!\n");*/
         return 0;
     }
 
     return 0;
-
-    /*if(o1) { return -1; }*/
-    /*if(o2) { return 1; }*/
-
-    /*return strcmp( dp1->d_name, dp2->d_name );*/
 }
 
 void dirent_list_sort(struct dirent_list *dl) {

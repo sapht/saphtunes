@@ -65,12 +65,13 @@ int main(int argc, char** argv) {
     int opts;
 	int retval = -1;
 	struct {
-		char list[9];
-		char* desc[9];
+		char list[10];
+		char* desc[10];
 	} o = {
-		"oasdlgnr", { 
+		"oapsdlgnr", { 
 			"         Print orphans",
 			" [file]  Analyze render",
+			" [file]  Print song meta",
 			"         Print git status",
 			"         Print displaced songs",
 			"         Write playlist files",
@@ -100,6 +101,12 @@ int main(int argc, char** argv) {
             retval = render_analyze(argv[2]);
 			break;
 
+        case 'p':
+            need_data();
+            data_available();
+            retval = song_print_metadata(song_resolve_slug(argv[2]));
+			break;
+
         case 's':
             need_data();
 			data_available();
@@ -107,9 +114,17 @@ int main(int argc, char** argv) {
 			printf("slug\tstat\n");
             for(int i=0; i<st.songs->len; i++) {
                 if(0 != strcmp("", st.songs->e[i]->git.status)) {
-                    printf("%s\t\"%s\"\n",
-						st.songs->e[i]->slug, 
-						st.songs->e[i]->git.status);
+                    printf("%s\n", st.songs->e[i]->slug); 
+                    putchar('\t');
+                    for (int j=0; j<strlen(st.songs->e[i]->git.status) - 1; j++) {
+                        if (st.songs->e[i]->git.status[j] == '\n') {
+                            putchar('\n');
+                            putchar('\t');
+                        } else {
+                            putchar(st.songs->e[i]->git.status[j]);
+                        }
+                    }
+                    putchar('\n');
                 }
             }
 

@@ -30,6 +30,38 @@ song_create(char *root, char *name)
     return r;
 }
 
+struct song *
+song_resolve_slug(char* song_slug) {
+    for(int i=0; i<st.songs->len; i++) {
+        if (strcmp(st.songs->e[i]->slug, song_slug) == 0) {
+            return st.songs->e[i];
+        }
+    }
+    return 0;
+}
+
+int
+song_print_metadata(struct song *e) {
+    /* Print slug\talbum\tlength etc... */
+    if (e == 0) {
+        return 0;
+    }
+
+    printf("%s\n", "asd");
+    printf("%p\n", e);
+    printf("%s\n", e->path);
+    return 0;
+    for(int i=0; i<st.albums->len; i++) {
+        for(int j=0; j<st.albums->e[i]->songs.len; j++) {
+            if (st.albums->e[i]->songs.e[j] == e) {
+                printf("\t%s", st.albums->e[i]->slug);
+            }
+        }
+    }
+    putchar('\n');
+    return 1;
+}
+
 void
 song_list_render(struct song_list *song_list, char *render_script_path)
 {

@@ -72,6 +72,7 @@ int album_make_m3u(struct album *album);
 int album_list_make_m3u(struct album_list *album_list, char *path);
 int album_load_dir(char* dir, struct album_list *album_list);
 int album_list_match_songs(struct album_list *album_list, struct song_list *song_list);
+int album_is_auxiliary(struct album *album);
 struct album * album_create(char *root, char *name);
 struct song_list * album_list_find_exclusions( struct album_list *album_list, struct song_list *song_list);
 
